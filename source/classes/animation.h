@@ -315,7 +315,7 @@ void ANIMATE::animateMovePlayer(int move, const char * name, OSL_IMAGE * sonymon
           int CHANGEDH = 0;
           int CHANGEDL = 1; //begin shifting
           OSL_IMAGE * manipulateEnemy = NULL;
-          oslCopyImage(manipulateEnemy, enemy);
+          oslCopyImageTo(manipulateEnemy, enemy);
           if(!manipulateEnemy)
              oslWarning("ERROR! Failed to copy image in animation method!!");
           
@@ -645,7 +645,7 @@ void ANIMATE::animateMoveEnemy(int move, const char * name, OSL_IMAGE * sonymon,
           int CHANGEDH = 0;
           int CHANGEDL = 1; //begin shifting
           OSL_IMAGE * manipulateSonymon = NULL;
-          oslCopyImage(manipulateSonymon, sonymon);
+          oslCopyImageTo(manipulateSonymon, sonymon);
           if(!manipulateSonymon)
              oslWarning("ERROR! Failed to copy image in animation method!!");
           

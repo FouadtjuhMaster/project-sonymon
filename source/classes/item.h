@@ -1,3 +1,4 @@
+#include <oslib/oslib.h>
 /* 
 DESCRIPTION:
    -below are the decided values for each item...
@@ -62,10 +63,10 @@ void ITEM::Use(int item)
          
      for(;;)
      {
-             //user input
              oslReadKeys();
+             
              if(osl_keys->pressed.circle) {oslPlaySound(beep, 2); break;}
-             else if(osl_keys->pressed.down && scroll < count - 1) {oslPlaySound(beep, 2); scroll++;}
+             else if(osl_keys->pressed.down) {oslPlaySound(beep, 2); scroll++;}
              else if(osl_keys->pressed.up && scroll > 0){oslPlaySound(beep, 2); scroll--;}
              
              oslStartDrawing();

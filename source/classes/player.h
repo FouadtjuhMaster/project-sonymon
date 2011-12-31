@@ -3,21 +3,19 @@ class PLAYER : public MAP
       public:
             PLAYER();
             ~PLAYER();
-             
-             bool collisionLeft;
-             bool collisionRight;
-             bool collisionUp;
-             bool collisionDown;
+            
              unsigned short tile;
              
-             inline bool Check();
-             inline void DrawInfo(int &WordsToggled, const int gameMode);
+             void DrawInfo(int &WordsToggled, const int gameMode);
              inline void SpriteAnimate( void );
 	         inline void ReadKeys(const char * playerName, OSL_MAP * map);
 	         
+	         
+	         
 	  private:
+            
 }player;
-
+  
 /*
 void PLAYER::DetectCenterEnds()
 {
@@ -40,48 +38,50 @@ void PLAYER::DetectCenterEnds()
      return;
 }*/
 
-inline bool PLAYER::Check()
-{
-    if(player.tile == STONE_WALL_OVERHEAD)          return true;
-    else if(player.tile == STONE_WALL)              return true;
-    else if(player.tile == STONE_WALL_OVERHEAD_TOP) return true;
-    
-    else return false;
-}
 
 inline void PLAYER::ReadKeys(const char * playerName, OSL_MAP * map)
 {
+    zeroMapX = map->scrollX;
+    zeroMapY = map->scrollY;
+    if (zero->x <= 1)   zero->x = 1;
+    if (zero->y <= 1)   zero->y = 1;
+    if (zero->x >= 460) zero->x = 460;
+    if (zero->y >= 239) zero->y = 239;
+   
     oslReadKeys();
     
-    if (osl_keys->held.left)
+    //create an object of class MAP
+    MAP check;
+    
+    if (osl_keys->held.left && check.CheckTileCollision(map,zero,0))
     {
        sprite_position = LEFT;        
-       if(!player.collisionLeft)map->scrollX-=2;
+       map->scrollX-=2;
        SpriteAnimate(); 
     }
      
-    else if (osl_keys->held.right)
+    else if (osl_keys->held.right && check.CheckTileCollision(map,zero,1))
     {
        sprite_position = RIGHT; 
-       if(!player.collisionRight)map->scrollX+= 2;
+       map->scrollX+= 2;
        SpriteAnimate(); 
     }
              
-    else if (osl_keys->held.up)
+    else if (osl_keys->held.up && check.CheckTileCollision(map,zero,2))
     {
        sprite_position = UP; 
-       if(!player.collisionUp)map->scrollY-=2;
+       map->scrollY-=2;
        SpriteAnimate();  
     }
      
-    else if (osl_keys->held.down)
+    else if (osl_keys->held.down && check.CheckTileCollision(map,zero,3))
     {
        sprite_position = DOWN;
-       if(!player.collisionDown)map->scrollY+=2;
+       map->scrollY+=2;
        SpriteAnimate(); 
     }
     
-    if(osl_keys->pressed.start) 
+    else if(osl_keys->pressed.start) 
          menu.pauseGame(playerName);
     
     else if(osl_keys->pressed.select)
@@ -95,12 +95,14 @@ inline void PLAYER::ReadKeys(const char * playerName, OSL_MAP * map)
    
     else if (!osl_keys->held.value) 
           {sprite_march = 0; oslSetImageTileSize(zero,0,sprite_position,23,32);}
-  
+    
+    else SpriteAnimate();
+    
      return;
 }
 
 
-inline void PLAYER::DrawInfo(int &WordsToggled, const int gameMode)
+void PLAYER::DrawInfo(int &WordsToggled, const int gameMode)
 {
      //handle device stats
      if(gameMode == FREE_ROAM){
@@ -149,14 +151,9 @@ inline void PLAYER::SpriteAnimate( void )
 
 PLAYER::PLAYER()
 {
-    collisionLeft = false;
-    collisionRight = false;
-    collisionUp = false;
-    collisionDown = false;
-    tile = TOP_DIRT;
-    
      return;
 }
+
 PLAYER::~PLAYER()
 {
      return;

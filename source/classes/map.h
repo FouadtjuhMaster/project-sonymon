@@ -4,7 +4,8 @@ class MAP
             MAP();
             ~MAP();
              
-             inline unsigned short GetTile(OSL_MAP *m, int col, int row);
+            inline unsigned short GetTile(OSL_MAP *m, int col, int row);
+            inline int CheckTileCollision(OSL_MAP *m, OSL_IMAGE * image, int direction);
              
       private:
               
@@ -16,19 +17,46 @@ inline unsigned short MAP::GetTile(OSL_MAP *m, int col, int row)
   return map[row*m->mapSizeX + col];
 }
 
-#define TOP_DIRT FR1_map[0][0]
+int MAP::CheckTileCollision(OSL_MAP *m, OSL_IMAGE * image, int direction)
+{
+  int tile = 0;
+  
+  if(direction == 0){
+    tile = GetTile(m,((m->scrollX + image->x - 0))/ m->tileX, (m->scrollY + image->y + image->stretchY)/ m->tileY);
+    //if(!tile) tile = GetTile(m,((m->scrollX + image->x - 0))/ m->tileX, (m->scrollY + image->y)/ m->tileY);
+  }
 
-#define DIRT FR1_map[0][1]
+  else if(direction == 1){
+    tile = GetTile(m,((m->scrollX + image->x +image->stretchX + 0))/ m->tileX, (m->scrollY + image->y + image->stretchY)/ m->tileY);
+    //if (!tile) tile = GetTile(m,((m->scrollX + image->x +image->stretchX + 0))/ m->tileX, (m->scrollY + image->y)/ m->tileY);
+  }
 
-#define STONE_WALL FR1_map[0][5]
+  else if(direction == 2){
+    tile = GetTile(m,((m->scrollX + image->x +image->stretchX ))/ m->tileX, (m->scrollY + image->y - 0)/ m->tileY);
+    //if (!tile) tile = GetTile(m,((m->scrollX + image->x))/ m->tileX, (m->scrollY + image->y - 0)/ m->tileY);
+  }
 
-#define STONE_WALL_OVERHEAD FR1_map[15][4]
+  else if(direction == 3){
+    tile = GetTile(m,((m->scrollX + image->x +image->stretchX ))/ m->tileX, (m->scrollY + image->y + image->stretchY + 0)/ m->tileY);
+    //if (!tile) tile = GetTile(m,((m->scrollX + image->x))/ m->tileX, (m->scrollY + image->y + image->stretchY + 0)/ m->tileY);
+  }
+  
+  else oslFatalError("INVALID PARAMETER PASSED TO CheckTileCollision()!!!");
+  
 
-#define STONE_WALL_OVERHEAD_TOP FR1_map[50][0]
+  if(tile == STONE_WALL_OVERHEAD_TOP)
+	return 0;
 
-#define GRAY_ROAD FR1_map[2][6]
-
-#define GRAY_ROAD_TOP FR1_map[2][6]
+  else if(tile == STONE_WALL_OVERHEAD)
+	return 0;
+	
+  else if(tile == STONE_WALL)
+	return 0;
+	
+  
+  return 1;
+  
+}
 
 MAP::MAP()
 {    

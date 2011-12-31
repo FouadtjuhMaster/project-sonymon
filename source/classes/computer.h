@@ -19,9 +19,6 @@ class COMPUTER
              bool loadedImage;
              OSL_IMAGE * image;
              
-             const char * message;
-             const char * name;
-             
       private:
               
 };
@@ -30,25 +27,23 @@ OSL_IMAGE * COMPUTER::loadImage(int id, bool &loadedImage)
 {
     if(!loadedImage)
     {
+       OSL_IMAGE * image = NULL;
+        
        oslSetTransparentColor(RGB(255,0,255));
        
-       OSL_IMAGE * image = NULL;
-
-       if(id == 0)image = oslLoadImageFile((char*)"img/sprites/male4.png", OSL_IN_RAM, OSL_PF_5551);
-	   if(id == 1)image = oslLoadImageFile((char*)"img/sprites/guy1.png", OSL_IN_RAM, OSL_PF_5551);
-	   if(id == 2)image = oslLoadImageFile((char*)"img/sprites/guy2.png", OSL_IN_RAM, OSL_PF_5551);
-	   if(id == 3)image = oslLoadImageFile((char*)"img/sprites/guy3.png", OSL_IN_RAM, OSL_PF_5551);
-	   if(id == 4)image = oslLoadImageFile((char*)"img/sprites/guy4.png", OSL_IN_RAM, OSL_PF_5551);
-	   if(id == 5)image = oslLoadImageFile((char*)"img/sprites/guy5.png", OSL_IN_RAM, OSL_PF_5551);
-	   if(id == 6)image = oslLoadImageFile((char*)"img/sprites/guy6.png", OSL_IN_RAM, OSL_PF_5551);
-	  
+       if(id == 0)image = oslLoadImageFilePNG((char*)"img/sprites/male4.png", OSL_IN_RAM, OSL_PF_5551);
+	   if(id == 1)image = oslLoadImageFilePNG((char*)"img/sprites/guy1.png", OSL_IN_RAM, OSL_PF_5551);
+	   if(id == 2)image = oslLoadImageFilePNG((char*)"img/sprites/guy2.png", OSL_IN_RAM, OSL_PF_5551);
+	   if(id == 3)image = oslLoadImageFilePNG((char*)"img/sprites/guy3.png", OSL_IN_RAM, OSL_PF_5551);
+	   if(id == 4)image = oslLoadImageFilePNG((char*)"img/sprites/guy4.png", OSL_IN_RAM, OSL_PF_5551);
+	   if(id == 5)image = oslLoadImageFilePNG((char*)"img/sprites/guy5.png", OSL_IN_RAM, OSL_PF_5551);
+	   if(id == 6)image = oslLoadImageFilePNG((char*)"img/sprites/guy6.png", OSL_IN_RAM, OSL_PF_5551);
+	   oslDisableTransparentColor();
+	      
+	   loadedImage = true;
+	    
 	   if(!image)
 	     MISSING_IMG_FILES(1);
-	     
-	    loadedImage = true;
-	    
-	    oslDisableTransparentColor();
-
     } 
 
     return image;
@@ -250,16 +245,12 @@ COMPUTER::COMPUTER()
      position = DOWN;
      march = 0;
      manip = 0;
-     message = "object created";
-     name = "???";
      
      return;
 }
 COMPUTER::~COMPUTER()
 {
      if(image != NULL){oslDeleteImage(image); image = NULL;}
-     message = "object destroyed";
-     name = "???";
      
      return;
 }

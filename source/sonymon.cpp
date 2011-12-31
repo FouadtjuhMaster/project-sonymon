@@ -8,26 +8,23 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //general functions used by both sonymon free roam and sonymon story modes:////////////////////////////
 void LoadFiles(const int mode)
-{
-    oslSetTransparentColor(RGB(255,0,255));
-    
-    int FR = 1;
-    int SM = 2;
-    
-    if(mode != FR && mode != SM) oslFatalError("ERROR INVALID PARAMETER PASSED TO void LoadFiles()!!!");
-    
-    OSL_IMAGE *loading_screen;
-	loading_screen = oslLoadImageFile((char*)"img/data/loading1.png", OSL_IN_RAM, OSL_PF_5551);
-	if(!loading_screen)
-	   MISSING_IMG_FILES(3);
-	   
+{       
+    if(mode != 1 && mode != 0) oslFatalError("ERROR INVALID PARAMETER PASSED TO void LoadFiles()!!!");
+
+    OSL_IMAGE * loading_screen;
+    loading_screen = oslLoadImageFile((char*)"img/data/loading1.png", OSL_IN_RAM, OSL_PF_5551);
+
     oslStartDrawing();
+    oslClearScreen(BLACK);
     oslDrawImage(loading_screen);
     oslEndDrawing();
     oslSyncFrame();
     
-    if(loadedBefore != 1){
-        
+    hWait;
+    
+    if(loadedBefore != 1)
+	{
+     
     //load images to memory
     item1 = oslLoadImageFile((char*)"img/data/item1.png", OSL_IN_RAM, OSL_PF_5551);
 	item2 = oslLoadImageFile((char*)"img/data/item2.png", OSL_IN_RAM, OSL_PF_5551);
@@ -39,7 +36,7 @@ void LoadFiles(const int mode)
 	linkOff = oslLoadImageFile((char*)"img/data/Off.png", OSL_IN_RAM, OSL_PF_5551);
 	battle_selector = oslLoadImageFile((char*)"img/data/bs2.png", OSL_IN_RAM, OSL_PF_5551);
 	pound_mark = oslLoadImageFile((char*)"img/data/pmark.png", OSL_IN_RAM, OSL_PF_5551);
-	    
+    
 	//load all the boxes
 	xp_bar = oslLoadImageFile((char*)"img/data/xp_bar.png", OSL_IN_RAM, OSL_PF_5551);
 	hp_bar = oslLoadImageFile((char*)"img/data/hp_bar.png", OSL_IN_RAM, OSL_PF_5551);
@@ -51,12 +48,7 @@ void LoadFiles(const int mode)
 	DialogBox = oslLoadImageFile((char*)"img/data/DialogBox.png", OSL_IN_RAM, OSL_PF_5551);
 	background_grass = oslLoadImageFile((char*)"img/data/background_grass.png", OSL_IN_RAM, OSL_PF_5551);
 	background_rock = oslLoadImageFile((char*)"img/data/background_rock.png", OSL_IN_RAM, OSL_PF_5551);
-	if(!background_rock || !background_grass || !messageBox || !pointer 
-    || !enemy_dialog_box || !dialog_box || !xp_bar || !battle_selector  || !linkOn 
-    || !linkOff || !mini_rec_selector || !item1 || !item2 || !item3 || !DialogBox 
-    || !battle_pointer || !sb || !hp_bar || !pound_mark)
-	   MISSING_IMG_FILES(1);
-
+     
     //set up the link and linkoff boxes
 	linkOn->x =  405;
     linkOn->y = 6;
@@ -88,13 +80,13 @@ void LoadFiles(const int mode)
 	lieosaur_back = oslLoadImageFile((char*)"img/sonymon/lieosaur_back.png", OSL_IN_RAM, OSL_PF_5551);
 	sturk_front = oslLoadImageFile((char*)"img/sonymon/sturk_front.png", OSL_IN_RAM, OSL_PF_5551);
 	sturk_back = oslLoadImageFile((char*)"img/sonymon/sturk_back.png", OSL_IN_RAM, OSL_PF_5551);
-	if(!arsande_front || !arsande_back || !blumkins_front || !blumkins_back
-    || !myboross_front || !myboross_back || !argrasse_front || !argrasse_back || !norbonkge_back 
-    || !norbonkge_front || !blowhole_back || !blowhole_front || !vandel_front || !vandel_back
-    || !waterserore_front || !waterserore_back || !cemes_front || !cemes_back || !lieosaur_front
-    || !lieosaur_back || !unknown_back || !unknown_front || !sturk_front || !sturk_back)
-	   MISSING_IMG_FILES(5);
-	   
+	blip_front = oslLoadImageFile((char*)"img/sonymon/blip_front.png", OSL_IN_RAM, OSL_PF_5551);
+	blip_back = oslLoadImageFile((char*)"img/sonymon/blip_back.png", OSL_IN_RAM, OSL_PF_5551);
+	cecei_front = oslLoadImageFile((char*)"img/sonymon/cecei_front.png", OSL_IN_RAM, OSL_PF_5551);
+	cecei_back = oslLoadImageFile((char*)"img/sonymon/cecei_back.png", OSL_IN_RAM, OSL_PF_5551);
+	fanz_front = oslLoadImageFile((char*)"img/sonymon/fanz_front.png", OSL_IN_RAM, OSL_PF_5551);
+	fanz_back = oslLoadImageFile((char*)"img/sonymon/fanz_back.png", OSL_IN_RAM, OSL_PF_5551);
+       
     //load all sonymon sounds
     unknown = oslLoadSoundFile((char*)"music/entrances/unknown.bgm", OSL_FMT_NONE); 
     blumkins = oslLoadSoundFile((char*)"music/entrances/blumkins.bgm", OSL_FMT_NONE);
@@ -107,83 +99,60 @@ void LoadFiles(const int mode)
     waterserore = oslLoadSoundFile((char*)"music/entrances/waterserore.bgm", OSL_FMT_NONE);
     vandel = oslLoadSoundFile((char*)"music/entrances/vandel.bgm", OSL_FMT_NONE);
     lieosaur = oslLoadSoundFile((char*)"music/entrances/lieosaur.bgm", OSL_FMT_NONE);
+    blip = oslLoadSoundFile((char*)"music/entrances/blip.bgm", OSL_FMT_NONE);
+    cecei = oslLoadSoundFile((char*)"music/entrances/cecei.bgm", OSL_FMT_NONE);
+    fanz = oslLoadSoundFile((char*)"music/entrances/fanz.bgm", OSL_FMT_NONE);
     enemy12 = oslLoadSoundFile((char*)"music/entrances/enemy12.bgm", OSL_FMT_NONE);
     enemy13 = oslLoadSoundFile((char*)"music/entrances/enemy13.bgm", OSL_FMT_NONE);
     enemy14 = oslLoadSoundFile((char*)"music/entrances/enemy14.bgm", OSL_FMT_NONE);
     enemy15 = oslLoadSoundFile((char*)"music/entrances/enemy15.bgm", OSL_FMT_NONE);
     enemy16 = oslLoadSoundFile((char*)"music/entrances/enemy16.bgm", OSL_FMT_NONE);
-    if(!unknown || !blumkins || !arsande || !myboross || !argrasse  || !norbonkge || !blowess
-	   || !cemes || !waterserore || !vandel || !lieosaur|| !enemy12 || !enemy13 || !enemy14 || !enemy15
-	   || !enemy16)
-       MISSING_IMG_FILES(2);
  
     //load move sounds
-    tackle_sound = oslLoadSoundFile((char*)"music/moves/tackle.bgm", OSL_FMT_NONE);
-    slam_sound = oslLoadSoundFile((char*)"music/moves/slam.bgm", OSL_FMT_NONE);
-    uplink_sound = oslLoadSoundFile((char*)"music/moves/uplink.bgm", OSL_FMT_NONE);
-    pound_sound = oslLoadSoundFile((char*)"music/moves/pound.bgm", OSL_FMT_NONE);
-    jumpKick_sound = oslLoadSoundFile((char*)"music/moves/jumpKick.bgm", OSL_FMT_NONE);
-    contaminate_sound = oslLoadSoundFile((char*)"music/moves/contaminate.bgm", OSL_FMT_NONE);
-    clobber_sound = oslLoadSoundFile((char*) "music/moves/tackle.bgm", OSL_FMT_NONE);
-    steroids_sound = oslLoadSoundFile((char*) "music/moves/steroids.bgm", OSL_FMT_NONE);
-    if(!tackle_sound || !slam_sound || !uplink_sound || !pound_sound || !jumpKick_sound
-    || !contaminate_sound || !clobber_sound || !steroids_sound) 
-        MISSING_IMG_FILES(2);
+    tackle_sound = oslLoadSoundFileBGM((char*)"music/moves/tackle.bgm", OSL_FMT_NONE);
+    slam_sound = oslLoadSoundFileBGM((char*)"music/moves/slam.bgm", OSL_FMT_NONE);
+    uplink_sound = oslLoadSoundFileBGM((char*)"music/moves/uplink.bgm", OSL_FMT_NONE);
+    pound_sound = oslLoadSoundFileBGM((char*)"music/moves/pound.bgm", OSL_FMT_NONE);
+    jumpKick_sound = oslLoadSoundFileBGM((char*)"music/moves/jumpKick.bgm", OSL_FMT_NONE);
+    contaminate_sound = oslLoadSoundFileBGM((char*)"music/moves/contaminate.bgm", OSL_FMT_NONE);
+    clobber_sound = oslLoadSoundFileBGM((char*) "music/moves/tackle.bgm", OSL_FMT_NONE);
+    steroids_sound = oslLoadSoundFileBGM((char*) "music/moves/steroids.bgm", OSL_FMT_NONE);
     
     //load damage taken sounds
-    hurt_low = oslLoadSoundFile((char*)"music/moves/hurt(low).bgm", OSL_FMT_NONE);
-    hurt_medium = oslLoadSoundFile((char*)"music/moves/hurt(medium).bgm", OSL_FMT_NONE);
-    hurt_high = oslLoadSoundFile((char*)"music/moves/hurt(high).bgm", OSL_FMT_NONE);
+    hurt_low = oslLoadSoundFileBGM((char*)"music/moves/hurt(low).bgm", OSL_FMT_NONE);
+    hurt_medium = oslLoadSoundFileBGM((char*)"music/moves/hurt(medium).bgm", OSL_FMT_NONE);
+    hurt_high = oslLoadSoundFileBGM((char*)"music/moves/hurt(high).bgm", OSL_FMT_NONE);
     
     //load battle music
-    wild_battle = oslLoadSoundFile((char*)"music/entrances/wild(loop).bgm", OSL_FMT_NONE);
-    leader_battle = oslLoadSoundFile((char*)"music/entrances/leader(loop).bgm", OSL_FMT_NONE);
-    boss_battle = oslLoadSoundFile((char*)"music/entrances/boss(loop).bgm", OSL_FMT_NONE);
-    wild_intro = oslLoadSoundFile((char*)"music/entrances/wild(intro).bgm", OSL_FMT_NONE);
-    leader_intro = oslLoadSoundFile((char*)"music/entrances/leader(intro).bgm", OSL_FMT_NONE);
-    boss_intro = oslLoadSoundFile((char*)"music/entrances/boss(intro).bgm", OSL_FMT_NONE);
-    if(!wild_battle || !leader_battle || !boss_battle || !wild_intro || !leader_intro
-    || !boss_intro) MISSING_IMG_FILES(2);
+    wild_battle = oslLoadSoundFileBGM((char*)"music/entrances/wild(loop).bgm", OSL_FMT_NONE);
+    leader_battle = oslLoadSoundFileBGM((char*)"music/entrances/leader(loop).bgm", OSL_FMT_NONE);
+    boss_battle = oslLoadSoundFileBGM((char*)"music/entrances/boss(loop).bgm", OSL_FMT_NONE);
+    wild_intro = oslLoadSoundFileBGM((char*)"music/entrances/wild(intro).bgm", OSL_FMT_NONE);
+    leader_intro = oslLoadSoundFileBGM((char*)"music/entrances/leader(intro).bgm", OSL_FMT_NONE);
+    boss_intro = oslLoadSoundFileBGM((char*)"music/entrances/boss(intro).bgm", OSL_FMT_NONE);
     
     //load all other sounds
-    enter  = oslLoadSoundFile((char*)"music/exit.wav", OSL_FMT_NONE);
-    found = oslLoadSoundFile((char*) "music/found.bgm", OSL_FMT_NONE);
-    beep = oslLoadSoundFile((char*)"music/beep.bgm", OSL_FMT_NONE);
-    Selected = oslLoadSoundFile((char*)"music/selected.bgm", OSL_FMT_NONE);
-    gameMusic = oslLoadSoundFile((char*)"music/route/route1.bgm", OSL_FMT_NONE); 
-    center_music = oslLoadSoundFile((char*)"music/building1.bgm", OSL_FMT_NONE);
-    if(!gameMusic || !beep || !hurt_low || !hurt_medium || !hurt_high || !Selected 
-    || !center_music || !found || !enter)
-       MISSING_IMG_FILES(2);
-       
-       
-    verdana = oslLoadFontFile((char*)"fonts/verdana.oft");
-    if(!verdana)
-       MISSING_IMG_FILES(4);
-       
-    main_font = oslLoadFontFile((char*)"fonts/Agency.oft");
-    if(!main_font)
-       MISSING_IMG_FILES(4);
-       
+    enter  = oslLoadSoundFileWAV((char*)"music/exit.wav", OSL_FMT_NONE);
+    found = oslLoadSoundFileBGM((char*) "music/found.bgm", OSL_FMT_NONE);
+    beep = oslLoadSoundFileBGM((char*)"music/beep.bgm", OSL_FMT_NONE);
+    Selected = oslLoadSoundFileBGM((char*)"music/selected.bgm", OSL_FMT_NONE);
+    gameMusic = oslLoadSoundFileBGM((char*)"music/route/route1.bgm", OSL_FMT_NONE); 
+    center_music = oslLoadSoundFileBGM((char*)"music/building1.bgm", OSL_FMT_NONE);
+    
+    //load fonts 
+    verdana = oslLoadFontFile((char*)"fonts/verdana.oft");  
+    main_font = oslLoadFontFile((char*)"fonts/battle.oft"); 
     bold_battle_font = oslLoadFontFile((char*)"fonts/battle(bold).oft");
-    if(!bold_battle_font)
-       MISSING_IMG_FILES(4);
-       
     battle_font = oslLoadFontFile((char*)"fonts/battle.oft");
-    if(!battle_font)
-       MISSING_IMG_FILES(4);
-       
        
     //load the main character
-    zero = oslLoadImageFile((char*)"img/sprites/male4.png", OSL_IN_RAM, OSL_PF_5551);  
-    if(!zero)
-        MISSING_IMG_FILES(1);
+    zero = oslLoadImageFilePNG((char*)"img/sprites/male4.png", OSL_IN_RAM, OSL_PF_5551);  
         
     loadedBefore = 1;
 	
     }
 	
-	if(mode == FR)
+	if(mode == 1)
 	{
 	    if(uplink_center != NULL){oslDeleteImage(uplink_center); uplink_center = NULL;}
 	    if(World_Route_tileset != NULL){oslDeleteImage(World_Route_tileset); World_Route_tileset = NULL;}
@@ -194,16 +163,13 @@ void LoadFiles(const int mode)
 	    if(FR1_tileset != NULL) {oslDeleteImage(FR1_tileset); FR1_tileset = NULL;}
 	
 	    //load map data
-	    uplink_center = oslLoadImageFile((char*)"img/data/maps/uplink_center.png", OSL_IN_RAM, OSL_PF_5551);
-	    World_Route_tileset = oslLoadImageFile((char*)"img/data/maps/world_route_tileset.png", OSL_IN_RAM, OSL_PF_5551);
-	    Route01_tileset = oslLoadImageFile((char*)"img/data/maps/route01_tileset.png", OSL_IN_RAM, OSL_PF_5551);
-	    Route02_tileset = oslLoadImageFile((char*)"img/data/maps/route02_tileset.png", OSL_IN_RAM, OSL_PF_5551);
-	    Route03_tileset = oslLoadImageFile((char*)"img/data/maps/route03_tileset.png", OSL_IN_RAM, OSL_PF_5551);
-        Route04_tileset = oslLoadImageFile((char*)"img/data/maps/route04_tileset.png", OSL_IN_RAM, OSL_PF_5551);
-	    FR1_tileset = oslLoadImageFile((char*) "img/data/maps/FR1_tileset.png", OSL_IN_RAM, OSL_PF_5551);
-        if(!uplink_center || !World_Route_tileset || !Route01_tileset || !Route02_tileset || !Route03_tileset
-	    || !Route04_tileset || !FR1_tileset)
-	        MISSING_IMG_FILES(5);
+	    uplink_center = oslLoadImageFilePNG((char*)"img/data/maps/uplink_center.png", OSL_IN_RAM, OSL_PF_5551);
+	    World_Route_tileset = oslLoadImageFilePNG((char*)"img/data/maps/world_route_tileset.png", OSL_IN_RAM, OSL_PF_5551);
+	    Route01_tileset = oslLoadImageFilePNG((char*)"img/data/maps/route01_tileset.png", OSL_IN_RAM, OSL_PF_5551);
+	    Route02_tileset = oslLoadImageFilePNG((char*)"img/data/maps/route02_tileset.png", OSL_IN_RAM, OSL_PF_5551);
+	    Route03_tileset = oslLoadImageFilePNG((char*)"img/data/maps/route03_tileset.png", OSL_IN_RAM, OSL_PF_5551);
+        Route04_tileset = oslLoadImageFilePNG((char*)"img/data/maps/route04_tileset.png", OSL_IN_RAM, OSL_PF_5551);
+	    FR1_tileset = oslLoadImageFilePNG((char*) "img/data/maps/FR1_tileset.png", OSL_IN_RAM, OSL_PF_5551);
 	
 	    FR1 = oslCreateMap(
 		   FR1_tileset,						//Tileset
@@ -250,16 +216,14 @@ void LoadFiles(const int mode)
 		loadedFRBefore = 1;
     }
 	
-	if(mode == SM)
+	if(mode == 0)
 	{
         if(uplink_center != NULL){oslDeleteImage(uplink_center); uplink_center = NULL;}
         if(Secruit_Town_tileset != NULL){oslDeleteImage(Secruit_Town_tileset); Secruit_Town_tileset = NULL;}
     
 	    //load map data
-	    uplink_center = oslLoadImageFile((char*)"img/data/maps/uplink_center.png", OSL_IN_RAM, OSL_PF_5551);
-	    Secruit_Town_tileset = oslLoadImageFile((char*)"img/data/maps/Secruit Town tileset.png", OSL_IN_RAM, OSL_PF_5551);
-	    if(!uplink_center || !Secruit_Town_tileset)
-	        MISSING_IMG_FILES(5);
+	    uplink_center = oslLoadImageFilePNG((char*)"img/data/maps/uplink_center.png", OSL_IN_RAM, OSL_PF_5551);
+	    Secruit_Town_tileset = oslLoadImageFilePNG((char*)"img/data/maps/Secruit Town tileset.png", OSL_IN_RAM, OSL_PF_5551);
 	
 	
 	    //create all the maps
@@ -275,8 +239,6 @@ void LoadFiles(const int mode)
     
     //free RAM
     oslDeleteImage(loading_screen);
-    
-    oslDisableTransparentColor();
     
     return;
 }
@@ -731,19 +693,25 @@ void ResetStats( void )
      norbonkge_front->y = 120;
      argrasse_front->y = 120;
      sturk_front->y = 120;
+     blip_front->y = 120;
+     cecei_front->y = 120;
+     fanz_front->y = 120;
      
-     vandel_front->x = 235;
-     blowhole_front->x = 235;
-     blowhole_front->x = 235;
-     waterserore_front->x = 235;
-     arsande_front->x = 235;
-     lieosaur_front->x = 235;
-     cemes_front->x = 235;
-     myboross_front->x = 235;
-     blumkins_front->x = 235;
-     norbonkge_front->x = 235;
-     argrasse_front->x = 235;
-     sturk_front->x = 235;
+     vandel_front->x = 230;
+     blowhole_front->x = 230;
+     blowhole_front->x = 230;
+     waterserore_front->x = 230;
+     arsande_front->x = 230;
+     lieosaur_front->x = 230;
+     cemes_front->x = 230;
+     myboross_front->x = 230;
+     blumkins_front->x = 230;
+     norbonkge_front->x = 230;
+     argrasse_front->x = 230;
+     sturk_front->x = 230;
+     blip_front->x = 230;
+     cecei_front->x = 230;
+     fanz_front->x = 230;
      
     //fix SonymonSeen[] array
     unsigned i;
@@ -765,11 +733,6 @@ void ResetStats( void )
     //sonymon_num = 0; //unequip any sonymon
     //currentSonymon = 0;	
     //ASSIGN_SONYMON(1, 1, 2);
-    
-    player.collisionLeft = false;
-    player.collisionRight = false;
-    player.collisionUp = false;
-    player.collisionDown = false;
     
     return;
 }
@@ -882,7 +845,7 @@ int Sonymon(const char * playerName, const int load)
     //}
     
     //load files
-    LoadFiles(2);
+    LoadFiles(0);
     
     //wipe all sonymon memory or stats CLEAN!!!
     ResetStats();
@@ -903,7 +866,8 @@ int Sonymon(const char * playerName, const int load)
     
     //welcome the player ;)
     if(gameMusic != NULL){oslStopSound(gameMusic); oslDeleteSound(gameMusic); gameMusic = NULL;}
-    gameMusic = oslLoadSoundFile((char*)"music/intro.bgm", OSL_FMT_NONE); {if(!gameMusic) MISSING_IMG_FILES(2);}
+    gameMusic = oslLoadSoundFileBGM((char*)"music/intro.bgm", OSL_FMT_NONE); 
+	if(!gameMusic) MISSING_IMG_FILES(2);
     
     //start sound loop
     oslPlaySound(gameMusic, 1); oslSetSoundLoop(gameMusic, 1);
@@ -914,7 +878,8 @@ int Sonymon(const char * playerName, const int load)
     messagebox.DisplayBox("Don't forget to check for updates on this homebrew weekly :D", 1);
     
     oslStopSound(gameMusic); oslDeleteSound(gameMusic); gameMusic = NULL;
-    gameMusic = oslLoadSoundFile((char*)"music/route/route3.bgm", OSL_FMT_NONE); {if(!gameMusic) MISSING_IMG_FILES(2);}
+    gameMusic = oslLoadSoundFile((char*)"music/route/route3.bgm", OSL_FMT_NONE); 
+    if(!gameMusic) MISSING_IMG_FILES(2);
     oslPlaySound(gameMusic, 1); oslSetSoundLoop(gameMusic, 1); //start sound loop
     
     for(;;)
@@ -928,7 +893,7 @@ int Sonymon(const char * playerName, const int load)
        oslSyncFrame();
        
        //handle all special events and move the story along
-	   EVENT_HANDLER(Secruit_Town);
+	   //EVENT_HANDLER(Secruit_Town);
 	   
        if(EXIT_GAME)break;     
     }
@@ -945,7 +910,7 @@ int Sonymon(const char * playerName, const int load)
 void HANDLE_STORY(const char * playerName, OSL_MAP * level)
 {
    if(level == NULL) oslFatalError("ERROR! Map level is equal to NULL CANNOT CONTINUE!!!"); 
-   if(Appeared){ENTRY_EFFECT(level, area); Appeared = 0;}
+	if(Appeared){ENTRY_EFFECT(level, area); Appeared = 0;}
    oslClearScreen(BLACK);
    oslDrawMap(level);
    
@@ -979,10 +944,7 @@ void HANDLE_STORY(const char * playerName, OSL_MAP * level)
           
 int SonymonFreeRoam(const char * playerName, const int load)
 {   
-	oslInit(0);
-	oslInitGfx(OSL_PF_8888, 1);
-    
-    if(playerName == NULL) playerName = "Ken";
+    if(playerName == NULL)playerName = "Ken";
     //load the game if the user selected "continue game"
     //if(load){
              //int success = 0;
@@ -993,13 +955,7 @@ int SonymonFreeRoam(const char * playerName, const int load)
     //load game files
 	LoadFiles(1);
 	
-	//Place player at the center of the screen
-	zero->x = 240; 
-    zero->y = 121; 
-    sprite_march = 0; 
-    oslSetImageTileSize(zero,0,DOWN,23,32);
-    
-    //reset all map points
+	//reset all map points
     World_Route->scrollX = 0;
     World_Route->scrollY = 0;
     Route01->scrollX = 0;
@@ -1011,20 +967,29 @@ int SonymonFreeRoam(const char * playerName, const int load)
     FR1->scrollX = 0;
     FR1->scrollY = 0;
     
+	//Place player at the center of the screen
+	zero->x = 240; 
+    zero->y = 121; 
+    FR1->scrollX = -2005;
+    FR1->scrollY = 1181;  
+    oslSetImageTileSize(zero,0,DOWN,23,32);
+    
     if(gameMusic != NULL){oslStopSound(gameMusic); oslDeleteSound(gameMusic); gameMusic = NULL;}
-    gameMusic = oslLoadSoundFile((char*)"music/route/dawn.bgm", OSL_FMT_NONE); {if(!gameMusic) MISSING_IMG_FILES(2);}
+    gameMusic = oslLoadSoundFileBGM((char*)"music/route/dawn.bgm", OSL_FMT_NONE);
     oslPlaySound(gameMusic, 1); oslSetSoundLoop(gameMusic, 1);
     
      //wipe all sonymon memory or stats CLEAN!!!
      ResetStats();
     
-    //choose a starting sonymon
-     int choice = 1;
+     //choose a starting sonymon
+     int choice = 2;
      const char * name = "???";
      
      OSL_IMAGE * selection;
-     selection = oslLoadImageFile((char*)"img/data/choose.png", OSL_IN_RAM, OSL_PF_5551);
+     selection = oslLoadImageFilePNG((char*)"img/data/choose.png", OSL_IN_RAM, OSL_PF_5551);
      if(!selection) MISSING_IMG_FILES(1);
+     
+     oslSetFont(main_font);
      
      while(1)
      { 
@@ -1032,21 +997,25 @@ int SonymonFreeRoam(const char * playerName, const int load)
         oslClearScreen(BLACK);
         oslDrawImage(selection);
         
-        if(choice == 1)       {oslDrawImageSimple(waterserore_front); name = "waterserore";  sonymon1_id = 9;}
-        else if(choice == 2)  {oslDrawImageSimple(vandel_front);      name = "vandel";       sonymon1_id = 10;}
-        else if(choice == 3)  {oslDrawImageSimple(blowhole_front);    name = "blowess";      sonymon1_id = 7;}
-        else if(choice == 4)  {oslDrawImageSimple(argrasse_front);    name = "argrasse";     sonymon1_id = 5;}
-        else if(choice == 5)  {oslDrawImageSimple(norbonkge_front);   name = "norbonkge";    sonymon1_id = 6;}
-        else if(choice == 6)  {oslDrawImageSimple(blumkins_front);    name = "blumkins";     sonymon1_id = 2;}
-        else if(choice == 7)  {oslDrawImageSimple(arsande_front);     name = "arsande";      sonymon1_id = 3;}
-        else if(choice == 8)  {oslDrawImageSimple(myboross_front);    name = "myboross";     sonymon1_id = 4;}
-        else if(choice == 9)  {oslDrawImageSimple(lieosaur_front);    name = "lieosaur";     sonymon1_id = 11;}
-        else if(choice == 10) {oslDrawImageSimple(cemes_front);       name = "cemes";        sonymon1_id = 8;}
-        else if(choice == 11) {oslDrawImageSimple(sturk_front);       name = "sturk";        sonymon1_id = 12;}
+        //I skip 1 because that is the id of "unknown" and it makes more sense :)
+        
+             if(choice == 2)  {oslDrawImageSimple(blumkins_front);    name = "blumdins";     sonymon1_id = 2;}
+        else if(choice == 3)  {oslDrawImageSimple(arsande_front);     name = "arsande";      sonymon1_id = 3;}
+        else if(choice == 4)  {oslDrawImageSimple(myboross_front);    name = "myboross";     sonymon1_id = 4;}
+        else if(choice == 5)  {oslDrawImageSimple(argrasse_front);    name = "argrasse";     sonymon1_id = 5;}
+        else if(choice == 6)  {oslDrawImageSimple(norbonkge_front);   name = "norbonkge";    sonymon1_id = 6;}
+        else if(choice == 7)  {oslDrawImageSimple(blowhole_front);    name = "blowess";      sonymon1_id = 7;}
+        else if(choice == 8)  {oslDrawImageSimple(cemes_front);       name = "cemes";        sonymon1_id = 8;}
+        else if(choice == 9)  {oslDrawImageSimple(waterserore_front); name = "waterserore";  sonymon1_id = 9;}
+        else if(choice == 10) {oslDrawImageSimple(vandel_front);      name = "vandel";       sonymon1_id = 10;}
+        else if(choice == 11) {oslDrawImageSimple(lieosaur_front);    name = "lieosaur";     sonymon1_id = 11;}
+        else if(choice == 12) {oslDrawImageSimple(sturk_front);       name = "sturk";        sonymon1_id = 12;}
+        else if(choice == 13) {oslDrawImageSimple(blip_front);        name = "blip";         sonymon1_id = 13;}
+        else if(choice == 14) {oslDrawImageSimple(cecei_front);       name = "cecei";        sonymon1_id = 14;}
+        else if(choice == 15) {oslDrawImageSimple(fanz_front);        name = "fanz";         sonymon1_id = 15;}
         
         oslSetTextColor(WHITE);
-        oslSetBkColor(RGBA(0,0,0,0));
-        oslSetFont(main_font);
+        oslSetBkColor(BLACK);
         oslPrintf_xy(5, 5, "Choose a starting Sonymon");
         oslPrintf_xy(5, 160, "%s Lv5", name); 
         
@@ -1056,17 +1025,18 @@ int SonymonFreeRoam(const char * playerName, const int load)
         oslReadKeys();
         
         //assign that sonymon
-        if(osl_keys->pressed.cross || osl_keys->pressed.start){
+        if(osl_keys->pressed.cross || osl_keys->pressed.start)
+        {
             sonymon_num = 1; //equip first sonymon
             sonymon1_alive = 1;
             currentSonymon = 1;	
             ASSIGN_SONYMON(1, sonymon1_id, 5);
             break;
         }
-        else if(osl_keys->pressed.left && choice > 1){choice--; oslPlaySound(beep, 2);}
-        else if(osl_keys->pressed.right && choice < 11){choice++; oslPlaySound(beep, 2);}
+        else if(osl_keys->pressed.left && choice > 2){choice--; oslPlaySound(beep, 2);}
+        else if(osl_keys->pressed.right && choice < 15){choice++; oslPlaySound(beep, 2);}
         
-    }
+	 }
     
     quitGame = 0;
     
@@ -1078,9 +1048,7 @@ int SonymonFreeRoam(const char * playerName, const int load)
     inventory[4] = 99;
     inventory[5] = 98;
     
-    if(TOP_DIRT == FR1_map[0][0]) oslWarning("TOLD YOU SO!!");
-    
-    for(;;)
+    while(quitGame == 0)
     { 
         oslStartDrawing();
         
@@ -1089,12 +1057,10 @@ int SonymonFreeRoam(const char * playerName, const int load)
         
         oslEndDrawing();
         oslSyncFrame();
-        
-        if(quitGame){quitGame = 0;  break;}
     }
-   
+
    //fix sig font
-   oslSetFont(verdana); oslSetTextColor(BLACK); oslSetBkColor(RGBA(0,0,0,0));
+   oslSetFont(verdana); oslSetTextColor(BLACK); oslSetBkColor(BLACK);
    
    //end any sound
    oslStopSound(center_music); oslStopSound(gameMusic);
@@ -1104,38 +1070,14 @@ int SonymonFreeRoam(const char * playerName, const int load)
 
 void HANDLE(const char * playerName, OSL_MAP * level)
 {
-   if(!level) oslFatalError("ERROR! Map level is equal to NULL CANNOT CONTINUE!!!"); 
+   if(!level) oslFatalError("ERROR! Map is equal to NULL CANNOT CONTINUE!!!"); 
    if(Appeared){ENTRY_EFFECT(level, area); Appeared = 0;}
    oslClearScreen(BLACK);
    oslDrawMap(level);
    
-   if(zero)oslDrawImage(zero);
-   else oslFatalError("ERROR! SOMEHOW PLAYER IMAGE IS NOW NULL! CANNOT CONTINUE!!");
-   
+   oslDrawImage(zero);
    player.DrawInfo(Toggle1, 2);
    player.ReadKeys(playerName, level);
-   if (zero->x <= 1)   zero->x = 1;
-   if (zero->y <= 1)   zero->y = 1;
-   if (zero->x >= 460) zero->x = 460;
-   if (zero->y >= 239) zero->y = 239;
-   zeroMapX = level->scrollX;
-   zeroMapY = level->scrollY;
-   
-   //check for tile collisions....
-   player.tile = map.GetTile(level, (level->scrollX / level->tileX), (level->scrollY / level->tileY));
-   
-   player.collisionDown = player.Check();
-   if(player.collisionDown) level->scrollY--;
-   
-   player.collisionUp = player.Check();
-   if(player.collisionUp) level->scrollY++;
-   
-   player.collisionRight = player.Check();
-   if(player.collisionRight) level->scrollX--;
-   
-   player.collisionLeft = player.Check();
-   if(player.collisionLeft) level->scrollX++;
-   
    
    if(InsideCenter)
    {

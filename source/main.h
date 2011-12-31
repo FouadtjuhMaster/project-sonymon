@@ -13,8 +13,8 @@
 /*Wait; will pause the screen for 3 seconds*/
 #define Wait sceKernelDelayThread(3000000);
 
-/*briefWait; will pause the screen for 0.5 seconds*/
-#define briefWait sceKernelDelayThread(500000);
+/*Wait; will pause the screen for 0.5 seconds*/
+#define hWait sceKernelDelayThread(500000);
 
 #define min(x, y) (((x)>(y))?(y):(x))
 #define WIDTH 480
@@ -29,6 +29,10 @@
 #define NUM_INPUT_FIELDS	(1)
 #define TEXT_LENGTH			(16)
 #define MAX_LIGHTS 6
+
+PSP_MODULE_INFO("Sonymon", 0, 1, 1);
+PSP_MAIN_THREAD_ATTR(THREAD_ATTR_USER | THREAD_ATTR_VFPU);
+PSP_HEAP_SIZE_KB(-2024);
 
 /*declare our pointers toward our sound effects (wav files and bgm files)*/
 OSL_SOUND *menu_music, *select, *start_music;
@@ -45,7 +49,6 @@ unsigned gameSelect = 0;
 char string[256];
 char button[12];
 
-static int done = 0;
 static unsigned int __attribute__((aligned(16))) list[262144];
 
 struct Vertex
@@ -136,7 +139,7 @@ void showError( void );
 
 int logoAffiche();
 
-char getInput();
+const char * getInput();
 
 static void SetupGu();
 
@@ -150,4 +153,4 @@ static void ShowMessageDialog(const char *message, int enableYesno);
 
 int main(int argc, char* argv[]);
 
-
+int initOSLib();

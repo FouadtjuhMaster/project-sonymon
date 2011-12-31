@@ -1,47 +1,39 @@
 #include <oslib/oslib.h>
 
-#include <pspkernel.h>
-#include <pspdebug.h> 
-#include <pspdisplay.h>
-#include <pspctrl.h>
-#include <stdio.h>
-#include <time.h> 
-#include <stdlib.h>
-#include <pspkernel.h>
-#include <pspgu.h>
-#include <pspgum.h>
-#include <pspdisplay.h>
-#include <string.h>
-#include <math.h>
+/*Wait; will pause the screen for 3 seconds*/
+#define Wait sceKernelDelayThread(3000000);
 
-//battle variables
+/*Wait; will pause the screen for 0.5 seconds*/
+#define hWait sceKernelDelayThread(500000);
+
+/* battle macros */
 #define MAX_SHIFT 130
 #define MIN_SHIFT 100
 #define HIGHLIGHTED 1
 #define IGNORED 0
 
-//sprite positions
+/* sprite macros */
 #define FACING_RIGHT 2
 #define FACING_LEFT 1
 #define FACING_UP 3
 #define FACING_DOWN 4
 
-//game modes
+/* game modes */
 #define STORY 1
 #define FREE_ROAM 2
 
-#define OVER_EXPOSURE 150
+/* sprite positions */
 #define DOWN 0
 #define UP 34
 #define LEFT 67
 #define RIGHT 99
 
-//battle variables
+/* battle macros */
 #define SUPER_EFFECTIVE 2
-#define NOTHING 1
 #define NOT_EFFECTIVE 0
+#define NOTHING 1
 
-//map variables
+/* map macros */
 #define SECRUIT_TOWN -99
 #define UPLINK_CENTER -98
 #define WORLD_ROUTE -97
@@ -51,11 +43,11 @@
 #define fromRoute04 4
 #define fromWorldRoute 0
 #define fromUnknown -1
-int senderID = fromUnknown;
 
-//just to have :D
+/* other macros */
 #define NO 9032
 #define YES 8923
+#define OVER_EXPOSURE 150
 
 //story mode maps
 #include "levels/Secruit Town.h"
@@ -68,130 +60,145 @@ int senderID = fromUnknown;
 #include "levels/route03.h"
 #include "levels/route04.h"
 
-/*Wait; will pause the screen for 3 seconds*/
-#define Wait sceKernelDelayThread(3000000);
-
-/*Wait; will pause the screen for 0.5 seconds*/
-#define hWait sceKernelDelayThread(500000);
+/* pointers to the maps themselves */
+OSL_MAP *Current_Map, *Level1, *Level2, *World_Route, *Route01, *Route02, *Route03, *Route04,
+*Secruit_Town, *FR1;
 
 /*Level tileset pointers*/
 OSL_IMAGE *World_Route_tileset, *Route01_tileset, *Route02_tileset, 
 *Route03_tileset, *Route04_tileset, *Secruit_Town_tileset, *FR1_tileset;
 
-/*pointers to the levels themselves*/
-OSL_MAP *Current_Map, *Level1, *Level2, *World_Route, *Route01, *Route02, *Route03, *Route04,
-*Secruit_Town, *FR1;
-
-/*declare our pointers toward our sound effects (wav files and bgm files)*/
-OSL_SOUND *unknown, *coin, *wild_battle, *leader_battle, *boss_battle, *wild_intro, *leader_intro,
-*gameMusic, *beep, *hurt_low, *hurt_medium, *hurt_high, *tackle_sound, *slam_sound, *uplink_sound,
-*pound_sound, *boss_intro, *found, *enter, *jumpKick_sound, *contaminate_sound, *clobber_sound, *steroids_sound;
-
-//declare all types of enemysonymon
-OSL_IMAGE *blumkins_back, *blumkins_front, *arsande_back, *arsande_front,
-*argrasse_front, *argrasse_back, *myboross_back, *myboross_front, *norbonkge_front, *norbonkge_back,
-*blowhole_front, *blowhole_back, *lieosaur_front, *lieosaur_back, *cemes_front, *cemes_back, *waterserore_front,
-*waterserore_back, *vandel_front, *vandel_back, *unknown_back, *unknown_front, *sturk_front, *sturk_back;
-
-//pointers toward player sonymon
-OSL_IMAGE *sonymon_pic1, *sonymon_pic2, *sonymon_pic3;
-
-//declare sonyon entrance pointers
-OSL_SOUND *blumkins, *arsande, *myboross, *argrasse, *norbonkge, *blowess, *cemes, *waterserore, *vandel, 
-*lieosaur, *enemy12, *enemy13, *enemy14, *enemy15, *enemy16, *Selected, *center_music, *sturk;
-
 //game images
 OSL_IMAGE *zero, *background_grass, *background_rock, *messageBox, *pointer, *battle_selector, 
 *mini_rec_selector, *DialogBox, *sb, *temp1, *temp2, *temp3, *pound_mark, *dialog_box, 
 *enemy_dialog_box, *xp_bar, *linkOff, *linkOn, *item1, *item2, *item3, *uplink_center, 
-*fightBox, *battle_pointer, *hp_bar, *enemy1, *enemy2, *enemy3;
+*fightBox, *battle_pointer, *hp_bar, *enemy1, *enemy2, *enemy3, *sonymon_pic1, *sonymon_pic2,
+*sonymon_pic3;
+
+/*declare our pointers toward our sound effects (wav files and bgm files)*/
+OSL_SOUND *unknown, *coin, *wild_battle, *leader_battle, *boss_battle, *wild_intro, *leader_intro,
+*gameMusic, *hurt_low, *hurt_medium, *hurt_high, *tackle_sound, *slam_sound, *uplink_sound, *beep,
+*pound_sound, *boss_intro, *found, *enter, *jumpKick_sound, *contaminate_sound, *clobber_sound, *steroids_sound;
 
 //declare font pointers
 OSL_FONT *verdana, *default_font, *main_font, *battle_font, *bold_battle_font;
 
+/*************************** sonymon images and sounds *******************************************/
+OSL_IMAGE *blumkins_back, *blumkins_front, *arsande_back, *arsande_front,
+*argrasse_front, *argrasse_back, *myboross_back, *myboross_front, *norbonkge_front, *norbonkge_back,
+*blowhole_front, *blowhole_back, *lieosaur_front, *lieosaur_back, *cemes_front, *cemes_back, *waterserore_front,
+*waterserore_back, *vandel_front, *vandel_back, *unknown_back, *unknown_front, *sturk_front, *sturk_back,
+*blip_front, *blip_back, *cecei_front, *cecei_back, *fanz_front, *fanz_back;
+
+OSL_SOUND *blumkins, *arsande, *myboross, *argrasse, *norbonkge, *blowess, *cemes, *waterserore, *vandel, 
+*lieosaur, *enemy12, *enemy13, *enemy14, *enemy15, *enemy16, *Selected, *center_music, *sturk, *cecei,
+*blip, *fanz;
+
 enum colors 
 {
-        RED          = 0xFF0000FF,
-		GREEN        = 0xFF00FF00,
-		BLUE         = 0xFFFF0000,
-		WHITE        = 0xFFFFFFFF,
-		LIGHTGRAY    = 0xFFBFBFBF,
-		GRAY         = 0xFF7F7F7F,
-		DARKGRAY     = 0xFF3F3F3F,		
-		BLACK        = 0xFF000000,
-		AZURE        = 0xFFFF7F00,
-        VIOLET       = 0xFFFF007F,
-        ROSE         = 0xFF7F00FF,
-        ORANGE       = 0xFF007FFF,
-        CHARTREUSE   = 0xFF00FF7F,
-        SPRING_GREEN = 0xFF7FFF00,
-        CYAN         = 0xFFFFFF00,
-        MAGENTA      = 0xFFFF00FF,
-        YELLOW       = 0xFF00FFFF,
+    RED          = 0xFF0000FF,
+	GREEN        = 0xFF00FF00,
+	BLUE         = 0xFFFF0000,
+	WHITE        = 0xFFFFFFFF,
+	LIGHTGRAY    = 0xFFBFBFBF,
+	GRAY         = 0xFF7F7F7F,
+	DARKGRAY     = 0xFF3F3F3F,		
+	BLACK        = 0xFF000000,
+	AZURE        = 0xFFFF7F00,
+    VIOLET       = 0xFFFF007F,
+    ROSE         = 0xFF7F00FF,
+    ORANGE       = 0xFF007FFF,
+    CHARTREUSE   = 0xFF00FF7F,
+    SPRING_GREEN = 0xFF7FFF00,
+    CYAN         = 0xFFFFFF00,
+    MAGENTA      = 0xFFFF00FF,
+    YELLOW       = 0xFF00FFFF,
 };
 
-enum types 
+enum types
 {
-     UNDEFINED = 0,
-     STATIC = 1,
-     ROCK = 2,
-     GRASS = 3,
-     FLYING = 4,
-     ULTRAVIOLET = 5,
-     NORMAL = 6,
-     WATER = 7,
-     FIRE = 8,
+  UNDEFINED = 0,
+  STATIC = 1,
+  ROCK = 2,
+  GRASS = 3,
+  FLYING = 4,
+  ULTRAVIOLET = 5,
+  NORMAL = 6,
+  WATER = 7,
+  FIRE = 8,
 };
 
 enum moves 
 {
-     erased = 0,
-     empty = 0,
-     tackle = 1,
-     slam = 2,
-     pound = 3,
-     jumpKick = 4,
-     waterGun = 5,
-     blaze = 6,
-     steroids = 7,
-     uplink = 8,
-     contaminate = 9,
-     leech = 10,
-     gust = 11,
-     clobber = 12,
+  erased = 0,
+  empty = 0,
+  tackle = 1,
+  slam = 2,
+  pound = 3,
+  jumpKick = 4,
+  waterGun = 5,
+  blaze = 6,
+  steroids = 7,
+  uplink = 8,
+  contaminate = 9,
+  leech = 10,
+  gust = 11,
+  clobber = 12,
 };
 
 enum items
 {
-     DEFAULT = 0,
-     potion = 1,
-     super_potion = 2,
-     hyper_potion = 3,
-     wonder_drug = 4,
-     MP_boost = 99,
-     LUJ = 98,
-
+  DEFAULT = 0,
+  potion = 1,
+  super_potion = 2,
+  hyper_potion = 3,
+  wonder_drug = 4,
+  MP_boost = 99,
+  LUJ = 98,
 };
 
-//define inventory variables
-int inventory[200];
+//battle option variables
+typedef int OPTION;
+OPTION FIGHT = 0;
+OPTION BAG = 0;
+OPTION SNYMN = 0;
+OPTION FLEE = 0;
+OPTION FIRST_MOVE = 0;
+OPTION SECOND_MOVE = 0;
+OPTION THIRD_MOVE = 0;
+OPTION FOURTH_MOVE = 0;
+
+/* types of tiles (based off of FR1.h */
+const int TOP_DIRT                = FR1_map[0][0];
+const int DIRT                    = FR1_map[0][1];
+const int STONE_WALL              = FR1_map[0][5];
+const int STONE_WALL_OVERHEAD     = FR1_map[15][4];
+const int STONE_WALL_OVERHEAD_TOP = FR1_map[50][0];
+const int GRAY_ROAD               = FR1_map[2][6];
+const int GRAY_ROAD_TOP           = FR1_map[2][6];
+
+
+/* sonymon globals */
+int SonymonSeen[99];  //counts all the sonymon the player has seen
+int SonymonOwned[99]; //counts all the sonymon the player owns
+long inventory[200];  //inventory for the player... holds 200 items
+int sonymon_num = 0;  //a counter for which soymon is active
+int numofSonymon = 0;
+int currentSonymon = 0;
+const char * currentSonymonName;
+const char * RecordName;
 
 //electromagnetic spectrum variables
 const char * Hz = "0Hz";
 const char * radiation = "Visible radiation (light)"; 
 int exposure = 0;
 int manipExposure = 0;
-//array value should be the maximum amount of sonymon created
-int seen[30];
-const char * seenSonymon[30];
 
-int area;
 int loadedStoryBefore = 0;
 int loadedFRBefore = 0;
 
-//game variables
+/* game variables */
 const char * object;
-int playerParty;
 int level = 0;
 int turn = 0;
 int ran = 0;
@@ -218,22 +225,10 @@ int EFFECT = 1;
 int ENEMY_EFFECT = 1;
 int swait = 0;
 int EXIT_GAME = 0;
-
-//story mode specific variables
 int introPassed = 0;
+int area = 0;
 
-//battle option variables
-typedef int OPTION;
-OPTION FIGHT = 0;
-OPTION BAG = 0;
-OPTION SNYMN = 0;
-OPTION FLEE = 0;
-OPTION FIRST_MOVE = 0;
-OPTION SECOND_MOVE = 0;
-OPTION THIRD_MOVE = 0;
-OPTION FOURTH_MOVE = 0;
-
-//enemy variables
+/* enemy variables */
 int enemyAlive = 0;
 int enemyAlive1;
 int enemyAlive2;
@@ -246,7 +241,7 @@ int enemyUsedMove = empty;
 const char * enemyName;
 const char * enemyMoveName;
 
-//player variables
+/* player variables */
 float money = 0.00f;
 int speed = 2;
 int sprite_position;
@@ -260,17 +255,6 @@ float zeroMapX;
 float zeroMapY;
 int zeroStoppedX = 0;
 int zeroStoppedY = 0;
-
-//sonymon variables
-int SonymonSeen[99]; //counts all the sonymon the player has seen
-int SonymonOwned[99]; //counts all the sonymon the player owns
-int TotalSeen = 0; //well I am pretty sure you can guess
-int TotalOwned = 0; //this one too :D
-int numofSonymon = 0;
-int sonymon_num = 0;  //a counter for which soymon is active
-int currentSonymon = 0;
-const char * currentSonymonName;
-const char * RecordName;
 
 //sonymon slot 1
 const char * sonymon1_name;
@@ -347,7 +331,7 @@ int OUTLINE_ENEMY_MAX = 0;
 int selecting = 0;
 int selectMoves = 0;
 
-//item variables
+/* item variables */
 int itemSwap = 1;
 int itemSwapManip = 0;
 int itemSpawned = 0;
@@ -367,7 +351,7 @@ int SAVEGAME(int sonymon1ID, int sonymon1LEVEL, int sonymon2ID, int sonymon2LEVE
 
 int LOADGAME(int &sonymon1ID, int &sonymon1LEVEL, int &sonymon2ID, int &sonymon2LEVEL, int &sonymon3ID, int &sonymon3LEVEL);
 
-
+int initOSLib();
 
 //battle functions
 int UPDATE(int &enemyHealth, const int enemyDefense, const int enemyRealType, OSL_IMAGE * enemy, OSL_IMAGE * background);

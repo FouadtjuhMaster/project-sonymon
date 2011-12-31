@@ -1,32 +1,36 @@
 #include "main.h"
 
-PSP_MODULE_INFO("Sonymon", 0, 1, 1);
-PSP_MAIN_THREAD_ATTR(THREAD_ATTR_USER | THREAD_ATTR_VFPU);
-PSP_HEAP_SIZE_KB(-1024);
+int initOSLib()
+{
+    oslInit(0);
+    oslInitGfx(OSL_PF_8888, 1);
+    oslInitAudio();
+    oslSetQuitOnLoadFailure(1);
+    oslSetKeyAutorepeatInit(20);
+    oslSetKeyAutorepeatInterval(5);
+    
+    return 0;
+}
 
 int main(int argc, char* argv[])
 {  
-    oslInit(0);
-	oslInitGfx(OSL_PF_8888, 1);
+	initOSLib();
+	
 	oslSetTransparentColor(RGB(255,0,255));
     
-    menu_music = oslLoadSoundFile((char*)"music/winterbliss.bgm", OSL_FMT_NONE);
-    select = oslLoadSoundFile((char*)"music/selected.bgm", OSL_FMT_NONE);
-	if(!select || !menu_music)
-	   MISSING_IMG_FILES(2);
+    menu_music = oslLoadSoundFileBGM((char*)"music/winterbliss.bgm", OSL_FMT_NONE);
+    select = oslLoadSoundFileBGM((char*)"music/selected.bgm", OSL_FMT_NONE);
 	
-    menu_background = oslLoadImageFile((char*)"img/data/menu_bk.png", OSL_IN_RAM, OSL_PF_5551);	
-    menu_background2 = oslLoadImageFile((char*)"img/data/menu_bk2.png", OSL_IN_RAM, OSL_PF_5551);
-    menu_background3 = oslLoadImageFile((char*)"img/data/menu_bk3.png", OSL_IN_RAM, OSL_PF_5551);
-    rec_selector = oslLoadImageFile((char*)"img/data/rec-selector.png", OSL_IN_RAM, OSL_PF_5551);
-    if(!menu_background || !rec_selector || !menu_background2 || !menu_background3)
-	    MISSING_IMG_FILES(1);
+    menu_background = oslLoadImageFilePNG((char*)"img/data/menu_bk.png", OSL_IN_RAM, OSL_PF_5551);	
+    menu_background2 = oslLoadImageFilePNG((char*)"img/data/menu_bk2.png", OSL_IN_RAM, OSL_PF_5551);
+    menu_background3 = oslLoadImageFilePNG((char*)"img/data/menu_bk3.png", OSL_IN_RAM, OSL_PF_5551);
+    rec_selector = oslLoadImageFilePNG((char*)"img/data/rec-selector.png", OSL_IN_RAM, OSL_PF_5551);
       
     //Show the logos
-    logoAffiche();
+    //logoAffiche();
 	VAUGHN_LOGO();	
     
-    oslPlaySound(menu_music, 0); 
+    oslPlaySound(menu_music, 1); 
     oslSetSoundLoop(menu_music, 1);
 	
     for(;;)
@@ -67,7 +71,7 @@ int main(int argc, char* argv[])
           oslDrawImage(rec_selector);
           oslSetBkColor(RGBA(0,0,0,0));
           oslSetTextColor(0xFF000000);
-          oslPrintf_xy(8, 210, "Sonymon v0.1 made by V@ughn");
+          oslPrintf_xy(3, 212, "Sonymon v0.1");
 		  oslEndDrawing();
 		  oslSyncFrame();		
        }
@@ -78,26 +82,29 @@ int main(int argc, char* argv[])
          showGameOptions();
          
          if(gameSelect == 1)
-         {
-             getInput();
+         {        
+             oslStopSound(menu_music); oslDeleteSound(menu_music);
              
-             Sonymon(playerName, 0); //story mode
+             playerName = getInput();
              
-             oslPlaySound(menu_music, 0); oslSetSoundLoop(menu_music, 1);
+             Sonymon(playerName, 0); //story mod
          }
          else if(gameSelect == 2)
-         {
-             getInput();
+         {             
+             oslStopSound(menu_music); oslDeleteSound(menu_music);
+             
+             playerName = getInput();
              
              SonymonFreeRoam(playerName, 0); //free roam mode
-             
-             oslPlaySound(menu_music, 0); oslSetSoundLoop(menu_music, 1);
          }
       }
     }
 
+  //kill oslib
   oslEndGfx();
-  oslQuit();
+  oslDeinitAudio();
+  
+  sceKernelExitGame();
   
   return 0;
 }
@@ -121,11 +128,11 @@ void showCredits( void )
           oslPrintf_xy(5, 15, "Credits: Sonymon v0.1 ~'the pokemon homebrew'");
           oslSetTextColor(0xFF000000);
           
-          oslPrintf_xy(5, 35, "Animation/Programming: V@ughn");
+          oslPrintf_xy(5, 35, "Programming: V@ughn");
           oslPrintf_xy(5, 45, "Programming support: Hardhat, Pspjoke, and HadesMinion");
           oslPrintf_xy(5, 55, "Sound Effects: V@ughn");
-          oslPrintf_xy(5, 65, "Music: entropoy.com");
-          oslPrintf_xy(5, 75, "Art/Maps: V@ughn");
+          oslPrintf_xy(5, 65, "Music: www.entropoy.com");
+          oslPrintf_xy(5, 75, "Art/Maps: V@ughn and fouadtjuhmaster");
           oslPrintf_xy(5, 85, "Art Advisor: JerretB");
           
           oslSetTextColor(0xFF0000FF);
@@ -264,8 +271,8 @@ void VAUGHN_LOGO( void )
 {
      OSL_IMAGE *logo;
      OSL_SOUND *logo_sound;
-     logo = oslLoadImageFile((char*)"img/data/logo.png", OSL_IN_RAM, OSL_PF_5551);
-     logo_sound = oslLoadSoundFile((char*)"music/powerup2.wav", OSL_FMT_NONE);  
+     logo = oslLoadImageFilePNG((char*)"img/data/logo.png", OSL_IN_RAM, OSL_PF_5551);
+     logo_sound = oslLoadSoundFileWAV((char*)"music/powerup2.wav", OSL_FMT_NONE);  
      
      if(!logo || !logo_sound)
          MISSING_IMG_FILES(4);
@@ -278,7 +285,10 @@ void VAUGHN_LOGO( void )
      oslSyncFrame();
      
      Wait;
+     oslStopSound(logo_sound);
+     oslDeleteSound(logo_sound);
      oslDeleteImage(logo);
+     
 }
 
 //intro function!!!!
@@ -477,8 +487,8 @@ int logoTextureImage(OSL_IMAGE *temp)			{
 }
 
 /*
-	Oslib logo
-	it's in french don't ask me why
+	Affiche le logo OSLib
+	Ne cherchez pas à comprendre cette fonction si vous débutez :p
 */
 int logoAffiche()			{
 	OSL_IMAGE *texte, *temp, *temp2, *etoile;
@@ -634,7 +644,21 @@ int logoAffiche()			{
 		if (angle < 0)
 			angle += 360;
 		skip = oslSyncFrameEx(1,4,0);
-		
+		//Lecture des touches
+		/*oslReadKeys();
+		if (osl_keys->pressed.L) oslWriteImageFile(OSL_SECONDARY_BUFFER, "screen.png", 0);
+		if (osl_keys->pressed.start || osl_keys->held.R){
+			if (osl_keys->held.L)
+				oslWriteImageFile(OSL_SECONDARY_BUFFER, "screen.png", 0);
+			do	{
+				oslReadKeys();
+			} while (!osl_keys->pressed.start && !osl_keys->pressed.select && !osl_keys->pressed.R && !osl_quit);
+			oslSwapBuffers();
+			oslSyncFrameEx(0,0,0);
+			skip = 0;
+		}
+		if (osl_keys->pressed.select)
+			goto recommence;*/
 		if (nFrame >= 290+32)
 			break;
 	}
@@ -644,191 +668,39 @@ int logoAffiche()			{
 	return 1;
 }
 
-char getInput()
-{    
-    oslStopSound(menu_music); 
-    
-    oslEndGfx();
-    
-    sceGuInit();
-	sceGuStart(GU_DIRECT,list);
-	sceGuDrawBuffer(GU_PSM_8888,(void*)0,BUF_WIDTH);
-	sceGuDispBuffer(SCR_WIDTH,SCR_HEIGHT,(void*)0x88000,BUF_WIDTH);
-	sceGuDepthBuffer((void*)0x110000,BUF_WIDTH);
-	sceGuOffset(2048 - (SCR_WIDTH/2),2048 - (SCR_HEIGHT/2));
-	sceGuViewport(2048,2048,SCR_WIDTH,SCR_HEIGHT);
-	sceGuDepthRange(0xc350,0x2710);
-	sceGuScissor(0,0,SCR_WIDTH,SCR_HEIGHT);
-	sceGuEnable(GU_SCISSOR_TEST);
-	sceGuDepthFunc(GU_GEQUAL);
-	sceGuEnable(GU_DEPTH_TEST);
-	sceGuFrontFace(GU_CW);
-	sceGuShadeModel(GU_FLAT);
-	sceGuEnable(GU_CULL_FACE);
-	sceGuEnable(GU_TEXTURE_2D);
-	sceGuEnable(GU_CLIP_PLANES);
-	sceGuFinish();
-	sceGuSync(0,0);
-	sceDisplayWaitVblankStart();
-	sceGuDisplay(GU_TRUE);
+const char * getInput()
+{   
+    const char * name = "Ken";
+    oslInitOsk((char*)"Enter your name", (char*)"Ken", 128, 1, -1);
 	
-	unsigned short intext[NUM_INPUT_FIELDS][TEXT_LENGTH];
-	unsigned short outtext[NUM_INPUT_FIELDS][TEXT_LENGTH];
-	unsigned short desc[NUM_INPUT_FIELDS][TEXT_LENGTH];
-	
-	memset(&intext, 0, NUM_INPUT_FIELDS * TEXT_LENGTH * sizeof(unsigned short));
-	memset(&outtext, 0, NUM_INPUT_FIELDS * TEXT_LENGTH * sizeof(unsigned short));
-	memset(&desc, 0, NUM_INPUT_FIELDS * TEXT_LENGTH * sizeof(unsigned short));
-	
-	int i;
-	
-	for(i = 0; i < NUM_INPUT_FIELDS;i++)
-	{
-        //this is the question to the right of the keyboard
-		desc[i][0] = 'W';
-		desc[i][1] = 'r';
-		desc[i][2] = 'i';
-		desc[i][3] = 't';
-		desc[i][4] = 'e';
-		desc[i][5] = ' ';
-		desc[i][6] = 'y';
-		desc[i][7] = 'o';
-		desc[i][8] = 'u';
-		desc[i][9] = 'r';
-		desc[i][10] = ' ';
-		desc[i][11] = 'n';
-		desc[i][12] = 'a';
-		desc[i][13] = 'm';
-		desc[i][14] = 'e';
-		desc[i][15] = 0;
-
-		//initial text in the keyboard
-		intext[i][0] = 'K';
-		intext[i][1] = 'e';
-		intext[i][2] = 'n';
-		intext[i][3] = 0;
-		
-	}
-
-	SceUtilityOskData data[NUM_INPUT_FIELDS];
-	
-	for(i = 0; i < NUM_INPUT_FIELDS;i++)
-	{
-		memset(&data[i], 0, sizeof(SceUtilityOskData));
-		data[i].language = PSP_UTILITY_OSK_LANGUAGE_ENGLISH; // Use english for text input
-		data[i].lines = 1;
-		data[i].unk_24 = 1;
-		data[i].inputtype = PSP_UTILITY_OSK_INPUTTYPE_ALL; // Allow all input types
-		data[i].desc = desc[i];
-		data[i].intext = intext[i];
-		data[i].outtextlength = TEXT_LENGTH;
-		data[i].outtextlimit = 13; // Limit input to 16 characters
-		data[i].outtext = outtext[i];
-	}
-	
-	SceUtilityOskParams params;
-	memset(&params, 0, sizeof(params));
-	params.base.size = sizeof(params);
-	sceUtilityGetSystemParamInt(PSP_SYSTEMPARAM_ID_INT_LANGUAGE, &params.base.language);
-	sceUtilityGetSystemParamInt(PSP_SYSTEMPARAM_ID_INT_UNKNOWN, &params.base.buttonSwap);
-	params.base.graphicsThread = 17;
-	params.base.accessThread = 19;
-	params.base.fontThread = 18;
-	params.base.soundThread = 16;
-	params.datacount = NUM_INPUT_FIELDS;
-	params.data = data;
-
-	sceUtilityOskInitStart(&params);
-
-	while(!done)
-	{
-		sceGuStart(GU_DIRECT,list);
-		sceGuClearColor(0);
-		sceGuClearDepth(0);
-		sceGuClear(GU_COLOR_BUFFER_BIT|GU_DEPTH_BUFFER_BIT);
-
-		sceGuFinish();
-		sceGuSync(0,0);
-
-		switch(sceUtilityOskGetStatus())
-		{
-			case PSP_UTILITY_DIALOG_INIT:
-				break;
+    for(;;)
+    {
+       oslStartDrawing();
+       oslClearScreen(RGBA(0,0,0,0));
+       oslDrawOsk();
+       
+	   if (oslGetOskStatus() == PSP_UTILITY_DIALOG_NONE)
+       {
+			if (oslOskGetResult() == OSL_OSK_CANCEL) break;
 			
-			case PSP_UTILITY_DIALOG_VISIBLE:
-				sceUtilityOskUpdate(1);
-				break;
-			
-			case PSP_UTILITY_DIALOG_QUIT:
-				sceUtilityOskShutdownStart();
-				break;
-			
-			case PSP_UTILITY_DIALOG_FINISHED:
-				break;
+            else
+            {
+				char userText[20] = "";
+				oslOskGetText(userText);
+				if(userText !=NULL)name = userText;
+				else oslWarning("ERROR player entered an incorrect value! Setting 'Ken' as player name!");
 				
-			case PSP_UTILITY_DIALOG_NONE:
-				done = 1;
-				
-			default :
 				break;
-		}
-
-		sceDisplayWaitVblankStart();
-		sceGuSwapBuffers();
-	}
-
-	pspDebugScreenInit();
-	pspDebugScreenSetXY(0, 0);
-	
-	int j;
-	
-	for(i = 0; i < NUM_INPUT_FIELDS;i++)
-	{
-		
-		switch(data[i].result)
-		{
-			case PSP_UTILITY_OSK_RESULT_UNCHANGED:
-				//pspDebugScreenPrintf("UNCHANGED: ");
-				break;
-			
-			case PSP_UTILITY_OSK_RESULT_CANCELLED:
-				//pspDebugScreenPrintf("CANCELLED: ");
-				break;
-				
-			case PSP_UTILITY_OSK_RESULT_CHANGED:
-				//pspDebugScreenPrintf("CHANGED: ");
-				break;
-				
-			default:
-				break;
-		}
-		
-		for(j = 0; data[i].outtext[j]; j++)
-		{
-			unsigned c = data[i].outtext[j];
-			
-			if(32 <= c && c <= 127) // print ascii only
-				pspDebugScreenPrintf("%c", data[i].outtext[j]);
-		}
-		
-		pspDebugScreenPrintf("\n");
-	}
-
-    /***********************************************/
-	done = 0;
-	//char NameArray[200];
-	
-	//for(j = 0; j < 200; j++)
-        //NameArray[j] = data[i].outtext[j];
+			}
+			oslEndOsk();	
+        }
         
-	//playerName = NameArray;
-	/***********************************************/
-
-	sceGuTerm();
- 
-    playerName = "Ken";
-    
-	return * playerName;
+        oslEndDrawing();
+        oslSyncFrame();
+        
+   }
+				
+    return name; 
 }
 
 static void SetupGu()

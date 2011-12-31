@@ -5,9 +5,10 @@ class STATS
               STATS();
               ~STATS();
               
-              //reoord specific members
+              //record specific members
               char setRecordName(int id, const char * name);
               void setPartyImage(int x, int id);
+              char * Description(const int id);
               
               //player sonymon specific members
               char setName(int type, int slot);
@@ -26,9 +27,9 @@ class STATS
               void setMoves(int slot, int id, int level);
               void setImage(int id, int slot);
               void setImageUnspecified(int id, OSL_IMAGE * image);
-              int setHealth(int &health, int type, int level);
-              int setAttackPower(int &attack, int type, int level);
-              int setDefense(int &defense, int type, int level);
+              int setHealth(int &health, int id, int level);
+              int setAttackPower(int &attack, int id, int level);
+              int setDefense(int &defense, int id, int level);
               int setType(int &manipType, int id);
              
       private:
@@ -122,6 +123,19 @@ void STATS::setEnemyMoves(int id, int level)
      else if(id == 12){
           if(level > 1) move1 = clobber;
      }
+     else if(id == 13){
+          if(level > 1) move1 = pound;
+          if(level > 6) move2 = clobber;
+     }
+     else if(id == 14){
+          if(level > 1) move1 = tackle;
+          if(level > 7) move2 = slam;
+     }
+     else if(id == 15){
+          if(level > 1) move1 = slam;
+          if(level > 5) move2 = blaze;
+          if(level > 8) move3 = tackle;
+     }
      else oslFatalError("Failed to assign moves! Found in function setMoves()!!!");
      
      //now apply!
@@ -192,6 +206,20 @@ void STATS::setMoves(int slot, int id, int level)
      }
      else if(id == 12){
           if(level > 1) move1 = clobber;
+          if(level > 7) move2 = slam;
+     }
+     else if(id == 13){
+          if(level > 1) move1 = pound;
+          if(level > 6) move2 = clobber;
+     }
+     else if(id == 14){
+          if(level > 1) move1 = tackle;
+          if(level > 7) move2 = slam;
+     }
+     else if(id == 15){
+          if(level > 1) move1 = slam;
+          if(level > 5) move2 = blaze;
+          if(level > 8) move3 = tackle;
      }
      else oslFatalError("Failed to assign moves! Found in function setMoves()!!!");
      
@@ -243,6 +271,9 @@ void STATS::SetMaxXP(int slot, int id)
      else if(id == 10) max_xp = 18; //vandel
      else if(id == 11) max_xp = 9; //Lieosaur
      else if(id == 12) max_xp = 8; //Sturk
+     else if(id == 13) max_xp = 7; //Blip
+     else if(id == 14) max_xp = 11; //Cecei
+     else if(id == 15) max_xp = 14; //Fanz
      
      if(max_xp <= 1) oslWarning("Failed to set a value to max_xp!!! found in function STATS::SetMaxXP(int slot, int id)");
      
@@ -271,6 +302,9 @@ void STATS::XPGain(int &xp, int id, int level)
      else if(id == 10){xp = 24; manipXP = 1.4;}
      else if(id == 11){xp = 18; manipXP = 1.1;}
      else if(id == 12){xp = 12; manipXP = 1.1;}
+     else if(id == 13){xp = 14; manipXP = 1.3;}
+     else if(id == 14){xp = 17; manipXP = 1.2;}
+     else if(id == 15){xp = 14; manipXP = 1.2;}
      else oslWarning("Failed to apply value to int manipXP and int xp found in function STATS::XPGain()!!!");
      
      xp = xp + (manipXP * level);
@@ -424,7 +458,9 @@ char STATS::setName(int id, int slot)
      else if(id == 10) name = "Vandel";
      else if(id == 11) name = "Lieosaur";
      else if(id == 12) name = "Sturk";
-     else if(id == 13) name =  "-- --";
+     else if(id == 13) name =  "Blip";
+     else if(id == 14) name =  "Cecei";
+     else if(id == 15) name =  "Fanz";
      else oslFatalError("failed to apply a name to char * name\nin char setName function");
      
      //a NULL char crashes the game...so check for it
@@ -453,7 +489,9 @@ char STATS::setRecordName(int id, const char * name)
      else if(id == 10) name = "Vandel";
      else if(id == 11) name = "Lieosaur";
      else if(id == 12) name = "Sturk";
-     else if(id == 13) name =  "-- --";
+     else if(id == 13) name =  "Blip";
+     else if(id == 14) name =  "Cecei";
+     else if(id == 15) name =  "Fanz";
      else oslFatalError("failed to apply a name to char * name\nin char setName function");
      
      //a NULL char crashes the game...so check for it
@@ -479,7 +517,9 @@ void STATS::playRoar(const int id)
 	else if(id == 10) {oslPlaySound(vandel, 4);}
 	else if(id == 11) {oslPlaySound(lieosaur, 4);}
 	else if(id == 12) {oslPlaySound(enemy12, 4);}
-	else if(id == 13) {oslPlaySound(enemy13, 4);}
+	else if(id == 13) {oslPlaySound(blip, 4);}
+	else if(id == 14) {oslPlaySound(cecei, 4);}
+	else if(id == 15) {oslPlaySound(fanz, 4);}
     else oslWarning("Incorrect parameter passed to void STATS::playRoar! Cannot play sound!");
     
     return;
@@ -500,7 +540,9 @@ char STATS::setEnemyType(int id, int level, OSL_IMAGE *enemy)
 	else if(id == 10) {oslPlaySound(vandel, 4);     enemyName = "Vandel";}
 	else if(id == 11) {oslPlaySound(lieosaur, 4);   enemyName = "Lieosaur";}
 	else if(id == 12) {oslPlaySound(enemy12, 4);    enemyName = "Sturk";}
-	else if(id == 13) {oslPlaySound(enemy13, 4);    enemyName =  "-- --";}
+	else if(id == 13) {oslPlaySound(enemy13, 4);    enemyName =  "Blip";}
+	else if(id == 14) {oslPlaySound(enemy13, 4);    enemyName =  "Cecei";}
+	else if(id == 15) {oslPlaySound(enemy13, 4);    enemyName =  "Fanz";}
     else oslFatalError("failed to apply a name to char * name\nin char setEnemyType function");
      
      if(enemyName == NULL) oslFatalError("char value equals NULL!!!\nfound in function setEnemyType!!!");
@@ -511,7 +553,7 @@ char STATS::setEnemyType(int id, int level, OSL_IMAGE *enemy)
      return * enemyName;
 }
 
-int STATS::setHealth(int &health, int type, int level)
+int STATS::setHealth(int &health, int id, int level)
 {
     //this function performs the following math equation:
     //h = B + xy
@@ -533,21 +575,27 @@ int STATS::setHealth(int &health, int type, int level)
        -Waterserore = 10 + 2.5
        -Vandel = 23 + 2.2
        -Lieosaur = 15 + 2.1
+       -sturk = 12 + 1.5
+       -blip = 14 + 1.8
+       -cecei = 15 + 2
+       -fanz = 21 + 2.1
     */
     
-    if(type == 1)       {health = 1; manipLevel = 1;}
-    else if(type == 2)  {health = 10; manipLevel = 2;}
-    else if(type == 3)  {health = 20; manipLevel = 2.4;}
-    else if(type == 4)  {health = 8; manipLevel = 1.8;}
-    else if(type == 5)  {health = 10; manipLevel = 2.2;}
-    else if(type == 6)  {health = 13; manipLevel = 2;}
-    else if(type == 7)  {health = 14; manipLevel = 1.9;}
-    else if(type == 8)  {health = 18; manipLevel = 2.1;}
-    else if(type == 9)  {health = 10; manipLevel = 2.5;}
-    else if(type == 10) {health = 23; manipLevel = 2.2;}
-    else if(type == 11) {health = 15; manipLevel = 2.1;}
-    else if(type == 12) {health = 12; manipLevel = 1.5;}
-    else if(type == 13) {health = 1; manipLevel = 1;}
+    if(id == 1)       {health = 1; manipLevel = 1;}
+    else if(id == 2)  {health = 10; manipLevel = 2;}
+    else if(id == 3)  {health = 20; manipLevel = 2.4;}
+    else if(id == 4)  {health = 8; manipLevel = 1.8;}
+    else if(id == 5)  {health = 10; manipLevel = 2.2;}
+    else if(id == 6)  {health = 13; manipLevel = 2;}
+    else if(id == 7)  {health = 14; manipLevel = 1.9;}
+    else if(id == 8)  {health = 18; manipLevel = 2.1;}
+    else if(id == 9)  {health = 10; manipLevel = 2.5;}
+    else if(id == 10) {health = 23; manipLevel = 2.2;}
+    else if(id == 11) {health = 15; manipLevel = 2.1;}
+    else if(id == 12) {health = 12; manipLevel = 1.5;}
+    else if(id == 13) {health = 14; manipLevel = 1.8;}
+    else if(id == 14) {health = 15; manipLevel = 2;}
+    else if(id == 15) {health = 21; manipLevel = 2.1;}
     else oslFatalError("failed to apply a value to int health\nin int setHealth function");
     
     manipHealth = level * manipLevel; //find our incremented value
@@ -577,6 +625,10 @@ int STATS::setAttackPower(int &attack, int id, int level)
               waterserore: 6.2
               vandel: 6.3
               lieosaur: 4
+              sturk: 6.1
+              blip: 4.1
+              cecei: 6.2
+              fanz: 6.5
     */
                        
     if(id == 1)       {manipAttack = 50;}
@@ -591,7 +643,9 @@ int STATS::setAttackPower(int &attack, int id, int level)
     else if(id == 10) {manipAttack = 6.3;}
     else if(id == 11) {manipAttack = 4;}
     else if(id == 12) {manipAttack = 6.1;}
-    else if(id == 13) {manipAttack = 1;}
+    else if(id == 13) {manipAttack = 4.1;}
+    else if(id == 14) {manipAttack = 6.2;}
+    else if(id == 15) {manipAttack = 6.5;}
     else oslFatalError("failed to apply a value to int manipAttack\nin int setAttackPower function");
     
     addOn = manipAttack * level;
@@ -599,7 +653,7 @@ int STATS::setAttackPower(int &attack, int id, int level)
     return attack;
 }
 
-int STATS::setDefense(int &defense, int type, int level)
+int STATS::setDefense(int &defense, int id, int level)
 {
      defense = 1;
      float manipDefense = 0.0;
@@ -618,21 +672,27 @@ int STATS::setDefense(int &defense, int type, int level)
               waterserore: 5.1
               vandel: 4.3
               lieosaur: 2.1
+              sturk: 3.3
+              blip: 2.5
+              cecei: 4.1
+              fanz: 6.5
     */
     
-    if(type == 1)       {manipDefense = 1;}
-    else if(type == 2)  {manipDefense = 3.5;}
-    else if(type == 3)  {manipDefense = 7.6;}
-    else if(type == 4)  {manipDefense = 2.3;}
-    else if(type == 5)  {manipDefense = 3.1;}
-    else if(type == 6)  {manipDefense = 6.8;}
-    else if(type == 7)  {manipDefense = 8.7;}
-    else if(type == 8)  {manipDefense = 4.2;}
-    else if(type == 9)  {manipDefense = 6.1;}
-    else if(type == 10) {manipDefense = 5.3;}
-    else if(type == 11) {manipDefense = 3.1;}
-    else if(type == 12) {manipDefense = 3.3;}
-    else if(type == 13) {manipDefense = 1;}
+    if(id == 1)       {manipDefense = 1;}
+    else if(id == 2)  {manipDefense = 3.5;}
+    else if(id == 3)  {manipDefense = 7.6;}
+    else if(id == 4)  {manipDefense = 2.3;}
+    else if(id == 5)  {manipDefense = 3.1;}
+    else if(id == 6)  {manipDefense = 6.8;}
+    else if(id == 7)  {manipDefense = 8.7;}
+    else if(id == 8)  {manipDefense = 4.2;}
+    else if(id == 9)  {manipDefense = 6.1;}
+    else if(id == 10) {manipDefense = 5.3;}
+    else if(id == 11) {manipDefense = 3.1;}
+    else if(id == 12) {manipDefense = 3.3;}
+    else if(id == 13) {manipDefense = 2.5;}
+    else if(id == 14) {manipDefense = 4.1;}
+    else if(id == 15) {manipDefense = 6.5;}
     else oslFatalError("failed to apply a value to int manipDefense\nin int setDefense function");
     
     addOn = manipDefense * level;
@@ -644,6 +704,7 @@ int STATS::setDefense(int &defense, int type, int level)
 int STATS::setType(int &manipType, int id)
 {
     manipType = UNDEFINED;
+    
     if(id == 1)       {manipType = UNDEFINED;}
     else if(id == 2)  {manipType = GRASS;}
     else if(id == 3)  {manipType = ROCK;}
@@ -656,7 +717,9 @@ int STATS::setType(int &manipType, int id)
     else if(id == 10) {manipType = ULTRAVIOLET;}
     else if(id == 11) {manipType = NORMAL;}
     else if(id == 12) {manipType = ROCK;}
-    else if(id == 13) {manipType = UNDEFINED;}
+    else if(id == 13) {manipType = NORMAL;}
+    else if(id == 14) {manipType = NORMAL;}
+    else if(id == 15) {manipType = FIRE;}
     else oslFatalError("failed to apply a value to int type in function\nint setType(int type)!!!");
     
     return manipType;
@@ -676,7 +739,9 @@ void STATS::setImageUnspecified(int id, OSL_IMAGE * image)
      else if(id == 10) {image = vandel_back;}
      else if(id == 11) {image = lieosaur_back;}
      else if(id == 12) {image = sturk_back;}
-     else if(id == 13) {image = unknown_back;}
+     else if(id == 13) {image = blip_back;}
+     else if(id == 14) {image = cecei_back;}
+     else if(id == 15) {image = fanz_back;}
      
      //if an image is drawn when NULL it causes the game crash....so check for it
      if(image == NULL) oslFatalError("MEM ISSUE!! FOUND IN function void setImageUnspecified(int id, OSL_IMAGE * image)!!!");
@@ -698,7 +763,9 @@ void STATS::setImage(int id, int slot)
      else if(id == 10) {image = vandel_back;}
      else if(id == 11) {image = lieosaur_back;}
      else if(id == 12) {image = sturk_back;}
-     else if(id == 13) {image = unknown_back;}
+     else if(id == 13) {image = blip_back;}
+     else if(id == 14) {image = cecei_back;}
+     else if(id == 15) {image = fanz_back;}
      
      //if an image is drawn when NULL it causes the game crash....so check for it
      if(image == NULL) oslFatalError("MEM ISSUE!! FOUND IN function void setImage(int id, int slot)!!!");
@@ -714,18 +781,21 @@ OSL_IMAGE * STATS::makeImage(const int id)
     OSL_IMAGE * image;
     image = NULL;
     
-    if(id == 1)       image = oslLoadImageFile((char*)"img/sonymon/unknownf.png", OSL_IN_RAM, OSL_PF_5551);
-	else if(id == 3)  image = oslLoadImageFile((char*)"img/sonymon/arsande_front.png", OSL_IN_RAM, OSL_PF_5551);
-	else if(id == 2)  image = oslLoadImageFile((char*)"img/sonymon/blumkins_front.png", OSL_IN_RAM, OSL_PF_5551);
-	else if(id == 5)  image = oslLoadImageFile((char*)"img/sonymon/argrasse_front.png", OSL_IN_RAM, OSL_PF_5551);
-	else if(id == 4)  image = oslLoadImageFile((char*)"img/sonymon/myboross_front.png", OSL_IN_RAM, OSL_PF_5551);
-	else if(id == 6)  image = oslLoadImageFile((char*)"img/sonymon/norbonkge_front.png", OSL_IN_RAM, OSL_PF_5551);
-	else if(id == 7)  image = oslLoadImageFile((char*)"img/sonymon/blowhole_front.png", OSL_IN_RAM, OSL_PF_5551);
-	else if(id == 8)  image = oslLoadImageFile((char*)"img/sonymon/cemes_front.png", OSL_IN_RAM, OSL_PF_5551);
-	else if(id == 9)  image = oslLoadImageFile((char*)"img/sonymon/waterserore_front.png", OSL_IN_RAM, OSL_PF_5551);
-	else if(id == 10) image = oslLoadImageFile((char*)"img/sonymon/vandel_front.png", OSL_IN_RAM, OSL_PF_5551);
-	else if(id == 11) image = oslLoadImageFile((char*)"img/sonymon/lieosaur_front.png", OSL_IN_RAM, OSL_PF_5551);
-	else if(id == 12) image = oslLoadImageFile((char*)"img/sonymon/sturk_front.png", OSL_IN_RAM, OSL_PF_5551);
+    if(id == 1)       image = oslLoadImageFilePNG((char*)"img/sonymon/unknownf.png", OSL_IN_RAM, OSL_PF_5551);
+	else if(id == 3)  image = oslLoadImageFilePNG((char*)"img/sonymon/arsande_front.png", OSL_IN_RAM, OSL_PF_5551);
+	else if(id == 2)  image = oslLoadImageFilePNG((char*)"img/sonymon/blumkins_front.png", OSL_IN_RAM, OSL_PF_5551);
+	else if(id == 5)  image = oslLoadImageFilePNG((char*)"img/sonymon/argrasse_front.png", OSL_IN_RAM, OSL_PF_5551);
+	else if(id == 4)  image = oslLoadImageFilePNG((char*)"img/sonymon/myboross_front.png", OSL_IN_RAM, OSL_PF_5551);
+	else if(id == 6)  image = oslLoadImageFilePNG((char*)"img/sonymon/norbonkge_front.png", OSL_IN_RAM, OSL_PF_5551);
+	else if(id == 7)  image = oslLoadImageFilePNG((char*)"img/sonymon/blowhole_front.png", OSL_IN_RAM, OSL_PF_5551);
+	else if(id == 8)  image = oslLoadImageFilePNG((char*)"img/sonymon/cemes_front.png", OSL_IN_RAM, OSL_PF_5551);
+	else if(id == 9)  image = oslLoadImageFilePNG((char*)"img/sonymon/waterserore_front.png", OSL_IN_RAM, OSL_PF_5551);
+	else if(id == 10) image = oslLoadImageFilePNG((char*)"img/sonymon/vandel_front.png", OSL_IN_RAM, OSL_PF_5551);
+	else if(id == 11) image = oslLoadImageFilePNG((char*)"img/sonymon/lieosaur_front.png", OSL_IN_RAM, OSL_PF_5551);
+	else if(id == 12) image = oslLoadImageFilePNG((char*)"img/sonymon/sturk_front.png", OSL_IN_RAM, OSL_PF_5551);
+	else if(id == 13) image = oslLoadImageFilePNG((char*)"img/sonymon/blip_front.png", OSL_IN_RAM, OSL_PF_5551);
+	else if(id == 14) image = oslLoadImageFilePNG((char*)"img/sonymon/cecei_front.png", OSL_IN_RAM, OSL_PF_5551);
+	else if(id == 15) image = oslLoadImageFilePNG((char*)"img/sonymon/fanz_front.png", OSL_IN_RAM, OSL_PF_5551);
        
     //if an image is drawn when NULL it causes the game crash....so check for it
     if(!image) oslFatalError("MEM ISSUE!! FOUND IN function\nvoid makeImage(const int id, OSL_IMAGE * image)!!!");
@@ -738,18 +808,21 @@ void STATS::setPartyImage(int x, int id)
      if(x == 1)
      {
 
-       if(id == 1)       temp1 = oslLoadImageFile((char*)"img/sonymon/unknownf.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 3)  temp1 = oslLoadImageFile((char*)"img/sonymon/arsande_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 2)  temp1 = oslLoadImageFile((char*)"img/sonymon/blumkins_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 5)  temp1 = oslLoadImageFile((char*)"img/sonymon/argrasse_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 4)  temp1 = oslLoadImageFile((char*)"img/sonymon/myboross_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 6)  temp1 = oslLoadImageFile((char*)"img/sonymon/norbonkge_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 7)  temp1 = oslLoadImageFile((char*)"img/sonymon/blowhole_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 8)  temp1 = oslLoadImageFile((char*)"img/sonymon/cemes_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 9)  temp1 = oslLoadImageFile((char*)"img/sonymon/waterserore_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 10) temp1 = oslLoadImageFile((char*)"img/sonymon/vandel_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 11) temp1 = oslLoadImageFile((char*)"img/sonymon/lieosaur_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 12) temp1 = oslLoadImageFile((char*)"img/sonymon/sturk_front.png", OSL_IN_RAM, OSL_PF_5551);
+       if(id == 1)       temp1 = oslLoadImageFilePNG((char*)"img/sonymon/unknownf.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 3)  temp1 = oslLoadImageFilePNG((char*)"img/sonymon/arsande_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 2)  temp1 = oslLoadImageFilePNG((char*)"img/sonymon/blumkins_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 5)  temp1 = oslLoadImageFilePNG((char*)"img/sonymon/argrasse_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 4)  temp1 = oslLoadImageFilePNG((char*)"img/sonymon/myboross_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 6)  temp1 = oslLoadImageFilePNG((char*)"img/sonymon/norbonkge_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 7)  temp1 = oslLoadImageFilePNG((char*)"img/sonymon/blowhole_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 8)  temp1 = oslLoadImageFilePNG((char*)"img/sonymon/cemes_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 9)  temp1 = oslLoadImageFilePNG((char*)"img/sonymon/waterserore_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 10) temp1 = oslLoadImageFilePNG((char*)"img/sonymon/vandel_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 11) temp1 = oslLoadImageFilePNG((char*)"img/sonymon/lieosaur_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 12) temp1 = oslLoadImageFilePNG((char*)"img/sonymon/sturk_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 13) temp1 = oslLoadImageFilePNG((char*)"img/sonymon/blip_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 14) temp1 = oslLoadImageFilePNG((char*)"img/sonymon/cecei_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 15) temp1 = oslLoadImageFilePNG((char*)"img/sonymon/fanz_front.png", OSL_IN_RAM, OSL_PF_5551);
        
        //if an image is drawn when NULL it causes the game crash....so check for it
      if(!temp1) oslFatalError("MEM ISSUE!! FOUND IN function\nvoid setPartyImage(int type, int slot)!!!");
@@ -758,18 +831,21 @@ void STATS::setPartyImage(int x, int id)
      else if(x == 2)
      {
 
-       if(id == 1)       temp2 = oslLoadImageFile((char*)"img/sonymon/unknownf.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 2)  temp2 = oslLoadImageFile((char*)"img/sonymon/arsande_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 3)  temp2 = oslLoadImageFile((char*)"img/sonymon/blumkins_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 5)  temp2 = oslLoadImageFile((char*)"img/sonymon/argrasse_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 4)  temp2 = oslLoadImageFile((char*)"img/sonymon/myboross_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 6)  temp2 = oslLoadImageFile((char*)"img/sonymon/norbonkge_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 7)  temp2 = oslLoadImageFile((char*)"img/sonymon/blowhole_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 8)  temp2 = oslLoadImageFile((char*)"img/sonymon/cemes_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 9)  temp2 = oslLoadImageFile((char*)"img/sonymon/waterserore_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 10) temp2 = oslLoadImageFile((char*)"img/sonymon/vandel_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 11) temp2 = oslLoadImageFile((char*)"img/sonymon/lieosaur_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 12) temp2 = oslLoadImageFile((char*)"img/sonymon/sturk_front.png", OSL_IN_RAM, OSL_PF_5551);
+       if(id == 1)       temp2 = oslLoadImageFilePNG((char*)"img/sonymon/unknownf.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 2)  temp2 = oslLoadImageFilePNG((char*)"img/sonymon/arsande_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 3)  temp2 = oslLoadImageFilePNG((char*)"img/sonymon/blumkins_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 5)  temp2 = oslLoadImageFilePNG((char*)"img/sonymon/argrasse_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 4)  temp2 = oslLoadImageFilePNG((char*)"img/sonymon/myboross_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 6)  temp2 = oslLoadImageFilePNG((char*)"img/sonymon/norbonkge_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 7)  temp2 = oslLoadImageFilePNG((char*)"img/sonymon/blowhole_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 8)  temp2 = oslLoadImageFilePNG((char*)"img/sonymon/cemes_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 9)  temp2 = oslLoadImageFilePNG((char*)"img/sonymon/waterserore_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 10) temp2 = oslLoadImageFilePNG((char*)"img/sonymon/vandel_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 11) temp2 = oslLoadImageFilePNG((char*)"img/sonymon/lieosaur_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 12) temp2 = oslLoadImageFilePNG((char*)"img/sonymon/sturk_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 13) temp2 = oslLoadImageFilePNG((char*)"img/sonymon/blip_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 14) temp2 = oslLoadImageFilePNG((char*)"img/sonymon/cecei_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 15) temp2 = oslLoadImageFilePNG((char*)"img/sonymon/fanz_front.png", OSL_IN_RAM, OSL_PF_5551);
        
      //if an image is drawn when NULL it causes the game crash....so check for it
      if(!temp2) oslFatalError("MEM ISSUE!! FOUND IN function\nvoid setPartyImage(int type, int slot)!!!");
@@ -778,18 +854,21 @@ void STATS::setPartyImage(int x, int id)
      else if(x == 3)
      {
 
-       if(id == 1)       temp3 = oslLoadImageFile((char*)"img/sonymon/unknownf.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 2)  temp3 = oslLoadImageFile((char*)"img/sonymon/arsande_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 3)  temp3 = oslLoadImageFile((char*)"img/sonymon/blumkins_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 5)  temp3 = oslLoadImageFile((char*)"img/sonymon/argrasse_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 4)  temp3 = oslLoadImageFile((char*)"img/sonymon/myboross_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 6)  temp3 = oslLoadImageFile((char*)"img/sonymon/norbonkge_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 7)  temp3 = oslLoadImageFile((char*)"img/sonymon/blowhole_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 8)  temp3 = oslLoadImageFile((char*)"img/sonymon/cemes_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 9)  temp3 = oslLoadImageFile((char*)"img/sonymon/waterserore_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 10) temp3 = oslLoadImageFile((char*)"img/sonymon/vandel_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 11) temp3 = oslLoadImageFile((char*)"img/sonymon/lieosaur_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 12) temp3 = oslLoadImageFile((char*)"img/sonymon/sturk_front.png", OSL_IN_RAM, OSL_PF_5551);
+       if(id == 1)       temp3 = oslLoadImageFilePNG((char*)"img/sonymon/unknownf.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 2)  temp3 = oslLoadImageFilePNG((char*)"img/sonymon/arsande_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 3)  temp3 = oslLoadImageFilePNG((char*)"img/sonymon/blumkins_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 5)  temp3 = oslLoadImageFilePNG((char*)"img/sonymon/argrasse_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 4)  temp3 = oslLoadImageFilePNG((char*)"img/sonymon/myboross_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 6)  temp3 = oslLoadImageFilePNG((char*)"img/sonymon/norbonkge_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 7)  temp3 = oslLoadImageFilePNG((char*)"img/sonymon/blowhole_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 8)  temp3 = oslLoadImageFilePNG((char*)"img/sonymon/cemes_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 9)  temp3 = oslLoadImageFilePNG((char*)"img/sonymon/waterserore_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 10) temp3 = oslLoadImageFilePNG((char*)"img/sonymon/vandel_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 11) temp3 = oslLoadImageFilePNG((char*)"img/sonymon/lieosaur_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 12) temp3 = oslLoadImageFilePNG((char*)"img/sonymon/sturk_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 13) temp3 = oslLoadImageFilePNG((char*)"img/sonymon/blip_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 14) temp3 = oslLoadImageFilePNG((char*)"img/sonymon/cecei_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 15) temp3 = oslLoadImageFilePNG((char*)"img/sonymon/fanz_front.png", OSL_IN_RAM, OSL_PF_5551);
        
        //if an image is drawn when NULL it causes the game crash....so check for it
      if(!temp3) oslFatalError("MEM ISSUE!! FOUND IN function\nvoid setPartyImage(int type, int slot)!!!");
@@ -800,4 +879,43 @@ void STATS::setPartyImage(int x, int id)
 
      
      return;
+}
+
+char * STATS::Description(const int id)
+{
+    char * message = (char*)"null";
+
+    if(id == 1) message = (char*)"This sonymon is only partially existent. ??? coexists between two demensions.";
+    
+    else if(id == 2) message = (char*)"Blumdins like to hide in the grass, not to hide from predators, they just like grass";
+    
+    else if(id == 3) message = (char*)"Using its huge and powerful arms, arsande can scale tall mountains in only a few minutes. It also likes to stack rocks on itself for protection.";
+    
+    else if(id == 4) message = (char*)"Myboross is a tricky sonymon who is always prone to shock any approaching object.";
+    
+    else if(id == 5) message = (char*)"This plant sonymon can always be found bathing in sunlight and bullying a blumdin.";
+    
+    else if(id == 6) message = (char*)"Like Myboross this sonymon shocks any intruder. Very violent and sneaky, beware of this sonymon.";
+    
+    else if(id == 7) message = (char*)"Large and in charge. Short temper and feared by many other sonymon.";
+    
+    else if(id == 8) message = (char*)"A little timid creature who usually can found during the night time.";
+
+    else if(id == 9) message = (char*)"One of the most aggressive fish sonymon there are! Constantly fights with others and disrupts any and all surrounding sonymon.";
+    
+    else if(id == 10) message = (char*)"There are many horror stories including this sonymon. This ghost-like creature can phase through walls and send you flying backwards with an energy blast.";
+    
+    else if(id == 11) message = (char*)"A Small reptillian creature who searches for food constantly.";
+    
+    else if(id == 12) message = (char*)"A small rock-like creature. Always in danger of being eaten. One of the weaker sonymons out there.";
+    
+    else if(id == 13) message = (char*)"This sonymon can always be found clowning around! The jokster of all sonymon.";
+    
+    else if(id == 14) message = (char*)"Attempts to intimidate other sonymon but always ends up creating infatuation, a very misunderstood sonymon.";
+    
+    else if(id == 15) message = (char*)"An unpredictable annoyance. Likes to sneak up on campers and scare them before running off with all of their food";
+    
+    else {oslWarning("Failed to apply a value to char[200] message! Cannot create description!"); message = (char*)"(error)";}
+    
+    return message;
 }

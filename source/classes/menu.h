@@ -1,15 +1,17 @@
 class MENU
 {
       public:
-             char CHECK_FREQUENCY();
-             void OPEN_BAG( void );
-             void OPEN_PARTY(bool inBattle);
-             void OPEN_RECORDS( void );
-             void OPEN_PLAYER(const char * playerName);
-             void SHOWSTATS(const int slot);
-             void pauseGame(const char * playerName);
              MENU();
              ~MENU();
+             
+             char CHECK_FREQUENCY();
+             void OPEN_BAG( void );
+             void OPEN_PARTY(bool inBattle, const char * playerName);
+             void OPEN_RECORDS( void );
+             void OPEN_PLAYER(const char * playerName);
+             void SHOWSTATS(const int slot, const char * playerName);
+             void pauseGame(const char * playerName);
+             
       private:
 }menu;
 
@@ -85,7 +87,7 @@ void MENU::pauseGame(const char * playerName)
                oslSyncFrame();
                
                if(accessBag)            OPEN_BAG();
-               else if(accessParty)     OPEN_PARTY(inBattle);
+               else if(accessParty)     OPEN_PARTY(inBattle, playerName);
                else if(accessFrequency) CHECK_FREQUENCY();
                else if(accessRecords)   OPEN_RECORDS();
                else if(accessPlayer)    OPEN_PLAYER(playerName);
@@ -134,7 +136,7 @@ void MENU::OPEN_RECORDS( void )
 {
      oslPlaySound(beep, 2);
      accessRecords = 0;
-     unsigned i, j;
+     unsigned i, j, TotalSeen;
      short posy = 0;
      short posx = 5;
      
@@ -160,7 +162,7 @@ void MENU::OPEN_RECORDS( void )
           posx = 5;
          
           //display sonymon seen
-          for(j = 0; j < 71; j++)
+          for(j = 0; j < 69; j++)
           {                
                 if(SonymonSeen[j] == 0) {oslSetTextColor(WHITE); oslPrintf_xy(posx, posy, "#%d  -- --", j);}
                 else
@@ -171,14 +173,14 @@ void MENU::OPEN_RECORDS( void )
                 }
                 
                 posy += 15;
-                if(posy > 272) {posy = 0; posx += 128; }
+                if(posy > 257) {posy = 0; posx += 128; }
           }
           
           //leave a key for the player to see
           oslSetTextColor(WHITE);
-          oslPrintf_xy(375, 215, "White = seen");
+          oslPrintf_xy(375, 225, "White = seen");
           oslSetTextColor(YELLOW);
-          oslPrintf_xy(350, 230, "Yellow = captured");
+          oslPrintf_xy(350, 240, "Yellow = captured");
           
           oslEndDrawing();
           oslSyncFrame();
@@ -193,11 +195,14 @@ void MENU::OPEN_RECORDS( void )
      return;
 }
 
-void MENU::SHOWSTATS(const int slot)
+void MENU::SHOWSTATS(const int slot, const char * playerName = "default")
 {
     oslSetFont(verdana);
     oslSetBkColor(RGBA(0,0,0,0));
     oslSetTextColor(WHITE);
+    
+    //create an object of the STATS class
+    STATS create;
     
     /**************************************************************/
     //GET MOVES AND SET THEM EQUAL TO NEW VARIABLES
@@ -291,8 +296,10 @@ void MENU::SHOWSTATS(const int slot)
     else if(slot == 3) id = sonymon3_id;
     else {oslWarning("Incorrect parameter passed to void MENU::SHOWSTATS(const int slot)!! Exiting function to avoid a crash!"); return;}
     
-    //create an object of the STATS class
-    STATS create;
+    /* Now lets grab the description of this sonymon from a method in the STATS class */
+    char * description = create.Description(id);
+    description[200] = '\0';
+    int manip = 0;
     
     //create a copy of the sonymon image
     OSL_IMAGE * TempImage;
@@ -319,28 +326,54 @@ void MENU::SHOWSTATS(const int slot)
         if(slot == 1)
         {   
             oslSetTextColor(WHITE);
-            oslPrintf_xy(5, 5, "sonymon stats: triangle = entrance sound and left/right = toggle info");
+            oslPrintf_xy(5, 5, "sonymon stats: triangle=entrance sound & left/right=toggle info");
             oslSetTextColor(RED);
             oslPrintf_xy(5, 20, "%s Lv:%d", sonymon1_name, sonymon1_level);
+            oslSetTextColor(WHITE);
+            oslPrintf_xy(5, 35, "original owner: %s", playerName);
             
             if(showStats)
             {
                oslSetTextColor(WHITE);
-               oslPrintf_xy(350, 150, "HP: ");
-               oslPrintf_xy(380, 150, "%d/%d", sonymon1_health, sonymon1_maxHealth);
-               oslPrintf_xy(350, 165, "Exp: ");
-               oslPrintf_xy(380, 165, "%d/%d", sonymon1_xp, sonymon1_max_xp);
-               oslPrintf_xy(350, 180, "Moves learned:");
-               oslPrintf_xy(370, 195, "%s", moveName1);
-               oslPrintf_xy(370, 210, "%s", moveName2);
-               oslPrintf_xy(370, 225, "%s", moveName3);
-               oslPrintf_xy(370, 240, "%s", moveName4);
+               oslPrintf_xy(350, 130, "HP: ");
+               oslPrintf_xy(380, 130, "%d/%d", sonymon1_health, sonymon1_maxHealth);
+               oslPrintf_xy(350, 145, "Exp: ");
+               oslPrintf_xy(380, 145, "%d/%d", sonymon1_xp, sonymon1_max_xp);
+               oslPrintf_xy(350, 160, "Moves learned:");
+               oslPrintf_xy(370, 175, "%s", moveName1);
+               oslPrintf_xy(370, 190, "%s", moveName2);
+               oslPrintf_xy(370, 205, "%s", moveName3);
+               oslPrintf_xy(370, 220, "%s", moveName4);
             }
             if(showNature)
             {
                 oslSetTextColor(WHITE);
-                oslPrintf_xy(300, 180, "(sonymon nature description)");
-            }
+                
+                manip = 0;
+                for(int i = 0; i < 35; i++){
+                    manip+=8; oslPrintf_xy((manip + 200), 170, "%c", description[i]);
+                }
+                manip = 0;
+                for(int i = 35; i < 71; i++){
+                    manip+=8; oslPrintf_xy((manip + 200), 180, "%c", description[i]);
+                } 
+                manip = 0;
+                for(int i = 71; i < 107; i++){
+                    manip+=8; oslPrintf_xy((manip + 200), 190, "%c", description[i]);
+                }
+                manip = 0;
+                for(int i = 107; i < 143; i++){
+                    manip+=8; oslPrintf_xy((manip + 210), 200, "%c", description[i]);
+                }
+                manip = 0;
+                for(int i = 143; i < 179; i++){
+                    manip+=8; oslPrintf_xy((manip + 220), 210, "%c", description[i]);
+                }
+                manip = 0;
+                for(unsigned i = 179; (i < sizeof(description)); i++){
+                    manip+=8; oslPrintf_xy((manip + 230), 220, "%c", description[i]);
+                }
+           }
         }
         //draw sonymon 2 stats
         else if(slot == 2){
@@ -364,7 +397,7 @@ void MENU::SHOWSTATS(const int slot)
     return;
 }
 
-void MENU::OPEN_PARTY(bool inBattle)
+void MENU::OPEN_PARTY(bool inBattle, const char * playerName = "default")
 {
      oslPlaySound(beep, 2);
      accessParty = 0;
@@ -439,9 +472,9 @@ void MENU::OPEN_PARTY(bool inBattle)
         
         else if(osl_keys->pressed.cross && selecting && inBattle == false)
         {
-            if(sonymon1_selected)      {SHOWSTATS(1); selecting = 0;}
-            else if(sonymon2_selected) {SHOWSTATS(2); selecting = 0;}
-            else if(sonymon3_selected) {SHOWSTATS(3); selecting = 0;}
+            if(sonymon1_selected)      {SHOWSTATS(1,playerName); selecting = 0;}
+            else if(sonymon2_selected) {SHOWSTATS(2, playerName); selecting = 0;}
+            else if(sonymon3_selected) {SHOWSTATS(3, playerName); selecting = 0;}
         }
         else if(osl_keys->pressed.cross && selecting && inBattle == true)
         {
@@ -564,45 +597,6 @@ void MENU::OPEN_BAG( void )
 char MENU::CHECK_FREQUENCY() //THIS FUNCTION NEEDS EXTREME WORK!!!!!
 {
      oslPlaySound(beep, 2);
-     int i, j, m, numCount, count, posy;
-     int manipExposure = OVER_EXPOSURE;
-     manipExposure -= exposure;
-     numCount = 0;
-     count = 0;
-     posy = 75;
-     
-     //see how many sonymon we have seen
-     for(j = 0; j < 31; j++)
-         if(seen[j] != 0) numCount++;
-         
-     //read that many sonymon into function readSeenSonymon();
-     for(i = 0; i < numCount; i++){
-         if(seen[i] == 1) {count++; seenSonymon[i] = "???";}
-         else if(seen[i] == 2) {count++; seenSonymon[i] = "Blumkins";}
-         else if(seen[i] == 3) {count++; seenSonymon[i] = "Arsande";}
-         else if(seen[i] == 4) {count++; seenSonymon[i] = "Myboross";}
-         else if(seen[i] == 5) {count++; seenSonymon[i] = "Argrasse";}
-         else if(seen[i] == 6) {count++; seenSonymon[i] = "Norbonkge";}
-         else if(seen[i] == 7) {count++; seenSonymon[i] = "Blowess";}
-         else if(seen[i] == 8) {count++; seenSonymon[i] = "Cemes";}
-         else if(seen[i] == 9) {count++; seenSonymon[i] = "Vandel";}
-         else if(seen[i] == 10) {seenSonymon[i] = "Lieosaur";}
-         else if(seen[i] == 11) {seenSonymon[i] = "-- --";}
-         else if(seen[i] == 12) {seenSonymon[i] = "-- --";}
-         else {seenSonymon[i] = "YOU HAVEN'T SEEN THIS SONYMON YET!";}
-     }
-         
-               
-     //else if(strcmp(Hz,"3Hz"))
-     
-     //else if(strcmp(Hz,"30Hz"))
-     
-     //else if(strcmp(Hz,"300Hz"))
-     
-     //else if(strcmp(Hz,"3kHz"))
-     
-     //else if(strcmp(Hz,"30kHz"))
-     
      
      while(1)
      {
@@ -615,15 +609,7 @@ char MENU::CHECK_FREQUENCY() //THIS FUNCTION NEEDS EXTREME WORK!!!!!
           oslPrintf_xy(5,5,"RADIATION PRESENT: %s", radiation);
           oslPrintf_xy(5,15,"DEVICE FREQUENCY %s", Hz);
           oslPrintf_xy(5, 35,"EXPOSURE COUNT: %i", exposure);
-          oslPrintf_xy(5, 45,"EXPOSURE FATAL IN %i COUNTS", manipExposure);
-          
-          //show seen sonymon
-          oslPrintf_xy(5, 65,"SONYMON AT THIS FREQUENCY:");
-          for(m = 0; m < count; m++){
-                oslPrintf_xy(5, posy, "-%s", seenSonymon[m]);
-                posy+=10;
-          }
-          
+          oslPrintf_xy(5, 45,"EXPOSURE FATAL IN %i COUNTS", manipExposure);     
           oslEndDrawing();
           oslSyncFrame();
      }
@@ -633,7 +619,8 @@ char MENU::CHECK_FREQUENCY() //THIS FUNCTION NEEDS EXTREME WORK!!!!!
      oslStartDrawing();
      oslClearScreen(RGBA(0,0,0,0));    
      oslEndDrawing();
-     oslSyncFrame();                                              
+     oslSyncFrame();    
+                                               
      return * Hz;
 }
 
