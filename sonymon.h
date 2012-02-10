@@ -76,11 +76,12 @@ OSL_IMAGE *blumkins_back, *blumkins_front, *arsande_back, *arsande_front,
 *argrasse_front, *argrasse_back, *myboross_back, *myboross_front, *norbonkge_front, *norbonkge_back,
 *blowhole_front, *blowhole_back, *lieosaur_front, *lieosaur_back, *cemes_front, *cemes_back, *waterserore_front,
 *waterserore_back, *vandel_front, *vandel_back, *unknown_back, *unknown_front, *sturk_front, *sturk_back,
-*blip_front, *blip_back, *cecei_front, *cecei_back, *fanz_front, *fanz_back;
+*blip_front, *blip_back, *cecei_front, *cecei_back, *fanz_front, *fanz_back, *darck_front, *darck_back,
+*feesh_front, *feesh_back;
 
 OSL_SOUND *blumkins, *arsande, *myboross, *argrasse, *norbonkge, *blowess, *cemes, *waterserore, *vandel, 
-*lieosaur, *enemy12, *enemy13, *enemy14, *enemy15, *enemy16, *Selected, *center_music, *sturk, *cecei,
-*blip, *fanz;
+*lieosaur, *Selected, *center_music, *sturk, *cecei,
+*blip, *fanz, *darck, *feesh;
 
 enum colors 
 {
@@ -359,12 +360,6 @@ void ClearMessageBox( void );
 void place(OSL_IMAGE *img, int posx, int posy);
 
 void HANDLE_SEARCH(const char * playerName, OSL_MAP * map);
-
-void ASSIGN_SONYMON(int slot, int id, int level);
-
-int ApplyAttackValue( int getValue, int enemyAttackPower );
-
-int ApplyTypes(const int moveUsed, int &damagePower, const int enemyRealType, int &EFFECT);
 
 void ENTRY_EFFECT(OSL_MAP * map, int area);
 

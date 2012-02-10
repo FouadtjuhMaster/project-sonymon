@@ -199,6 +199,7 @@ void MENU::OPEN_RECORDS( void )
 
 void MENU::SHOWSTATS(const int slot, const char * playerName = "default")
 {
+    oslPlaySound(beep, 2);
     oslSetFont(verdana);
     oslSetBkColor(RGBA(0,0,0,0));
     oslSetTextColor(WHITE);
@@ -320,7 +321,7 @@ void MENU::SHOWSTATS(const int slot, const char * playerName = "default")
         else if(osl_keys->pressed.left && showNature == true){oslPlaySound(beep, 2); showNature = false; showStats = true;}
         
         oslStartDrawing();
-        oslClearScreen(BLACK);
+        oslClearScreen(RGB(0,56, 57));
         
         //draw sonymon 1 stats
         if(slot == 1)
@@ -366,7 +367,7 @@ void MENU::SHOWSTATS(const int slot, const char * playerName = "default")
         }
         
         
-        oslDrawImage(TempImage);
+        oslDrawImageSimple(TempImage);
         oslEndDrawing();
         oslSyncFrame();
     }

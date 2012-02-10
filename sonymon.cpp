@@ -267,7 +267,7 @@ SONYMON::~SONYMON()
 //general functions used by both sonymon free roam and sonymon story modes:////////////////////
 void LoadFiles(const int mode)
 {     
-    OSL_IMAGE * loading_screen = oslLoadImageFile((char*)"img/data/loading1.png", OSL_IN_RAM, OSL_PF_5551);
+    OSL_IMAGE * loading_screen = oslLoadImageFilePNG((char*)"img/data/loading1.png", OSL_IN_RAM, OSL_PF_5551);
 
     oslStartDrawing();
     oslClearScreen(BLACK);
@@ -276,31 +276,30 @@ void LoadFiles(const int mode)
     oslSyncFrame();
     
     if(loadedBefore != 1)
-    {
-      
+    { 
     //load images to memory
-    item1 = oslLoadImageFile((char*)"img/data/item1.png", OSL_IN_RAM, OSL_PF_5551);
-	item2 = oslLoadImageFile((char*)"img/data/item2.png", OSL_IN_RAM, OSL_PF_5551);
-	item3 = oslLoadImageFile((char*)"img/data/item3.png", OSL_IN_RAM, OSL_PF_5551);
-	mini_rec_selector = oslLoadImageFile((char*)"img/data/mini-rec-selector.png", OSL_IN_RAM, OSL_PF_5551);
-	pointer = oslLoadImageFile((char*)"img/data/p0.png", OSL_IN_RAM, OSL_PF_5551);
-	battle_pointer = oslLoadImageFile((char*)"img/data/p1.png", OSL_IN_RAM, OSL_PF_5551);
-	linkOn = oslLoadImageFile((char*)"img/data/On.png", OSL_IN_RAM, OSL_PF_5551);
-	linkOff = oslLoadImageFile((char*)"img/data/Off.png", OSL_IN_RAM, OSL_PF_5551);
-	battle_selector = oslLoadImageFile((char*)"img/data/bs2.png", OSL_IN_RAM, OSL_PF_5551);
-	pound_mark = oslLoadImageFile((char*)"img/data/pmark.png", OSL_IN_RAM, OSL_PF_5551);
+    item1 = oslLoadImageFilePNG((char*)"img/data/item1.png", OSL_IN_RAM, OSL_PF_5551);
+	item2 = oslLoadImageFilePNG((char*)"img/data/item2.png", OSL_IN_RAM, OSL_PF_5551);
+	item3 = oslLoadImageFilePNG((char*)"img/data/item3.png", OSL_IN_RAM, OSL_PF_5551);
+	mini_rec_selector = oslLoadImageFilePNG((char*)"img/data/mini-rec-selector.png", OSL_IN_RAM, OSL_PF_5551);
+	pointer = oslLoadImageFilePNG((char*)"img/data/p0.png", OSL_IN_RAM, OSL_PF_5551);
+	battle_pointer = oslLoadImageFilePNG((char*)"img/data/p1.png", OSL_IN_RAM, OSL_PF_5551);
+	linkOn = oslLoadImageFilePNG((char*)"img/data/On.png", OSL_IN_RAM, OSL_PF_5551);
+	linkOff = oslLoadImageFilePNG((char*)"img/data/Off.png", OSL_IN_RAM, OSL_PF_5551);
+	battle_selector = oslLoadImageFilePNG((char*)"img/data/bs2.png", OSL_IN_RAM, OSL_PF_5551);
+	pound_mark = oslLoadImageFilePNG((char*)"img/data/pmark.png", OSL_IN_RAM, OSL_PF_5551);
     
 	//load all the boxes
-	xp_bar = oslLoadImageFile((char*)"img/data/xp_bar.png", OSL_IN_RAM, OSL_PF_5551);
-	hp_bar = oslLoadImageFile((char*)"img/data/hp_bar.png", OSL_IN_RAM, OSL_PF_5551);
-	sb = oslLoadImageFile((char*)"img/data/sb.png", OSL_IN_RAM, OSL_PF_5551);
-	dialog_box = oslLoadImageFile((char*)"img/data/dialog.png", OSL_IN_RAM, OSL_PF_5551);
-	enemy_dialog_box = oslLoadImageFile((char*)"img/data/dialog.png", OSL_IN_RAM, OSL_PF_5551);
-	messageBox = oslLoadImageFile((char*)"img/data/messageBox.png", OSL_IN_RAM, OSL_PF_5551);
-	fightBox = oslLoadImageFile((char*)"img/data/fightBox.png", OSL_IN_RAM, OSL_PF_5551);
-	DialogBox = oslLoadImageFile((char*)"img/data/DialogBox.png", OSL_IN_RAM, OSL_PF_5551);
-	background_grass = oslLoadImageFile((char*)"img/data/background_grass.png", OSL_IN_RAM, OSL_PF_5551);
-	background_rock = oslLoadImageFile((char*)"img/data/background_rock.png", OSL_IN_RAM, OSL_PF_5551);
+	xp_bar = oslLoadImageFilePNG((char*)"img/data/xp_bar.png", OSL_IN_RAM, OSL_PF_5551);
+	hp_bar = oslLoadImageFilePNG((char*)"img/data/hp_bar.png", OSL_IN_RAM, OSL_PF_5551);
+	sb = oslLoadImageFilePNG((char*)"img/data/sb.png", OSL_IN_RAM, OSL_PF_5551);
+	dialog_box = oslLoadImageFilePNG((char*)"img/data/dialog.png", OSL_IN_RAM, OSL_PF_5551);
+	enemy_dialog_box = oslLoadImageFilePNG((char*)"img/data/dialog.png", OSL_IN_RAM, OSL_PF_5551);
+	messageBox = oslLoadImageFilePNG((char*)"img/data/messageBox.png", OSL_IN_RAM, OSL_PF_5551);
+	fightBox = oslLoadImageFilePNG((char*)"img/data/fightBox.png", OSL_IN_RAM, OSL_PF_5551);
+	DialogBox = oslLoadImageFilePNG((char*)"img/data/DialogBox.png", OSL_IN_RAM, OSL_PF_5551);
+	background_grass = oslLoadImageFilePNG((char*)"img/data/background_grass.png", OSL_IN_RAM, OSL_PF_5551);
+	background_rock = oslLoadImageFilePNG((char*)"img/data/background_rock.png", OSL_IN_RAM, OSL_PF_5551);
      
     //set up the link and linkoff boxes
 	linkOn->x =  405;
@@ -309,57 +308,59 @@ void LoadFiles(const int mode)
     linkOff->y = linkOn->y;
        
     //load all sonymon images
-    unknown_back = oslLoadImageFile((char*)"img/sonymon/unknownb.png", OSL_IN_RAM, OSL_PF_5551);
-    unknown_front = oslLoadImageFile((char*)"img/sonymon/unknownf.png", OSL_IN_RAM, OSL_PF_5551);
-	arsande_front = oslLoadImageFile((char*)"img/sonymon/arsande_front.png", OSL_IN_RAM, OSL_PF_5551);
-	arsande_back = oslLoadImageFile((char*)"img/sonymon/arsande_back.png", OSL_IN_RAM, OSL_PF_5551);
-	blumkins_front = oslLoadImageFile((char*)"img/sonymon/blumkins_front.png", OSL_IN_RAM, OSL_PF_5551);
-	blumkins_back = oslLoadImageFile((char*)"img/sonymon/blumkins_back.png", OSL_IN_RAM, OSL_PF_5551);
-	argrasse_front = oslLoadImageFile((char*)"img/sonymon/argrasse_front.png", OSL_IN_RAM, OSL_PF_5551);
-	argrasse_back = oslLoadImageFile((char*)"img/sonymon/argrasse_back.png", OSL_IN_RAM, OSL_PF_5551);
-	myboross_front = oslLoadImageFile((char*)"img/sonymon/myboross_front.png", OSL_IN_RAM, OSL_PF_5551);
-	myboross_back = oslLoadImageFile((char*)"img/sonymon/myboross_back.png", OSL_IN_RAM, OSL_PF_5551);
-	norbonkge_front = oslLoadImageFile((char*)"img/sonymon/norbonkge_front.png", OSL_IN_RAM, OSL_PF_5551);
-	norbonkge_back = oslLoadImageFile((char*)"img/sonymon/norbonkge_back.png", OSL_IN_RAM, OSL_PF_5551);
-	blowhole_front = oslLoadImageFile((char*)"img/sonymon/blowhole_front.png", OSL_IN_RAM, OSL_PF_5551);
-	blowhole_back = oslLoadImageFile((char*)"img/sonymon/blowhole_back.png", OSL_IN_RAM, OSL_PF_5551);
-	vandel_front = oslLoadImageFile((char*)"img/sonymon/vandel_front.png", OSL_IN_RAM, OSL_PF_5551);
-	vandel_back = oslLoadImageFile((char*)"img/sonymon/vandel_back.png", OSL_IN_RAM, OSL_PF_5551);
-	waterserore_front = oslLoadImageFile((char*)"img/sonymon/waterserore_front.png", OSL_IN_RAM, OSL_PF_5551);
-	waterserore_back = oslLoadImageFile((char*)"img/sonymon/waterserore_back.png", OSL_IN_RAM, OSL_PF_5551);
-	cemes_front = oslLoadImageFile((char*)"img/sonymon/cemes_front.png", OSL_IN_RAM, OSL_PF_5551);
-	cemes_back = oslLoadImageFile((char*)"img/sonymon/cemes_back.png", OSL_IN_RAM, OSL_PF_5551);
-	lieosaur_front = oslLoadImageFile((char*)"img/sonymon/lieosaur_front.png", OSL_IN_RAM, OSL_PF_5551);
-	lieosaur_back = oslLoadImageFile((char*)"img/sonymon/lieosaur_back.png", OSL_IN_RAM, OSL_PF_5551);
-	sturk_front = oslLoadImageFile((char*)"img/sonymon/sturk_front.png", OSL_IN_RAM, OSL_PF_5551);
-	sturk_back = oslLoadImageFile((char*)"img/sonymon/sturk_back.png", OSL_IN_RAM, OSL_PF_5551);
-	blip_front = oslLoadImageFile((char*)"img/sonymon/blip_front.png", OSL_IN_RAM, OSL_PF_5551);
-	blip_back = oslLoadImageFile((char*)"img/sonymon/blip_back.png", OSL_IN_RAM, OSL_PF_5551);
-	cecei_front = oslLoadImageFile((char*)"img/sonymon/cecei_front.png", OSL_IN_RAM, OSL_PF_5551);
-	cecei_back = oslLoadImageFile((char*)"img/sonymon/cecei_back.png", OSL_IN_RAM, OSL_PF_5551);
-	fanz_front = oslLoadImageFile((char*)"img/sonymon/fanz_front.png", OSL_IN_RAM, OSL_PF_5551);
-	fanz_back = oslLoadImageFile((char*)"img/sonymon/fanz_back.png", OSL_IN_RAM, OSL_PF_5551);
+    unknown_back = oslLoadImageFilePNG((char*)"img/sonymon/unknownb.png", OSL_IN_RAM, OSL_PF_5551);
+    unknown_front = oslLoadImageFilePNG((char*)"img/sonymon/unknownf.png", OSL_IN_RAM, OSL_PF_5551);
+	arsande_front = oslLoadImageFilePNG((char*)"img/sonymon/arsande_front.png", OSL_IN_RAM, OSL_PF_5551);
+	arsande_back = oslLoadImageFilePNG((char*)"img/sonymon/arsande_back.png", OSL_IN_RAM, OSL_PF_5551);
+	blumkins_front = oslLoadImageFilePNG((char*)"img/sonymon/blumkins_front.png", OSL_IN_RAM, OSL_PF_5551);
+	blumkins_back = oslLoadImageFilePNG((char*)"img/sonymon/blumkins_back.png", OSL_IN_RAM, OSL_PF_5551);
+	argrasse_front = oslLoadImageFilePNG((char*)"img/sonymon/argrasse_front.png", OSL_IN_RAM, OSL_PF_5551);
+	argrasse_back = oslLoadImageFilePNG((char*)"img/sonymon/argrasse_back.png", OSL_IN_RAM, OSL_PF_5551);
+	myboross_front = oslLoadImageFilePNG((char*)"img/sonymon/myboross_front.png", OSL_IN_RAM, OSL_PF_5551);
+	myboross_back = oslLoadImageFilePNG((char*)"img/sonymon/myboross_back.png", OSL_IN_RAM, OSL_PF_5551);
+	norbonkge_front = oslLoadImageFilePNG((char*)"img/sonymon/norbonkge_front.png", OSL_IN_RAM, OSL_PF_5551);
+	norbonkge_back = oslLoadImageFilePNG((char*)"img/sonymon/norbonkge_back.png", OSL_IN_RAM, OSL_PF_5551);
+	blowhole_front = oslLoadImageFilePNG((char*)"img/sonymon/blowhole_front.png", OSL_IN_RAM, OSL_PF_5551);
+	blowhole_back = oslLoadImageFilePNG((char*)"img/sonymon/blowhole_back.png", OSL_IN_RAM, OSL_PF_5551);
+	vandel_front = oslLoadImageFilePNG((char*)"img/sonymon/vandel_front.png", OSL_IN_RAM, OSL_PF_5551);
+	vandel_back = oslLoadImageFilePNG((char*)"img/sonymon/vandel_back.png", OSL_IN_RAM, OSL_PF_5551);
+	waterserore_front = oslLoadImageFilePNG((char*)"img/sonymon/waterserore_front.png", OSL_IN_RAM, OSL_PF_5551);
+	waterserore_back = oslLoadImageFilePNG((char*)"img/sonymon/waterserore_back.png", OSL_IN_RAM, OSL_PF_5551);
+	cemes_front = oslLoadImageFilePNG((char*)"img/sonymon/cemes_front.png", OSL_IN_RAM, OSL_PF_5551);
+	cemes_back = oslLoadImageFilePNG((char*)"img/sonymon/cemes_back.png", OSL_IN_RAM, OSL_PF_5551);
+	lieosaur_front = oslLoadImageFilePNG((char*)"img/sonymon/lieosaur_front.png", OSL_IN_RAM, OSL_PF_5551);
+	lieosaur_back = oslLoadImageFilePNG((char*)"img/sonymon/lieosaur_back.png", OSL_IN_RAM, OSL_PF_5551);
+	sturk_front = oslLoadImageFilePNG((char*)"img/sonymon/sturk_front.png", OSL_IN_RAM, OSL_PF_5551);
+	sturk_back = oslLoadImageFilePNG((char*)"img/sonymon/sturk_back.png", OSL_IN_RAM, OSL_PF_5551);
+	blip_front = oslLoadImageFilePNG((char*)"img/sonymon/blip_front.png", OSL_IN_RAM, OSL_PF_5551);
+	blip_back = oslLoadImageFilePNG((char*)"img/sonymon/blip_back.png", OSL_IN_RAM, OSL_PF_5551);
+	cecei_front = oslLoadImageFilePNG((char*)"img/sonymon/cecei_front.png", OSL_IN_RAM, OSL_PF_5551);
+	cecei_back = oslLoadImageFilePNG((char*)"img/sonymon/cecei_back.png", OSL_IN_RAM, OSL_PF_5551);
+	fanz_front = oslLoadImageFilePNG((char*)"img/sonymon/fanz_front.png", OSL_IN_RAM, OSL_PF_5551);
+	fanz_back = oslLoadImageFilePNG((char*)"img/sonymon/fanz_back.png", OSL_IN_RAM, OSL_PF_5551);
+	darck_front = oslLoadImageFilePNG((char*)"img/sonymon/darck_front.png", OSL_IN_RAM, OSL_PF_5551);
+	darck_back = oslLoadImageFilePNG((char*)"img/sonymon/darck_back.png", OSL_IN_RAM, OSL_PF_5551);
+	feesh_front = oslLoadImageFilePNG((char*)"img/sonymon/feesh_front.png", OSL_IN_RAM, OSL_PF_5551);
+	feesh_back = oslLoadImageFilePNG((char*)"img/sonymon/feesh_back.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_5551);
        
     //load all sonymon sounds
-    unknown = oslLoadSoundFile((char*)"music/entrances/unknown.bgm", OSL_FMT_NONE); 
-    blumkins = oslLoadSoundFile((char*)"music/entrances/blumkins.bgm", OSL_FMT_NONE);
-    arsande = oslLoadSoundFile((char*)"music/entrances/arsande.bgm", OSL_FMT_NONE);
-    myboross = oslLoadSoundFile((char*)"music/entrances/myboross.bgm", OSL_FMT_NONE);
-    argrasse = oslLoadSoundFile((char*)"music/entrances/argrasse.bgm", OSL_FMT_NONE);
-    norbonkge = oslLoadSoundFile((char*)"music/entrances/norbonkge.bgm", OSL_FMT_NONE);
-    blowess = oslLoadSoundFile((char*)"music/entrances/blowess.bgm", OSL_FMT_NONE);
-    cemes = oslLoadSoundFile((char*)"music/entrances/cemes.bgm", OSL_FMT_NONE);
-    waterserore = oslLoadSoundFile((char*)"music/entrances/waterserore.bgm", OSL_FMT_NONE);
-    vandel = oslLoadSoundFile((char*)"music/entrances/vandel.bgm", OSL_FMT_NONE);
-    lieosaur = oslLoadSoundFile((char*)"music/entrances/lieosaur.bgm", OSL_FMT_NONE);
-    blip = oslLoadSoundFile((char*)"music/entrances/blip.bgm", OSL_FMT_NONE);
-    cecei = oslLoadSoundFile((char*)"music/entrances/cecei.bgm", OSL_FMT_NONE);
-    fanz = oslLoadSoundFile((char*)"music/entrances/fanz.bgm", OSL_FMT_NONE);
-    enemy12 = oslLoadSoundFile((char*)"music/entrances/enemy12.bgm", OSL_FMT_NONE);
-    enemy13 = oslLoadSoundFile((char*)"music/entrances/enemy13.bgm", OSL_FMT_NONE);
-    enemy14 = oslLoadSoundFile((char*)"music/entrances/enemy14.bgm", OSL_FMT_NONE);
-    enemy15 = oslLoadSoundFile((char*)"music/entrances/enemy15.bgm", OSL_FMT_NONE);
-    enemy16 = oslLoadSoundFile((char*)"music/entrances/enemy16.bgm", OSL_FMT_NONE);
+    unknown = oslLoadSoundFileBGM((char*)"music/entrances/unknown.bgm", OSL_FMT_NONE); 
+    blumkins = oslLoadSoundFileBGM((char*)"music/entrances/blumkins.bgm", OSL_FMT_NONE);
+    arsande = oslLoadSoundFileBGM((char*)"music/entrances/arsande.bgm", OSL_FMT_NONE);
+    myboross = oslLoadSoundFileBGM((char*)"music/entrances/myboross.bgm", OSL_FMT_NONE);
+    argrasse = oslLoadSoundFileBGM((char*)"music/entrances/argrasse.bgm", OSL_FMT_NONE);
+    norbonkge = oslLoadSoundFileBGM((char*)"music/entrances/norbonkge.bgm", OSL_FMT_NONE);
+    blowess = oslLoadSoundFileBGM((char*)"music/entrances/blowess.bgm", OSL_FMT_NONE);
+    cemes = oslLoadSoundFileBGM((char*)"music/entrances/cemes.bgm", OSL_FMT_NONE);
+    waterserore = oslLoadSoundFileBGM((char*)"music/entrances/waterserore.bgm", OSL_FMT_NONE);
+    vandel = oslLoadSoundFileBGM((char*)"music/entrances/vandel.bgm", OSL_FMT_NONE);
+    lieosaur = oslLoadSoundFileBGM((char*)"music/entrances/lieosaur.bgm", OSL_FMT_NONE);
+    sturk = oslLoadSoundFileBGM((char*)"music/entrances/sturk.bgm", OSL_FMT_NONE);
+    blip = oslLoadSoundFileBGM((char*)"music/entrances/blip.bgm", OSL_FMT_NONE);
+    cecei = oslLoadSoundFileBGM((char*)"music/entrances/cecei.bgm", OSL_FMT_NONE);
+    fanz = oslLoadSoundFileBGM((char*)"music/entrances/fanz.bgm", OSL_FMT_NONE);
+    darck = oslLoadSoundFileBGM((char*)"music/entrances/darck.bgm", OSL_FMT_NONE);
+    feesh = oslLoadSoundFileBGM((char*)"music/entrances/feesh.bgm", OSL_FMT_NONE);
  
     //load move sounds
     tackle_sound = oslLoadSoundFileBGM((char*)"music/moves/tackle.bgm", OSL_FMT_NONE);
@@ -397,8 +398,8 @@ void LoadFiles(const int mode)
        
     //load the main character
     zero = oslLoadImageFilePNG((char*)"img/sprites/male4.png", OSL_IN_RAM, OSL_PF_5551);  
-	
-	//load and init fonts
+    
+    //load and init fonts
     oslIntraFontInit(INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
     normal = oslLoadFontFile("flash0:/font/ltn0.pgf");
     bold = oslLoadFontFile("flash0:/font/ltn4.pgf");
@@ -514,7 +515,7 @@ void HANDLE_SEARCH(const char * playerName, OSL_MAP * map)
     
     int random_number;
     srand((unsigned)time(0));
-    random_number = (rand()%30)+1;
+    random_number = (rand()%50)+1;
     
     /* battle blumdins */
     if(random_number == 2 || random_number == 3) {BATTLE(playerName, blumkins_front, 2, 2);}
@@ -543,10 +544,8 @@ void HANDLE_SEARCH(const char * playerName, OSL_MAP * map)
     else if(random_number == 17) {BATTLE(playerName, blowhole_front, 7, 4);}
     
     /* battle cemes */
-    else if(random_number == 18 || random_number == 19) BATTLE(playerName, cemes_front, 8, 2);
-    else if(random_number == 20) {BATTLE(playerName, cemes_front, 8, 3);}
-    else if(random_number == 21) {BATTLE(playerName, cemes_front, 8, 4);}
-    else if(random_number == 22) {BATTLE(playerName, cemes_front, 8, 5);}
+    else if(random_number == 18 || random_number == 19 || random_number == 20) BATTLE(playerName, cemes_front, 8, 2);
+    else if(random_number == 21 || random_number == 22) {BATTLE(playerName, cemes_front, 8, 3);}
     
     /* battle sturk */
     else if(random_number == 23 || random_number == 24) {BATTLE(playerName, sturk_front, 12, 4); }
@@ -559,6 +558,12 @@ void HANDLE_SEARCH(const char * playerName, OSL_MAP * map)
     
     /* battle blip */
     else if(random_number == 29 || random_number == 30) {BATTLE(playerName, blip_front, 13, 3); }
+    
+    /* battle darck */
+    else if(random_number == 29 || random_number == 30) {BATTLE(playerName, darck_front, 16, 4); }
+    
+    /* battle feesh */
+    else if(random_number == 29 || random_number == 30) {BATTLE(playerName, feesh_front, 17, 6); }
      
     swait = 0;
 
@@ -653,6 +658,8 @@ void ResetStats( void )
     blip_front->y = 120;
     cecei_front->y = 120;
     fanz_front->y = 120;
+    darck_front->y = 120;
+    feesh_front->y = 120;
     
     vandel_front->x = 230;
     blowhole_front->x = 230;
@@ -669,6 +676,8 @@ void ResetStats( void )
     blip_front->x = 230;
     cecei_front->x = 230;
     fanz_front->x = 230;
+    darck_front->x = 230;
+    feesh_front->x = 230;
     
     //I am pretty sure you can guess what this does ;)
     totalSonymon = 0;
@@ -739,7 +748,7 @@ void ENTRY_EFFECT(OSL_MAP * map, int area)
           
 int SonymonFreeRoam(const char * playerName, const int load)
 {   
-    if(playerName == NULL)playerName = "Ken";
+    if(playerName == NULL){oslDebug("ERROR! Player name is equal to NULL...setting to 'Ken' by default"); playerName = "KEN";}
     //load the game if the user selected "continue game"
     //if(load){
              //int success = 0;
@@ -747,8 +756,10 @@ int SonymonFreeRoam(const char * playerName, const int load)
              //if(success != 1) return 0;
     //}
     
+    oslSetTransparentColor(RGB(255,0,255));
     //load game files
 	LoadFiles(1);
+	
 	
 	//reset all map points
     World_Route->scrollX = 0;
@@ -778,8 +789,6 @@ int SonymonFreeRoam(const char * playerName, const int load)
      selection = oslLoadImageFilePNG((char*)"img/data/choose.png", OSL_IN_RAM, OSL_PF_5551);
      if(!selection) MISSING_IMG_FILES(1);
      
-     oslSetFont(bold);
-     
      while(1)
      { 
         oslStartDrawing();
@@ -788,25 +797,28 @@ int SonymonFreeRoam(const char * playerName, const int load)
         
         //I skip 1 because that is the id of "unknown" and it makes more sense :)
         
-             if(choice == 2)  {oslDrawImageSimple(blumkins_front);    name = "blumdins";     sonymon1.id = choice;}
-        else if(choice == 3)  {oslDrawImageSimple(arsande_front);     name = "arsande";      sonymon1.id = choice;}
-        else if(choice == 4)  {oslDrawImageSimple(myboross_front);    name = "myboross";     sonymon1.id = choice;}
-        else if(choice == 5)  {oslDrawImageSimple(argrasse_front);    name = "argrasse";     sonymon1.id = choice;}
-        else if(choice == 6)  {oslDrawImageSimple(norbonkge_front);   name = "norbonkge";    sonymon1.id = choice;}
-        else if(choice == 7)  {oslDrawImageSimple(blowhole_front);    name = "blowess";      sonymon1.id = choice;}
-        else if(choice == 8)  {oslDrawImageSimple(cemes_front);       name = "cemes";        sonymon1.id = choice;}
-        else if(choice == 9)  {oslDrawImageSimple(waterserore_front); name = "waterserore";  sonymon1.id = choice;}
-        else if(choice == 10) {oslDrawImageSimple(vandel_front);      name = "vandel";       sonymon1.id = choice;}
-        else if(choice == 11) {oslDrawImageSimple(lieosaur_front);    name = "lieosaur";     sonymon1.id = choice;}
-        else if(choice == 12) {oslDrawImageSimple(sturk_front);       name = "sturk";        sonymon1.id = choice;}
-        else if(choice == 13) {oslDrawImageSimple(blip_front);        name = "blip";         sonymon1.id = choice;}
-        else if(choice == 14) {oslDrawImageSimple(cecei_front);       name = "cecei";        sonymon1.id = choice;}
-        else if(choice == 15) {oslDrawImageSimple(fanz_front);        name = "fanz";         sonymon1.id = choice;}
+             if(choice == 2)  {oslDrawImage(blumkins_front);    name = "blumdins";     sonymon1.id = choice;}
+        else if(choice == 3)  {oslDrawImage(arsande_front);     name = "arsande";      sonymon1.id = choice;}
+        else if(choice == 4)  {oslDrawImage(myboross_front);    name = "myboross";     sonymon1.id = choice;}
+        else if(choice == 5)  {oslDrawImage(argrasse_front);    name = "argrasse";     sonymon1.id = choice;}
+        else if(choice == 6)  {oslDrawImage(norbonkge_front);   name = "norbonkge";    sonymon1.id = choice;}
+        else if(choice == 7)  {oslDrawImage(blowhole_front);    name = "blowess";      sonymon1.id = choice;}
+        else if(choice == 8)  {oslDrawImage(cemes_front);       name = "cemes";        sonymon1.id = choice;}
+        else if(choice == 9)  {oslDrawImage(waterserore_front); name = "waterserore";  sonymon1.id = choice;}
+        else if(choice == 10) {oslDrawImage(vandel_front);      name = "vandel";       sonymon1.id = choice;}
+        else if(choice == 11) {oslDrawImage(lieosaur_front);    name = "lieosaur";     sonymon1.id = choice;}
+        else if(choice == 12) {oslDrawImage(sturk_front);       name = "sturk";        sonymon1.id = choice;}
+        else if(choice == 13) {oslDrawImage(blip_front);        name = "blip";         sonymon1.id = choice;}
+        else if(choice == 14) {oslDrawImage(cecei_front);       name = "cecei";        sonymon1.id = choice;}
+        else if(choice == 15) {oslDrawImage(fanz_front);        name = "fanz";         sonymon1.id = choice;}
+        else if(choice == 16) {oslDrawImage(darck_front);       name = "darck";         sonymon1.id = choice;}
+        else if(choice == 17) {oslDrawImage(feesh_front);       name = "feesh";         sonymon1.id = choice;}
         
         oslSetTextColor(WHITE);
-        oslSetBkColor(BLACK);
+        oslSetFont(bold);
         oslDrawString(5, 15, "Choose a starting Sonymon");
-        oslPrintf_xy(5, 160, "%s Lv5", name); 
+        oslSetFont(verdana);
+        oslPrintf_xy(50, 160, "%s Lv5", name); 
         
         oslEndDrawing();
         oslSyncFrame();
@@ -822,7 +834,7 @@ int SonymonFreeRoam(const char * playerName, const int load)
             break;
         }
         else if(osl_keys->pressed.left && choice > 2){choice--; oslPlaySound(beep, 2);}
-        else if(osl_keys->pressed.right && choice < 15){choice++; oslPlaySound(beep, 2);}
+        else if(osl_keys->pressed.right && choice < 17){choice++; oslPlaySound(beep, 2);}
         
 	 }
     
@@ -836,8 +848,7 @@ int SonymonFreeRoam(const char * playerName, const int load)
     inventory[4] = 99;
     inventory[5] = 98;
     
-    while(quitGame == 0)
-    { 
+    while(quitGame == 0) { 
         oslStartDrawing();
         
         HANDLE(playerName, FR1);
@@ -848,10 +859,13 @@ int SonymonFreeRoam(const char * playerName, const int load)
     }
 
    //fix sig font
-   oslSetFont(verdana); oslSetTextColor(BLACK); oslSetBkColor(BLACK);
+   oslSetFont(verdana); 
+   oslSetTextColor(BLACK); 
+   oslSetBkColor(BLACK);
    
    //end any sound
-   oslStopSound(center_music); oslStopSound(gameMusic);
+   oslStopSound(center_music); 
+   oslStopSound(gameMusic);
    
    return 0;
 }
@@ -1468,20 +1482,20 @@ void BATTLE(const char * playerName, OSL_IMAGE * enemy, const int enemyID, const
                 if(sonymon_num == 1){
                     oslPrintf_xy(18, 226, "%s" , sonymon1.moveName1);
                     oslPrintf_xy(153, 226, "%s",  sonymon1.moveName2);
-                    oslPrintf_xy(18, 242, "%s", sonymon1.moveName3);
-                    oslPrintf_xy(153, 242, "%s", sonymon1.moveName4);
+                    oslPrintf_xy(18, 252, "%s", sonymon1.moveName3);
+                    oslPrintf_xy(153, 252, "%s", sonymon1.moveName4);
                 }
                 else if(sonymon_num == 2){
                     oslPrintf_xy(18, 226, "%s" , sonymon2.moveName1);
                     oslPrintf_xy(153, 226, "%s",  sonymon2.moveName2);
-                    oslPrintf_xy(18, 242, "%s", sonymon2.moveName3);
-                    oslPrintf_xy(153, 242, "%s", sonymon2.moveName4);
+                    oslPrintf_xy(18, 252, "%s", sonymon2.moveName3);
+                    oslPrintf_xy(153, 252, "%s", sonymon2.moveName4);
                 }
                 else if(sonymon_num == 3){
                     oslPrintf_xy(18, 226, "%s" , sonymon3.moveName1);
                     oslPrintf_xy(153, 226, "%s",  sonymon3.moveName2);
-                    oslPrintf_xy(18, 242, "%s", sonymon3.moveName3);
-                    oslPrintf_xy(153, 242, "%s", sonymon3.moveName4);
+                    oslPrintf_xy(18, 252, "%s", sonymon3.moveName3);
+                    oslPrintf_xy(153, 252, "%s", sonymon3.moveName4);
                 }
                 oslDrawImageSimple(battle_selector);
              }
@@ -1629,7 +1643,7 @@ OSL_IMAGE * DrawCharacterTextBox(OSL_IMAGE * image)
      
      //now manipulate!!!
      if(loadedHealthBefore == 0){
-        MAX_HP = manipulateHealth; //we do not want MAX_HP to be changed anymore NO MATTER WHAT
+        MAX_HP = sonymon1.maxHealth; //we do not want MAX_HP to be changed anymore NO MATTER WHAT
         OUTLINE_MAX = MAX_HP + 2;
         loadedHealthBefore = 1;
      }
@@ -1774,8 +1788,12 @@ void playDeathSound(int type)
 	else if(type == 9) oslPlaySound(waterserore, 4);
 	else if(type == 10) oslPlaySound(vandel, 4);
 	else if(type == 11) oslPlaySound(lieosaur, 4);
-	else if(type == 12) oslPlaySound(enemy12, 4);
-	else if(type == 13) oslPlaySound(enemy13, 4);
+	else if(type == 12) oslPlaySound(sturk, 4);
+	else if(type == 13) oslPlaySound(blip, 4);
+	else if(type == 14) oslPlaySound(cecei, 4);
+	else if(type == 15) oslPlaySound(fanz, 4);
+	else if(type == 16) oslPlaySound(darck, 4);
+	else if(type == 17) oslPlaySound(feesh, 4);
 	else oslFatalError("DID NOT APPLY A DEATH SOUND TO SONYMON!!!\nfound in function playDeathSound(int type);!!!");
      
      return;

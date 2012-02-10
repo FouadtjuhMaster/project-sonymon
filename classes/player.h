@@ -108,8 +108,8 @@ void PLAYER::DrawInfo(int &WordsToggled, const int gameMode)
          else            oslDrawImage(linkOff);
      }
      else if(gameMode == STORY){  
-         if(allowSearch && introPassed) oslDrawImage(linkOn);
-         else           {if(introPassed){oslDrawImage(linkOff);}}
+         if(allowSearch && introPassed) oslDrawImageSimple(linkOn);
+         else           {if(introPassed){oslDrawImageSimple(linkOff);}}
      }
    
      if(WordsToggled)

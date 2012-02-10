@@ -66,7 +66,7 @@ void ITEM::Use(int item)
              oslReadKeys();
              
              if(osl_keys->pressed.circle) {oslPlaySound(beep, 2); break;}
-             else if(osl_keys->pressed.down) {oslPlaySound(beep, 2); scroll++;}
+             else if(osl_keys->pressed.down && scroll < (count - 1)) {oslPlaySound(beep, 2); scroll++;}
              else if(osl_keys->pressed.up && scroll > 0){oslPlaySound(beep, 2); scroll--;}
              
              oslStartDrawing();
@@ -91,12 +91,12 @@ void ITEM::Use(int item)
                    if(inventory[scroll] == inventory[i]) oslSetTextColor(RED);
                    else oslSetTextColor(WHITE);
                    
-                   if(inventory[i] == potion)            itemName = "potion";
-                   else if(inventory[i] == super_potion) itemName = "super potion";
-                   else if(inventory[i] == hyper_potion) itemName = "hyper potion";
-                   else if(inventory[i] == wonder_drug)  itemName = "wonder drug";
-                   else if(inventory[i] == MP_boost)     itemName = "MP boost";
-                   else if(inventory[i] == LUJ)          itemName = "LUJ";
+                   if(inventory[i] == potion)            itemName = "-potion";
+                   else if(inventory[i] == super_potion) itemName = "-super potion";
+                   else if(inventory[i] == hyper_potion) itemName = "-hyper potion";
+                   else if(inventory[i] == wonder_drug)  itemName = "-wonder drug";
+                   else if(inventory[i] == MP_boost)     itemName = "-MP boost";
+                   else if(inventory[i] == LUJ)          itemName = "-LUJ";
                    else{
                         if(inventory[i] == DEFAULT) {oslWarning("ERROR!! inventory[i] is equal to 0!! Exiting function to avoid a crash!"); break;}
                         else oslFatalError("THERE WAS A SERIOUS PROBLEM IN INVENTORY FUNCTION!! SHUTTING DOWN!");

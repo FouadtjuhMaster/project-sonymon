@@ -32,7 +32,7 @@
 
 PSP_MODULE_INFO("Sonymon", 0, 1, 1);
 PSP_MAIN_THREAD_ATTR(THREAD_ATTR_USER | THREAD_ATTR_VFPU);
-PSP_HEAP_SIZE_MAX();
+PSP_HEAP_SIZE_KB(-2024);
 
 /*declare our pointers toward our sound effects (wav files and bgm files)*/
 OSL_SOUND *menu_music, *select, *start_music;
