@@ -21,7 +21,8 @@ NORMAL ! WATER
 NORMAL ! FLYING           
 NORMAL < ULTRAVIOLET      
 NORMAL < ROCK             
-NORMAL ! FIRE             
+NORMAL ! FIRE    
+NORMAL ! ICE         
 
 
 //static type
@@ -34,6 +35,7 @@ STATIC > FLYING
 STATIC < ULTRAVIOLET
 STATIC > ROCK 
 STATIC ! FIRE
+STATIC ! ICE
  
  
 //grass type              
@@ -45,7 +47,8 @@ GRASS > WATER
 GRASS ! FLYING            
 GRASS ! ULTRAVIOLET       
 GRASS > ROCK              
-GRASS < FIRE              
+GRASS < FIRE    
+GRASS < ICE          
 
 
 //water type
@@ -58,6 +61,7 @@ WATER ! FLYING
 WATER ! ULTRAVIOLET
 WATER > ROCK
 WATER > FIRE
+WATER < ICE
 
 
 //ultraviolet type
@@ -74,6 +78,7 @@ FLYING ! FLYING
 FLYING ! ULTRAVIOLET
 FLYING < ROCK
 FLYING ! FIRE
+FLYING ! ICE
 
 
 //rock type
@@ -86,6 +91,7 @@ ROCK > FLYING
 ROCK ! ULTRAVIOLET
 ROCK < ROCK
 ROCK < FIRE
+ROCK ! ICE
 
 
 //fire type
@@ -98,3 +104,15 @@ FIRE ! FLYING
 FIRE ! ULTRAVIOLET
 FIRE < ROCK
 FIRE < FIRE
+FIRE > ICE
+
+//ice type
+ICE ! UDEFINED
+ICE ! NORMAL
+ICE ! STATIC
+ICE > GRASS
+ICE < WATER
+ICE > FLYING
+ICE ! ULTRAVIOLET
+ICE > ROCK
+ICE < FIRE

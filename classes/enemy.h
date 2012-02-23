@@ -16,7 +16,7 @@ class ENEMY
               int enemyAttack;
               int sonymonType;
               int random_number;
-};
+}controlEnemy;
 
 void ENEMY::SetEnemyMoveName(int moveUsed)
 {

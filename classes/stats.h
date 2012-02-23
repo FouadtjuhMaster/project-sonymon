@@ -18,7 +18,7 @@ class STATS : public SONYMON
               void LEVEL_UP(int slot, int id);
               
               //enemy specific members
-              char setEnemyType(int id, int level, OSL_IMAGE *enemy);
+              char * setEnemyType(int id, OSL_IMAGE *enemy);
               void setEnemyMoves(int id, int level);
               
               //general stats members
@@ -146,6 +146,13 @@ void STATS::setEnemyMoves(int id, int level)
           if(level > 5) move2 = slam;
           if(level > 8) move3 = clobber;
      }
+     else if(id == 18){
+          if(level > 1) move1 = gust;
+          if(level > 5) move2 = tackle;
+     }
+     else if(id == 19){
+          if(level > 1) move1 = uplink;
+     }
      else oslFatalError("Failed to assign moves! Found in function setMoves()!!!");
      
      //now apply!
@@ -241,6 +248,13 @@ void STATS::setMoves(int slot, int id, int level)
           if(level > 5) move2 = slam;
           if(level > 8) move3 = clobber;
      }
+     else if(id == 18){
+          if(level > 1) move1 = gust;
+          if(level > 5) move2 = tackle;
+     }
+     else if(id == 19){
+          if(level > 1) move1 = uplink;
+     }
      else oslFatalError("Failed to assign moves! Found in function setMoves()!!!");
      
      //now apply!
@@ -267,6 +281,16 @@ void STATS::LEVEL_UP(int slot, int id)
              sonymon3.level += 1;
              sonymon3.xp = 0;
              create.ASSIGN_SONYMON(slot, id, sonymon3.level);
+     }
+     else if(slot == 4){
+             sonymon4.level += 1;
+             sonymon4.xp = 0;
+             create.ASSIGN_SONYMON(slot, id, sonymon4.level);
+     }
+     else if(slot == 5){
+             sonymon5.level += 1;
+             sonymon5.xp = 0;
+             create.ASSIGN_SONYMON(slot, id, sonymon5.level);
      }
      else oslWarning("Failed to Level up sonymon! found in function STATS::LEVEL_UP(int slot, int id);!!");
      
@@ -296,6 +320,8 @@ void STATS::SetMaxXP(int slot, int id)
      else if(id == 15) max_xp = 20; //Fanz
      else if(id == 16) max_xp = 13; //darck
      else if(id == 17) max_xp = 12; //feesh
+     else if(id == 18) max_xp = 15; //abel
+     else if(id == 19) max_xp = 26; //chaos
      
      if(max_xp <= 1) oslWarning("Failed to set a value to max_xp!!! found in function STATS::SetMaxXP(int slot, int id)");
      
@@ -329,6 +355,8 @@ void STATS::XPGain(int &xp, int id, int level)
      else if(id == 15){xp = 14; manipXP = 1.2;}
      else if(id == 16){xp = 16; manipXP = 1.12;}
      else if(id == 17){xp = 18; manipXP = 1.25;}
+     else if(id == 18){xp = 17; manipXP = 1.45;}
+     else if(id == 19){xp = 50; manipXP = 1.299;}
      else oslWarning("Failed to apply value to int manipXP and int xp found in function STATS::XPGain()!!!");
      
      xp = xp + (manipXP * level);
@@ -384,6 +412,26 @@ void STATS::setMoveNames(int slot)
              move2 = sonymon3.move2;
              move3 = sonymon3.move3;
              move4 = sonymon3.move4;
+     }
+     else if(slot == 4){
+             moveName1 = sonymon4.moveName1;
+             moveName2 = sonymon4.moveName2;
+             moveName3 = sonymon4.moveName3;
+             moveName4 = sonymon4.moveName4;
+             move1 = sonymon4.move1;
+             move2 = sonymon4.move2;
+             move3 = sonymon4.move3;
+             move4 = sonymon4.move4;
+     }
+     else if(slot == 5){
+             moveName1 = sonymon5.moveName1;
+             moveName2 = sonymon5.moveName2;
+             moveName3 = sonymon5.moveName3;
+             moveName4 = sonymon5.moveName4;
+             move1 = sonymon5.move1;
+             move2 = sonymon5.move2;
+             move3 = sonymon5.move3;
+             move4 = sonymon5.move4;
      }
      
         
@@ -464,6 +512,18 @@ void STATS::setMoveNames(int slot)
              sonymon3.moveName3 = moveName3;
              sonymon3.moveName4 = moveName4;
      }
+     else if(slot == 4){
+             sonymon4.moveName1 = moveName1;
+             sonymon4.moveName2 = moveName2;
+             sonymon4.moveName3 = moveName3;
+             sonymon4.moveName4 = moveName4;
+     }
+     else if(slot == 5){
+             sonymon5.moveName1 = moveName1;
+             sonymon5.moveName2 = moveName2;
+             sonymon5.moveName3 = moveName3;
+             sonymon5.moveName4 = moveName4;
+     }
      
      return;
 }
@@ -489,6 +549,8 @@ char STATS::setName(int id, int slot)
 	 else if(id == 15) {name =  "FANZ";}
 	 else if(id == 16) {name =  "DARCK";}
 	 else if(id == 17) {name =  "FEESH";}
+	 else if(id == 18) {name =  "ABEL";}
+	 else if(id == 19) {name =  "CHAOS";}
      else oslFatalError("failed to apply a name to char * name\nin char setName function");
      
      //a NULL char crashes the game...so check for it
@@ -521,6 +583,8 @@ char STATS::setRecordName(int id, const char * name)
 	 else if(id == 15) {name =  "FANZ";}
 	 else if(id == 16) {name =  "DARCK";}
 	 else if(id == 17) {name =  "FEESH";}
+	 else if(id == 18) {name =  "ABEL";}
+	 else if(id == 19) {name =  "CHAOS";}
      else oslFatalError("failed to apply a name to char * name\nin char setName function");
      
      //a NULL char crashes the game...so check for it
@@ -551,39 +615,44 @@ void STATS::playRoar(const int id)
 	else if(id == 15) {oslPlaySound(fanz, 4);}
 	else if(id == 16) {oslPlaySound(darck, 4);}
 	else if(id == 17) {oslPlaySound(feesh, 4);}
+	else if(id == 18) {oslPlaySound(abel, 4);}
+	else if(id == 19) {oslPlaySound(chaos, 4);}
     else oslWarning("Incorrect parameter passed to void STATS::playRoar! Cannot play sound!");
     
     return;
 }
 
-char STATS::setEnemyType(int id, int level, OSL_IMAGE *enemy)
+char * STATS::setEnemyType(int id, OSL_IMAGE *enemy)
 {
-     
-	if(id == 1)      {oslPlaySound(unknown, 4);     enemyName = "???";}
-	else if(id == 2) {oslPlaySound(blumkins, 4);    enemyName = "BLUMDINS";}
-	else if(id == 3) {oslPlaySound(arsande, 4);     enemyName = "ARSANDE";}
-	else if(id == 4) {oslPlaySound(myboross, 4);    enemyName = "MYBOROSS";}
-	else if(id == 5) {oslPlaySound(argrasse, 4);    enemyName = "ARGRASSE";}
-	else if(id == 6) {oslPlaySound(norbonkge, 4);   enemyName = "NORBONKGE";}
-	else if(id == 7) {oslPlaySound(blowess, 4);     enemyName = "BLOWESS";}
-	else if(id == 8) {oslPlaySound(cemes, 4);       enemyName =  "CEMES";}
-	else if(id == 9) {oslPlaySound(waterserore, 4); enemyName = "WATERSERORE";}
-	else if(id == 10) {oslPlaySound(vandel, 4);     enemyName = "VANDEL";}
-	else if(id == 11) {oslPlaySound(lieosaur, 4);   enemyName = "LIEOSAUR";}
-	else if(id == 12) {oslPlaySound(sturk, 4);      enemyName = "STURK";}
-	else if(id == 13) {oslPlaySound(blip, 4);       enemyName =  "BLIP";}
-	else if(id == 14) {oslPlaySound(cecei, 4);      enemyName =  "CECEI";}
-	else if(id == 15) {oslPlaySound(fanz, 4);       enemyName =  "FANZ";}
-	else if(id == 16) {oslPlaySound(darck, 4);      enemyName =  "DARCK";}
-	else if(id == 17) {oslPlaySound(feesh, 4);      enemyName =  "FEESH";}
+    char * name = (char*)"never was assigned";
+    
+	if(id == 1)      {oslPlaySound(unknown, 4);     name = (char*)"???";}
+	else if(id == 2) {oslPlaySound(blumkins, 4);    name = (char*)"BLUMDINS";}
+	else if(id == 3) {oslPlaySound(arsande, 4);     name = (char*)"ARSANDE";}
+	else if(id == 4) {oslPlaySound(myboross, 4);    name = (char*)"MYBOROSS";}
+	else if(id == 5) {oslPlaySound(argrasse, 4);    name = (char*)"ARGRASSE";}
+	else if(id == 6) {oslPlaySound(norbonkge, 4);   name = (char*)"NORBONKGE";}
+	else if(id == 7) {oslPlaySound(blowess, 4);     name = (char*)"BLOWESS";}
+	else if(id == 8) {oslPlaySound(cemes, 4);       name = (char*)"CEMES";}
+	else if(id == 9) {oslPlaySound(waterserore, 4); name = (char*)"WATERSERORE";}
+	else if(id == 10) {oslPlaySound(vandel, 4);     name = (char*)"VANDEL";}
+	else if(id == 11) {oslPlaySound(lieosaur, 4);   name = (char*)"LIEOSAUR";}
+	else if(id == 12) {oslPlaySound(sturk, 4);      name = (char*)"STURK";}
+	else if(id == 13) {oslPlaySound(blip, 4);       name = (char*)"BLIP";}
+	else if(id == 14) {oslPlaySound(cecei, 4);      name = (char*)"CECEI";}
+	else if(id == 15) {oslPlaySound(fanz, 4);       name = (char*)"FANZ";}
+	else if(id == 16) {oslPlaySound(darck, 4);      name = (char*)"DARCK";}
+	else if(id == 17) {oslPlaySound(feesh, 4);      name = (char*)"FEESH";}
+	else if(id == 18) {oslPlaySound(abel, 4);       name = (char*)"ABEL";}
+	else if(id == 19) {oslPlaySound(chaos, 4);      name = (char*)"CHAOS";}
     else oslFatalError("failed to apply a name to char * name\nin char setEnemyType function");
      
-     if(enemyName == NULL) oslFatalError("char value equals NULL!!!\nfound in function setEnemyType!!!");
+    if(name == NULL) oslFatalError("char value equals NULL!!!\nfound in function setEnemyType!!!");
      
-     //set default stats...
-     enemyAlive = 1;
+    //set default stats...
+    enemyAlive = 1;
      
-     return * enemyName;
+    return name;
 }
 
 int STATS::setHealth(int &health, int id, int level)
@@ -614,6 +683,8 @@ int STATS::setHealth(int &health, int id, int level)
        -fanz = 21 + 2.1
        -darck = 18 + 2.31
        -feesh = 16 + 2.38
+       -abel = 16 + 1.78
+       -chaos = 29 + 2.31
     */
     
     if(id == 1)       {health = 1; manipLevel = 1;}
@@ -633,6 +704,8 @@ int STATS::setHealth(int &health, int id, int level)
     else if(id == 15) {health = 21; manipLevel = 2.1;}
     else if(id == 16) {health = 18; manipLevel = 2.31;}
     else if(id == 17) {health = 16; manipLevel = 2.38;}
+    else if(id == 18) {health = 16; manipLevel = 1.78;}
+    else if(id == 19) {health = 29; manipLevel = 2.31;}
     else oslFatalError("failed to apply a value to int health\nin int setHealth function");
     
     manipHealth = level * manipLevel; //find our incremented value
@@ -657,7 +730,7 @@ int STATS::setAttackPower(int &attack, int id, int level)
               myboross: 6.1
               argasse: 6.2
               norbonk: 5.2
-              blowess: 7.1
+              blowess: 6.1
               cemes: 4.4
               waterserore: 6.2
               vandel: 6.3
@@ -668,6 +741,8 @@ int STATS::setAttackPower(int &attack, int id, int level)
               fanz: 6.5
               darck: 5
               feesh: 6.1
+              abel: 6.3
+              chaos: 8.1
     */
                        
     if(id == 1)       {manipAttack = 50;}
@@ -676,7 +751,7 @@ int STATS::setAttackPower(int &attack, int id, int level)
     else if(id == 4)  {manipAttack = 6.1;}
     else if(id == 5)  {manipAttack = 6.2;}
     else if(id == 6)  {manipAttack = 5.2;}
-    else if(id == 7)  {manipAttack = 7.1;}
+    else if(id == 7)  {manipAttack = 6.1;}
     else if(id == 8)  {manipAttack = 4.4;}
     else if(id == 9)  {manipAttack = 6.2;}
     else if(id == 10) {manipAttack = 6.3;}
@@ -687,6 +762,8 @@ int STATS::setAttackPower(int &attack, int id, int level)
     else if(id == 15) {manipAttack = 6.5;}
     else if(id == 16) {manipAttack = 5;}
     else if(id == 17) {manipAttack = 6.1;}
+    else if(id == 18) {manipAttack = 6.3;}
+    else if(id == 19) {manipAttack = 8.1;}
     else oslFatalError("failed to apply a value to int manipAttack\nin int setAttackPower function");
     
     addOn = manipAttack * level;
@@ -719,6 +796,8 @@ int STATS::setDefense(int &defense, int id, int level)
               fanz: 6.5
               darck: 4.5
               feesh: 3.5
+              abel: 7.6
+              chaos: 8.1
     */
     
     if(id == 1)       {manipDefense = 1;}
@@ -738,6 +817,8 @@ int STATS::setDefense(int &defense, int id, int level)
     else if(id == 15) {manipDefense = 6.5;}
     else if(id == 16) {manipDefense = 4.5;}
     else if(id == 17) {manipDefense = 3.5;}
+    else if(id == 18) {manipDefense = 7.6;}
+    else if(id == 19) {manipDefense = 8.1;}
     else oslFatalError("failed to apply a value to int manipDefense\nin int setDefense function");
     
     addOn = manipDefense * level;
@@ -767,6 +848,8 @@ int STATS::setType(int &manipType, int id)
     else if(id == 15) {manipType = FIRE;}
     else if(id == 16) {manipType = STATIC;}
     else if(id == 17) {manipType = WATER;}
+    else if(id == 18) {manipType = ICE;}
+    else if(id == 19) {manipType = STATIC;}
     else oslFatalError("failed to apply a value to int type in function\nint setType(int type)!!!");
     
     return manipType;
@@ -791,6 +874,8 @@ void STATS::setImageUnspecified(int id, OSL_IMAGE * image)
      else if(id == 15) {image = fanz_back;}
      else if(id == 16) {image = darck_back;}
      else if(id == 17) {image = feesh_back;}
+     else if(id == 18) {image = abel_back;}
+     else if(id == 19) {image = chaos_back;}
      
      //if an image is drawn when NULL it causes the game crash....so check for it
      if(image == NULL) oslFatalError("MEM ISSUE!! FOUND IN function void setImageUnspecified(int id, OSL_IMAGE * image)!!!");
@@ -817,6 +902,8 @@ OSL_IMAGE * STATS::setImage(int id)
      else if(id == 15) {image = fanz_back;}
      else if(id == 16) {image = darck_back;}
      else if(id == 17) {image = feesh_back;}
+     else if(id == 18) {image = abel_back;}
+     else if(id == 19) {image = chaos_back;}
      
      //if an image is drawn when NULL it causes the game crash....so check for it
      if(image == NULL) oslFatalError("MEM ISSUE!! FOUND IN function void setImage(int id, int slot)!!!");
@@ -844,7 +931,9 @@ OSL_IMAGE * STATS::makeImage(const int id)
 	else if(id == 14) image = oslLoadImageFilePNG((char*)"img/sonymon/cecei_front.png", OSL_IN_RAM, OSL_PF_5551);
 	else if(id == 15) image = oslLoadImageFilePNG((char*)"img/sonymon/fanz_front.png", OSL_IN_RAM, OSL_PF_5551);
 	else if(id == 16) image = oslLoadImageFilePNG((char*)"img/sonymon/darck_front.png", OSL_IN_RAM, OSL_PF_5551);
-	   else if(id == 17) image = oslLoadImageFilePNG((char*)"img/sonymon/feesh_front.png", OSL_IN_RAM, OSL_PF_5551);
+	else if(id == 17) image = oslLoadImageFilePNG((char*)"img/sonymon/feesh_front.png", OSL_IN_RAM, OSL_PF_5551);
+	else if(id == 18) image = oslLoadImageFilePNG((char*)"img/sonymon/abel_front.png", OSL_IN_RAM, OSL_PF_5551);
+	else if(id == 19) image = oslLoadImageFilePNG((char*)"img/sonymon/chaos_front.png", OSL_IN_RAM, OSL_PF_5551);
        
     //if an image is drawn when NULL it causes the game crash....so check for it
     if(!image) oslFatalError("MEM ISSUE!! FOUND IN function\nvoid makeImage(const int id, OSL_IMAGE * image)!!!");
@@ -874,6 +963,8 @@ void STATS::setPartyImage(int x, int id)
 	   else if(id == 15) temp1 = oslLoadImageFilePNG((char*)"img/sonymon/fanz_front.png", OSL_IN_RAM, OSL_PF_5551);
 	   else if(id == 16) temp1 = oslLoadImageFilePNG((char*)"img/sonymon/darck_front.png", OSL_IN_RAM, OSL_PF_5551);
 	   else if(id == 17) temp1 = oslLoadImageFilePNG((char*)"img/sonymon/feesh_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 18) temp1 = oslLoadImageFilePNG((char*)"img/sonymon/abel_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 19) temp1 = oslLoadImageFilePNG((char*)"img/sonymon/chaos_front.png", OSL_IN_RAM, OSL_PF_5551);
        
        //if an image is drawn when NULL it causes the game crash....so check for it
      if(!temp1) oslFatalError("MEM ISSUE!! FOUND IN function\nvoid setPartyImage(int type, int slot)!!!");
@@ -899,6 +990,8 @@ void STATS::setPartyImage(int x, int id)
 	   else if(id == 15) temp2 = oslLoadImageFilePNG((char*)"img/sonymon/fanz_front.png", OSL_IN_RAM, OSL_PF_5551);
 	   else if(id == 16) temp2 = oslLoadImageFilePNG((char*)"img/sonymon/darck_front.png", OSL_IN_RAM, OSL_PF_5551);
 	   else if(id == 17) temp2 = oslLoadImageFilePNG((char*)"img/sonymon/feesh_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 18) temp2 = oslLoadImageFilePNG((char*)"img/sonymon/abel_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 19) temp2 = oslLoadImageFilePNG((char*)"img/sonymon/chaos_front.png", OSL_IN_RAM, OSL_PF_5551);
        
      //if an image is drawn when NULL it causes the game crash....so check for it
      if(!temp2) oslFatalError("MEM ISSUE!! FOUND IN function\nvoid setPartyImage(int type, int slot)!!!");
@@ -924,6 +1017,8 @@ void STATS::setPartyImage(int x, int id)
 	   else if(id == 15) temp3 = oslLoadImageFilePNG((char*)"img/sonymon/fanz_front.png", OSL_IN_RAM, OSL_PF_5551);
 	   else if(id == 16) temp3 = oslLoadImageFilePNG((char*)"img/sonymon/darck_front.png", OSL_IN_RAM, OSL_PF_5551);
 	   else if(id == 17) temp3 = oslLoadImageFilePNG((char*)"img/sonymon/feesh_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 18) temp3 = oslLoadImageFilePNG((char*)"img/sonymon/abel_front.png", OSL_IN_RAM, OSL_PF_5551);
+	   else if(id == 19) temp3 = oslLoadImageFilePNG((char*)"img/sonymon/chaos_front.png", OSL_IN_RAM, OSL_PF_5551);
        
        //if an image is drawn when NULL it causes the game crash....so check for it
      if(!temp3) oslFatalError("MEM ISSUE!! FOUND IN function\nvoid setPartyImage(int type, int slot)!!!");
@@ -981,11 +1076,11 @@ char * STATS::Description(const int id)
     }
     
     else if(id == 6) {
-        message = (char*)"Like Myboross this sonymon shocks any intruder. Very violent and sneaky, beware of this sonymon.";
-        des1 = (char*)"This plant sonymon can always be found bathing";
-        des2 = (char*)"in sunlight and bullying a blumdin.";
-        des3 = (char*)"";
-        des4 = (char*)"";
+        message = (char*)"Like Myboross this sonymon shocks any";
+        des1 = (char*)"intruder. Very violent and sneaky, beware";
+        des2 = (char*)"of this sonymon. This plant sonymon can";
+        des3 = (char*)"always be found bathing in sunlight and";
+        des4 = (char*)"bullying a blumdin.";
         des5 = (char*)"";
     }
     
@@ -998,16 +1093,16 @@ char * STATS::Description(const int id)
     }
     
     else if(id == 8) {
-        des1 = (char*)"A little timid creature who usually can found";
-        des2 = (char*)"during the night time.";
+        des1 = (char*)"A little timid creature who usually can";
+        des2 = (char*)"found during the night time.";
         des3 = (char*)"";
         des4 = (char*)"";
         des5 = (char*)"";
     }
     
     else if(id == 9) {
-        des1 = (char*)"One of the most aggressive fish sonymon there are!";
-        des2 = (char*)"Constantly fights with others and disrupts";
+        des1 = (char*)"One of the most aggressive fish sonymon there";
+        des2 = (char*)"are! Constantly fights with others and disrupts";
         des3 = (char*)"any and all surrounding sonymon.";
         des4 = (char*)"";
         des5 = (char*)"";
@@ -1022,42 +1117,42 @@ char * STATS::Description(const int id)
    }
     
     else if(id == 11) {
-        des1 = (char*)"A Small reptillian creature who searches for";
-        des2 = (char*)"food constantly.";
+        des1 = (char*)"A Small reptillian creature who searches";
+        des2 = (char*)"for food constantly.";
         des3 = (char*)"";
         des4 = (char*)"";
         des5 = (char*)"";
     }
     
     else if(id == 12) {
-        des1 = (char*)"A small rock-like creature. Always in danger";
-        des2 = (char*)"of being eaten. One of the weaker sonymons";
-        des3 = (char*)"out there.";
+        des1 = (char*)"A small rock-like creature. Always in";
+        des2 = (char*)"danger of being eaten. One of the weaker";
+        des3 = (char*)"sonymons out there.";
         des4 = (char*)"";
         des5 = (char*)"";
     }
     
     else if(id == 13) {
-        des1 = (char*)"This sonymon can always be found clowning around!";
-        des2 = (char*)"The jokster of all sonymon.";
+        des1 = (char*)"This sonymon can always be found clowning";
+        des2 = (char*)" around! The jokster of all sonymon.";
         des3 = (char*)"";
         des4 = (char*)"";
         des5 = (char*)"";
     }
     
     else if(id == 14) {
-        des1 = (char*)"Attempts to intimidate other sonymon but always";
-        des2 = (char*)"ends up creating infatuation, a very";
-        des3 = (char*)"misunderstood sonymon.";
+        des1 = (char*)"Attempts to intimidate other sonymon but";
+        des2 = (char*)"always ends up creating infatuation, a";
+        des3 = (char*)"very misunderstood sonymon.";
         des4 = (char*)"";
         des5 =  (char*)"";
     }
     
     else if(id == 15) {
-        des1 = (char*)"An unpredictable annoyance. Likes to sneak up";
-        des2 = (char*)"on campers and scare them before running off";
-        des3 = (char*)"with all of their food";
-        des4 = (char*)"";
+        des1 = (char*)"An unpredictable annoyance. Likes to";
+        des2 = (char*)"sneak up on campers and scare them ";
+        des3 = (char*)"before running off with all of their";
+        des4 = (char*)"food";
         des5 = (char*)"";
     }
     
@@ -1070,10 +1165,24 @@ char * STATS::Description(const int id)
     }
     
     else if(id == 17) {
-        des1 = (char*)"Extreemly fast sonymon. Can whip through water";
-        des2 = (char*)"at amazingly high speeds to catch prey.";
-        des3 = (char*)"";
+        des1 = (char*)"Extreemly fast sonymon. Can whip through";
+        des2 = (char*)"water at amazingly high speeds to catch";
+        des3 = (char*)"prey.";
         des4 = (char*)"";
+        des5 = (char*)"";
+    }
+    else if(id == 18) {
+        des1 = (char*)"Loves the cold and clings to ice.";
+        des2 = (char*)"Loving, and calm, this sonymon makes";
+        des3 = (char*)"a very hugable friend!";
+        des4 = (char*)"";
+        des5 = (char*)"";
+    }
+    else if(id == 19) {
+        des1 = (char*)"A fearsome and legendary sonymon... Very";
+        des2 = (char*)"powerful and dangerous. Those luck enough";
+        des3 = (char*)"to wield this awesome sonymon leave a path";
+        des4 = (char*)"of destruction in their wake.";
         des5 = (char*)"";
     }
     else {oslWarning("Failed to apply a value to message! Cannot create description!"); message = (char*)"(error)";}

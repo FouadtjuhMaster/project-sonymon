@@ -1,13 +1,13 @@
 #compile main.cpp save.cpp and sonymon.cpp into object files:
-TARGET = SonyMon
-OBJS = source/main.o source/saveIcon.h source/savePic1.h source/save.o source/sonymon.o
+TARGET = Sonymon
+OBJS = source/main.o source/saveIcon.h source/savePic1.h source/sonymon.o
 
 #To build for custom firmware:
 BUILD_PRX = 1
 PSP_FW_VERSION=371
 
 #set CFLAGS to -G0 (do not set to -G4 or -G2)
-CFLAGS = -G0 -Wall -O2 -g
+CFLAGS = -G2 -Wall -O2 -g
 CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
 ASFLAGS = $(CFLAGS)
 LIBDIR =
@@ -25,7 +25,7 @@ LIBS=$(STDLIBS) $(MYLIBS)
 #EBOOT PIC1:  PIC1.png
 #EBOOT ATR3:  SND0.at3
 EXTRA_TARGETS = EBOOT.PBP
-PSP_EBOOT_TITLE = Sonymon
+PSP_EBOOT_TITLE = Sonymon v0.3
 PSP_EBOOT_ICON = resource/ICON0.png
 PSP_EBOOT_PIC1 = resource/PIC1.png
 PSP_EBOOT_SND0 = resource/SND0.at3

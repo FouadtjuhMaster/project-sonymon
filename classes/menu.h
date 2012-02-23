@@ -4,7 +4,7 @@ class MENU
              MENU();
              ~MENU();
              
-             char CHECK_FREQUENCY();
+             void CHECK_FREQUENCY();
              void OPEN_BAG( void );
              void OPEN_PARTY(bool inBattle, const char * playerName);
              void OPEN_RECORDS( void );
@@ -76,7 +76,6 @@ void MENU::pauseGame(const char * playerName)
       
                oslStartDrawing();
                oslClearScreen(BLACK);    
-               oslDrawImageSimple(zero);
 		       
 		       sb->x = 360;
 		       sb->y = 0;
@@ -117,7 +116,7 @@ void MENU::OPEN_PLAYER(const char * playerName)
              
              oslSetTextColor(GREEN);
              
-             oslPrintf_xy(5, 45, "Money: $%f", money);
+             oslPrintf_xy(5, 45, "Money: $%lld", money);
              
              oslSetTextColor(RED);
              
@@ -398,8 +397,6 @@ void MENU::OPEN_PARTY(bool inBattle, const char * playerName = "default")
      big_h = oslLoadImageFile((char*)"img/data/bp.png", OSL_IN_RAM, OSL_PF_5551);
      qbox = oslLoadImageFile((char*)"img/data/qb.png", OSL_IN_RAM, OSL_PF_5551);
      sbox = oslLoadImageFile((char*)"img/data/sbox.png", OSL_IN_RAM, OSL_PF_5551);
-     if(!party || !big_h || !small_h || !qbox || !sbox)
-         MISSING_IMG_FILES(1);
      
      party->x = 0;      party->y = 0;
      small_h->x = 189;  small_h->y = 13;
@@ -561,9 +558,7 @@ void MENU::OPEN_BAG( void )
 {
      oslPlaySound(beep, 2);
      
-     //init ITEM class
-     ITEM items;
-     items.Use(1);
+     bag.Use(1);
      
      accessBag = 0; //if this is not set back to zero the player will be trapped in an endless pause of death!!!!
      oslPlaySound(beep, 2); 
@@ -575,22 +570,50 @@ void MENU::OPEN_BAG( void )
      return;
 }
 
-char MENU::CHECK_FREQUENCY() //THIS FUNCTION NEEDS EXTREME WORK!!!!!
+void MENU::CHECK_FREQUENCY() //THIS FUNCTION NEEDS EXTREME WORK!!!!!
 {
      oslPlaySound(beep, 2);
      
+    oslSetFont(verdana);
+    oslSetBkColor(RGBA(0,0,0,0));
+    oslSetTextColor(WHITE);
+          
      while(1)
      {
           oslReadKeys();
           if(osl_keys->pressed.circle || osl_keys->pressed.select) break;
+          
           oslStartDrawing();
-          oslSetFont(verdana);
-          oslSetBkColor(RGBA(0,0,0,0));
+          oslClearScreen(BLACK);
+          
           oslSetTextColor(WHITE);
-          oslPrintf_xy(5,5,"RADIATION PRESENT: %s", radiation);
-          oslPrintf_xy(5,15,"DEVICE FREQUENCY %s", Hz);
-          oslPrintf_xy(5, 35,"EXPOSURE COUNT: %i", exposure);
-          oslPrintf_xy(5, 45,"EXPOSURE FATAL IN %i COUNTS", manipExposure);     
+          oslPrintf_xy(5,5,"Help:");   
+          
+          oslSetTextColor(RED);
+          oslPrintf_xy(5,25,"Movement:");  
+          oslSetTextColor(WHITE);
+          oslPrintf_xy(5,35,"Use the directional pads to move.");  
+          oslPrintf_xy(5,45,"Player can not move through certain walls.");  
+          oslPrintf_xy(5,55,"End of map is reached when map ceases scrolling");  
+          
+          oslSetTextColor(RED);
+          oslPrintf_xy(5,75,"Battling:");  
+          oslSetTextColor(WHITE);
+          oslPrintf_xy(5,85,"Pokemon-style battles.");  
+          oslPrintf_xy(5,95,"...");  
+          
+          oslSetTextColor(RED);
+          oslPrintf_xy(5,115,"Trainers:");  
+          oslSetTextColor(WHITE);
+          oslPrintf_xy(5,125,"To fight a trainer, simply bump into them!"); 
+          oslPrintf_xy(5,135,"Money is won after each win."); 
+          
+          oslSetTextColor(RED);
+          oslPrintf_xy(5,155,"Other:");  
+          oslSetTextColor(WHITE);
+          oslPrintf_xy(5,165,"To toggle wild sonymon battles press R."); 
+          oslPrintf_xy(5,175,"To view debug mode press select."); 
+          
           oslEndDrawing();
           oslSyncFrame();
      }
@@ -602,7 +625,7 @@ char MENU::CHECK_FREQUENCY() //THIS FUNCTION NEEDS EXTREME WORK!!!!!
      oslEndDrawing();
      oslSyncFrame();    
                                                
-     return * Hz;
+     return;
 }
 
 MENU::MENU()

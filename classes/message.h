@@ -3,9 +3,9 @@ class MESSAGEBOX
       public:
              MESSAGEBOX();
              ~MESSAGEBOX();
-             void MessageBoxMap(const char * message, int speed, OSL_IMAGE * image, OSL_MAP * map);
-             void DoubleMessageBox(const char * message1, const char * message2, int speed, OSL_IMAGE * image);
-             void MessageBox(const char * message, int speed, int location, OSL_IMAGE * image);
+             void MessageBoxMap(const char * message, int speed, IMAGE * image, OSL_MAP * map);
+             void DoubleMessageBox(const char * message1, const char * message2, int speed, IMAGE * image);
+             void MessageBox(const char * message, int speed, int location, IMAGE * image);
              void DisplayBox(const char * message, int speed);
              
       private:
@@ -30,7 +30,6 @@ void MESSAGEBOX::DisplayBox(const char * message, int speed)
              { oslPlaySound(beep, 2); break; }
              
              oslStartDrawing();
-             oslDrawImage(zero);
              oslDrawImage(DialogBox);
              oslDrawImage(pointer);
              oslSetTextColor(BLACK);
@@ -45,7 +44,7 @@ void MESSAGEBOX::DisplayBox(const char * message, int speed)
 }
 
 
-void MESSAGEBOX::MessageBox(const char * message, int speed, int location, OSL_IMAGE * image)
+void MESSAGEBOX::MessageBox(const char * message, int speed, int location, IMAGE * image)
 {
      int count, posx;
      count = sizeof message;
@@ -64,9 +63,6 @@ void MESSAGEBOX::MessageBox(const char * message, int speed, int location, OSL_I
              { oslPlaySound(beep, 2); break; }
              
              oslStartDrawing();
-             if(location == UPLINK_CENTER && uplink_center != NULL) oslDrawImageSimple(uplink_center);
-             
-             oslDrawImage(zero);
              oslDrawImage(image);
              oslDrawImage(DialogBox);
              oslDrawImage(pointer);
@@ -81,7 +77,7 @@ void MESSAGEBOX::MessageBox(const char * message, int speed, int location, OSL_I
      return;
 }
 
-void MESSAGEBOX::MessageBoxMap(const char * message, int speed, OSL_IMAGE * image, OSL_MAP * map)
+void MESSAGEBOX::MessageBoxMap(const char * message, int speed, IMAGE * image, OSL_MAP * map)
 {
      if(map == NULL){oslWarning("Error! Map data sent to messagebox function is equal to NULL!!! Exiting function to avoid crash!!"); return;}
      
@@ -103,7 +99,6 @@ void MESSAGEBOX::MessageBoxMap(const char * message, int speed, OSL_IMAGE * imag
              
              oslStartDrawing();
              oslDrawMapSimple(map);
-             oslDrawImage(zero);
              oslDrawImage(image);
              oslDrawImage(DialogBox);
              oslDrawImage(pointer);
@@ -118,7 +113,7 @@ void MESSAGEBOX::MessageBoxMap(const char * message, int speed, OSL_IMAGE * imag
      return;
 }
 
-void MESSAGEBOX::DoubleMessageBox(const char * message1, const char * message2, int speed, OSL_IMAGE * image)
+void MESSAGEBOX::DoubleMessageBox(const char * message1, const char * message2, int speed, IMAGE * image)
 {
      int count1, count2, posx;
      count1 = sizeof message1;
@@ -138,7 +133,6 @@ void MESSAGEBOX::DoubleMessageBox(const char * message1, const char * message2, 
              { oslPlaySound(beep, 2); break; }
              
              oslStartDrawing();
-             oslDrawImage(zero);
              oslDrawImage(image);
              oslDrawImage(DialogBox);
              oslDrawImage(pointer);

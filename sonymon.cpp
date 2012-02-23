@@ -135,6 +135,7 @@ int SONYMON::ApplyTypes(const int moveUsed, int &damagePower, const int enemyRea
     else if(manipEnemyType == UNDEFINED && manipType == ULTRAVIOLET)  {EFFECT = NOTHING; }
     else if(manipEnemyType == UNDEFINED && manipType == ROCK)         {EFFECT = NOTHING; }
     else if(manipEnemyType == UNDEFINED && manipType == FIRE)         {EFFECT = NOTHING; }
+    else if(manipEnemyType == UNDEFINED && manipType == ICE)          {EFFECT = NOTHING; }
     
     else if(manipEnemyType == NORMAL && manipType == UNDEFINED)    {EFFECT = NOTHING;          }
     else if(manipEnemyType == NORMAL && manipType == NORMAL)       {EFFECT = NOTHING;          }
@@ -145,6 +146,7 @@ int SONYMON::ApplyTypes(const int moveUsed, int &damagePower, const int enemyRea
     else if(manipEnemyType == NORMAL && manipType == ULTRAVIOLET)  {EFFECT = SUPER_EFFECTIVE;  }
     else if(manipEnemyType == NORMAL && manipType == ROCK)         {EFFECT = NOTHING;          }
     else if(manipEnemyType == NORMAL && manipType == FIRE)         {EFFECT = NOTHING;          }
+    else if(manipEnemyType == NORMAL && manipType == ICE)          {EFFECT = NOTHING;          }
     
     else if(manipEnemyType == STATIC && manipType == UNDEFINED)    {EFFECT = NOTHING;         }
     else if(manipEnemyType == STATIC && manipType == NORMAL)       {EFFECT = NOTHING;         }
@@ -155,16 +157,18 @@ int SONYMON::ApplyTypes(const int moveUsed, int &damagePower, const int enemyRea
     else if(manipEnemyType == STATIC && manipType == ULTRAVIOLET)  {EFFECT = NOT_EFFECTIVE;   }
     else if(manipEnemyType == STATIC && manipType == ROCK)         {EFFECT = SUPER_EFFECTIVE; }
     else if(manipEnemyType == STATIC && manipType == FIRE)         {EFFECT = NOTHING;         }
+    else if(manipEnemyType == STATIC && manipType == ICE)          {EFFECT = NOTHING;         }
     
     else if(manipEnemyType == GRASS && manipType == UNDEFINED)    {EFFECT = NOTHING;          }
     else if(manipEnemyType == GRASS && manipType == NORMAL)       {EFFECT = NOTHING;          }
     else if(manipEnemyType == GRASS && manipType == STATIC)       {EFFECT = NOTHING;          }
     else if(manipEnemyType == GRASS && manipType == GRASS)        {EFFECT = NOT_EFFECTIVE;    }
     else if(manipEnemyType == GRASS && manipType == WATER)        {EFFECT = NOT_EFFECTIVE;    }
-    else if(manipEnemyType == GRASS && manipType == FLYING)       {EFFECT = NOTHING;          }
+    else if(manipEnemyType == GRASS && manipType == FLYING)       {EFFECT = SUPER_EFFECTIVE;  }
     else if(manipEnemyType == GRASS && manipType == ULTRAVIOLET)  {EFFECT = SUPER_EFFECTIVE;  }
     else if(manipEnemyType == GRASS && manipType == ROCK)         {EFFECT = NOTHING;          }
     else if(manipEnemyType == GRASS && manipType == FIRE)         {EFFECT = SUPER_EFFECTIVE;  }
+    else if(manipEnemyType == GRASS && manipType == ICE)          {EFFECT = SUPER_EFFECTIVE;  }
     
     else if(manipEnemyType == WATER && manipType == UNDEFINED)    {EFFECT = NOTHING;          }
     else if(manipEnemyType == WATER && manipType == NORMAL)       {EFFECT = NOTHING;          }
@@ -175,6 +179,7 @@ int SONYMON::ApplyTypes(const int moveUsed, int &damagePower, const int enemyRea
     else if(manipEnemyType == WATER && manipType == ULTRAVIOLET)  {EFFECT = SUPER_EFFECTIVE;  }
     else if(manipEnemyType == WATER && manipType == ROCK)         {EFFECT = NOTHING;          }
     else if(manipEnemyType == WATER && manipType == FIRE)         {EFFECT = NOT_EFFECTIVE;    }
+    else if(manipEnemyType == WATER && manipType == ICE)          {EFFECT = NOT_EFFECTIVE;    }
     
     else if(manipEnemyType == FLYING && manipType == UNDEFINED)   {EFFECT = NOTHING;          }
     else if(manipEnemyType == FLYING && manipType == NORMAL)      {EFFECT = NOTHING;          }
@@ -185,6 +190,7 @@ int SONYMON::ApplyTypes(const int moveUsed, int &damagePower, const int enemyRea
     else if(manipEnemyType == FLYING && manipType == ULTRAVIOLET) {EFFECT = SUPER_EFFECTIVE;  }
     else if(manipEnemyType == FLYING && manipType == ROCK)        {EFFECT = NOTHING;          }
     else if(manipEnemyType == FLYING && manipType == FIRE)        {EFFECT = NOTHING;          }
+    else if(manipEnemyType == FLYING && manipType == ICE)         {EFFECT = SUPER_EFFECTIVE;  }        
     
     else if(manipEnemyType == ROCK && manipType == UNDEFINED)     {EFFECT = NOTHING;         }
     else if(manipEnemyType == ROCK && manipType == NORMAL)        {EFFECT = NOT_EFFECTIVE;   }
@@ -195,6 +201,7 @@ int SONYMON::ApplyTypes(const int moveUsed, int &damagePower, const int enemyRea
     else if(manipEnemyType == ROCK && manipType == ULTRAVIOLET)   {EFFECT = SUPER_EFFECTIVE; }
     else if(manipEnemyType == ROCK && manipType == ROCK)          {EFFECT = NOT_EFFECTIVE;   }
     else if(manipEnemyType == ROCK && manipType == FIRE)          {EFFECT = NOT_EFFECTIVE;   }
+    else if(manipEnemyType == ROCK && manipType == ICE)           {EFFECT = SUPER_EFFECTIVE; }
     
     else if(manipEnemyType == ULTRAVIOLET && manipType == UNDEFINED)   {EFFECT = NOTHING;         }
     else if(manipEnemyType == ULTRAVIOLET && manipType == NORMAL)      {EFFECT = NOT_EFFECTIVE;   }
@@ -205,16 +212,29 @@ int SONYMON::ApplyTypes(const int moveUsed, int &damagePower, const int enemyRea
     else if(manipEnemyType == ULTRAVIOLET && manipType == ULTRAVIOLET) {EFFECT = SUPER_EFFECTIVE; }
     else if(manipEnemyType == ULTRAVIOLET && manipType == ROCK)        {EFFECT = NOT_EFFECTIVE;   }
     else if(manipEnemyType == ULTRAVIOLET && manipType == FIRE)        {EFFECT = NOTHING;         }
+    else if(manipEnemyType == ULTRAVIOLET && manipType == ICE)         {EFFECT = NOTHING;         }
     
-    else if(manipEnemyType == FIRE && manipType == UNDEFINED)   {EFFECT = NOTHING;        }
-    else if(manipEnemyType == FIRE && manipType == NORMAL)      {EFFECT = NOTHING;        }
-    else if(manipEnemyType == FIRE && manipType == STATIC)      {EFFECT = NOTHING;        }
-    else if(manipEnemyType == FIRE && manipType == GRASS)       {EFFECT = NOT_EFFECTIVE;  }
-    else if(manipEnemyType == FIRE && manipType == WATER)       {EFFECT = NOT_EFFECTIVE;  }
-    else if(manipEnemyType == FIRE && manipType == FLYING)      {EFFECT = NOTHING;        }
-    else if(manipEnemyType == FIRE && manipType == ULTRAVIOLET) {EFFECT = NOTHING;        }
-    else if(manipEnemyType == FIRE && manipType == ROCK)        {EFFECT = NOT_EFFECTIVE;  }
-    else if(manipEnemyType == FIRE && manipType == FIRE)        {EFFECT = NOT_EFFECTIVE;  }
+    else if(manipEnemyType == FIRE && manipType == UNDEFINED)   {EFFECT = NOTHING;         }
+    else if(manipEnemyType == FIRE && manipType == NORMAL)      {EFFECT = NOTHING;         }
+    else if(manipEnemyType == FIRE && manipType == STATIC)      {EFFECT = NOTHING;         }
+    else if(manipEnemyType == FIRE && manipType == GRASS)       {EFFECT = NOT_EFFECTIVE;   }
+    else if(manipEnemyType == FIRE && manipType == WATER)       {EFFECT = NOT_EFFECTIVE;   }
+    else if(manipEnemyType == FIRE && manipType == FLYING)      {EFFECT = NOTHING;         }
+    else if(manipEnemyType == FIRE && manipType == ULTRAVIOLET) {EFFECT = SUPER_EFFECTIVE; }
+    else if(manipEnemyType == FIRE && manipType == ROCK)        {EFFECT = NOT_EFFECTIVE;   }
+    else if(manipEnemyType == FIRE && manipType == FIRE)        {EFFECT = NOT_EFFECTIVE;   }
+    else if(manipEnemyType == FIRE && manipType == ICE)         {EFFECT = NOT_EFFECTIVE;   }
+    
+    else if(manipEnemyType == ICE && manipType == UNDEFINED)   {EFFECT = NOTHING;        }
+    else if(manipEnemyType == ICE && manipType == NORMAL)      {EFFECT = NOTHING;        }
+    else if(manipEnemyType == ICE && manipType == STATIC)      {EFFECT = NOTHING;        }
+    else if(manipEnemyType == ICE && manipType == GRASS)       {EFFECT = NOTHING;        }
+    else if(manipEnemyType == ICE && manipType == WATER)       {EFFECT = NOTHING;        }
+    else if(manipEnemyType == ICE && manipType == FLYING)      {EFFECT = NOTHING;        }
+    else if(manipEnemyType == ICE && manipType == ULTRAVIOLET) {EFFECT = SUPER_EFFECTIVE;}
+    else if(manipEnemyType == ICE && manipType == ROCK)        {EFFECT = NOTHING;        }
+    else if(manipEnemyType == ICE && manipType == FIRE)        {EFFECT = SUPER_EFFECTIVE;}
+    else if(manipEnemyType == ICE && manipType == ICE)         {EFFECT = NOTHING;        }
 
     else oslWarning("Failed to apply scales to move and type!!! Found in function ApplyTypes();!!!");
     
@@ -264,7 +284,7 @@ SONYMON::~SONYMON()
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
-//general functions used by both sonymon free roam and sonymon story modes:////////////////////
+//general functions:////////////////////
 void LoadFiles(const int mode)
 {     
     OSL_IMAGE * loading_screen = oslLoadImageFilePNG((char*)"img/data/loading1.png", OSL_IN_RAM, OSL_PF_5551);
@@ -341,7 +361,11 @@ void LoadFiles(const int mode)
 	darck_front = oslLoadImageFilePNG((char*)"img/sonymon/darck_front.png", OSL_IN_RAM, OSL_PF_5551);
 	darck_back = oslLoadImageFilePNG((char*)"img/sonymon/darck_back.png", OSL_IN_RAM, OSL_PF_5551);
 	feesh_front = oslLoadImageFilePNG((char*)"img/sonymon/feesh_front.png", OSL_IN_RAM, OSL_PF_5551);
-	feesh_back = oslLoadImageFilePNG((char*)"img/sonymon/feesh_back.png", OSL_IN_RAM | OSL_SWIZZLED, OSL_PF_5551);
+	feesh_back = oslLoadImageFilePNG((char*)"img/sonymon/feesh_back.png", OSL_IN_RAM, OSL_PF_5551);
+	abel_front = oslLoadImageFilePNG((char*)"img/sonymon/abel_front.png", OSL_IN_RAM, OSL_PF_5551);
+	abel_back = oslLoadImageFilePNG((char*)"img/sonymon/abel_back.png", OSL_IN_RAM, OSL_PF_5551);
+	chaos_front = oslLoadImageFilePNG((char*)"img/sonymon/chaos_front.png", OSL_IN_RAM, OSL_PF_5551);
+	chaos_back = oslLoadImageFilePNG((char*)"img/sonymon/chaos_back.png", OSL_IN_RAM, OSL_PF_5551);
        
     //load all sonymon sounds
     unknown = oslLoadSoundFileBGM((char*)"music/entrances/unknown.bgm", OSL_FMT_NONE); 
@@ -361,6 +385,8 @@ void LoadFiles(const int mode)
     fanz = oslLoadSoundFileBGM((char*)"music/entrances/fanz.bgm", OSL_FMT_NONE);
     darck = oslLoadSoundFileBGM((char*)"music/entrances/darck.bgm", OSL_FMT_NONE);
     feesh = oslLoadSoundFileBGM((char*)"music/entrances/feesh.bgm", OSL_FMT_NONE);
+    abel = oslLoadSoundFileBGM((char*)"music/entrances/abel.bgm", OSL_FMT_NONE);
+    chaos = oslLoadSoundFileBGM((char*)"music/entrances/chaos.bgm", OSL_FMT_NONE);
  
     //load move sounds
     tackle_sound = oslLoadSoundFileBGM((char*)"music/moves/tackle.bgm", OSL_FMT_NONE);
@@ -389,6 +415,7 @@ void LoadFiles(const int mode)
     enter  = oslLoadSoundFileWAV((char*)"music/exit.wav", OSL_FMT_NONE);
     found = oslLoadSoundFileBGM((char*) "music/found.bgm", OSL_FMT_NONE);
     beep = oslLoadSoundFileBGM((char*)"music/beep.bgm", OSL_FMT_NONE);
+    healthBoost = oslLoadSoundFileWAV((char*)"music/health_boost.wav", OSL_FMT_NONE);
     Selected = oslLoadSoundFileBGM((char*)"music/selected.bgm", OSL_FMT_NONE);
     gameMusic = oslLoadSoundFileBGM((char*)"music/route/route1.bgm", OSL_FMT_NONE); 
     center_music = oslLoadSoundFileBGM((char*)"music/building1.bgm", OSL_FMT_NONE);
@@ -397,14 +424,8 @@ void LoadFiles(const int mode)
     verdana = oslLoadFontFile((char*)"fonts/verdana.oft");  
        
     //load the main character
-    zero = oslLoadImageFilePNG((char*)"img/sprites/male4.png", OSL_IN_RAM, OSL_PF_5551);  
-    
-    //load and init fonts
-    oslIntraFontInit(INTRAFONT_CACHE_ALL | INTRAFONT_STRING_UTF8);
-    normal = oslLoadFontFile("flash0:/font/ltn0.pgf");
-    bold = oslLoadFontFile("flash0:/font/ltn4.pgf");
-    italic = oslLoadFontFile("flash0:/font/ltn2.pgf");
-    oslIntraFontSetStyle(normal, 1.0f,WHITE,BLACK,INTRAFONT_ALIGN_LEFT);
+    player.image = oslLoadImageFilePNG((char*)"img/sprites/male4.png", OSL_IN_RAM, OSL_PF_5551);  
+
     
 	loadedBefore = 1;
 	
@@ -436,7 +457,37 @@ void LoadFiles(const int mode)
     //free RAM
     oslDeleteImage(loading_screen);
     
+    //reset all map points
+    World_Route->scrollX = 0; World_Route->scrollY = 0;
+    FR1->scrollX = 0; FR1->scrollY = 0;
+    
+	//Place player at the center of the screen
+	player.image->x = 240;  
+    player.image->y = 121; 
+	oslSetImageTileSize(player.image,0,DOWN,23,32);
+    FR1->scrollX = -2005; 
+    FR1->scrollY = 1181; 
+    
     return;
+}
+
+int collision(OSL_IMAGE *img1,float img1posX, float img1posY, OSL_IMAGE *img2, float img2posX, float img2posY ) 
+{
+   int collisio;
+   collisio = 0;
+   float img1width  = img1->stretchX;
+   float img1height = img1->stretchY;
+   float img2width  = img2->stretchX;
+   float img2height = img2->stretchY;
+   
+   if ((img1posX + img1width > img2posX) &&
+       (img1posX < img2posX + img2width) &&
+       (img1posY + img1height > img2posY) &&
+       (img1posY < img2posY + img2height) ) 
+{
+         collisio = 1;               
+   }     
+   return collisio;
 }
 
 void TransitionUp(OSL_MAP * map, OSL_IMAGE * image)
@@ -564,6 +615,12 @@ void HANDLE_SEARCH(const char * playerName, OSL_MAP * map)
     
     /* battle feesh */
     else if(random_number == 29 || random_number == 30) {BATTLE(playerName, feesh_front, 17, 6); }
+    
+    /* battle abel */
+    else if(random_number == 31 || random_number == 32) {BATTLE(playerName, abel_front, 18, 12); }
+    
+    /* battle chaos */
+    else if(random_number == 33 || random_number == 34) {BATTLE(playerName, chaos_front, 19, 50); }
      
     swait = 0;
 
@@ -573,9 +630,6 @@ void HANDLE_SEARCH(const char * playerName, OSL_MAP * map)
 void ResetStats( void )
 {
     //wipe all sonymon memory or stats CLEAN!!!
-    
-    //const char * object just displays info about where the player is standing
-    object = "NULL"; 
     
     //wipe sonymon slot #1
     sonymon1.name = "???";
@@ -660,6 +714,8 @@ void ResetStats( void )
     fanz_front->y = 120;
     darck_front->y = 120;
     feesh_front->y = 120;
+    abel_front->y = 120;
+    chaos_front->y = 120;
     
     vandel_front->x = 230;
     blowhole_front->x = 230;
@@ -678,6 +734,8 @@ void ResetStats( void )
     fanz_front->x = 230;
     darck_front->x = 230;
     feesh_front->x = 230;
+    abel_front->x = 230;
+    chaos_front->x = 230;
     
     //I am pretty sure you can guess what this does ;)
     totalSonymon = 0;
@@ -695,13 +753,99 @@ void ResetStats( void )
     //fix inventory[] array
     unsigned m;
     for(m = 0; m < 200; m++)
-        inventory[m] = 0;
+        bag.inventory[m] = 0;
+    
+    //reset movement points
+    player.movedUp = 0;
+    player.movedDown = 0;
+    player.movedLeft = 0;
+    player.movedRight = 0;
+    money = 0;
     
     /***** THE CODE BELOW CAUSES SonymonSeen[1] to become equal to 1.. which puts it in records******/
     //since this is a new game set first sonymon slot to default (no sonymon)...kinda
     //sonymon_num = 0; //unequip any sonymon
     //currentSonymon = 0;	
     //ASSIGN_SONYMON(1, 1, 2);
+    
+    //choose a starting sonymon
+    int choice = 2;
+    const char * name = "???";
+     
+    OSL_IMAGE * selection;
+    selection = oslLoadImageFilePNG((char*)"img/data/choose.png", OSL_IN_RAM, OSL_PF_5551);
+     
+    while(1)
+    { 
+        oslStartDrawing();
+        oslClearScreen(BLACK);
+        oslDrawImage(selection);
+        
+        //I skip 1 because that is the id of "unknown" and it makes more sense :)
+        
+             if(choice == 2)  {oslDrawImage(blumkins_front);    name = "BLUMDINS";     sonymon1.id = choice;}
+        else if(choice == 3)  {oslDrawImage(arsande_front);     name = "ARSANDE";      sonymon1.id = choice;}
+        else if(choice == 4)  {oslDrawImage(myboross_front);    name = "MYBOROSS";     sonymon1.id = choice;}
+        else if(choice == 5)  {oslDrawImage(argrasse_front);    name = "ARGRASSE";     sonymon1.id = choice;}
+        else if(choice == 6)  {oslDrawImage(norbonkge_front);   name = "NORBONKGE";    sonymon1.id = choice;}
+        else if(choice == 7)  {oslDrawImage(blowhole_front);    name = "BLOWESS";      sonymon1.id = choice;}
+        else if(choice == 8)  {oslDrawImage(cemes_front);       name = "CEMES";        sonymon1.id = choice;}
+        else if(choice == 9)  {oslDrawImage(waterserore_front); name = "WATERSERORE";  sonymon1.id = choice;}
+        else if(choice == 10) {oslDrawImage(vandel_front);      name = "VANDEL";       sonymon1.id = choice;}
+        else if(choice == 11) {oslDrawImage(lieosaur_front);    name = "LIEOSAUR";     sonymon1.id = choice;}
+        else if(choice == 12) {oslDrawImage(sturk_front);       name = "STURK";        sonymon1.id = choice;}
+        else if(choice == 13) {oslDrawImage(blip_front);        name = "BLIP";         sonymon1.id = choice;}
+        else if(choice == 14) {oslDrawImage(cecei_front);       name = "CECEI";        sonymon1.id = choice;}
+        else if(choice == 15) {oslDrawImage(fanz_front);        name = "FANZ";         sonymon1.id = choice;}
+        else if(choice == 16) {oslDrawImage(darck_front);       name = "DARCK";        sonymon1.id = choice;}
+        else if(choice == 17) {oslDrawImage(feesh_front);       name = "FEESH";        sonymon1.id = choice;}
+        else if(choice == 18) {oslDrawImage(abel_front);        name = "ABEL";         sonymon1.id = choice;}
+        else if(choice == 19) {oslDrawImage(chaos_front);       name = "CHAOS";        sonymon1.id = choice;}
+        
+        oslSetTextColor(WHITE); oslPrintf_xy(5, 15, "Choose a starting Sonymon");
+        
+        if(choice == 2) oslPrintf_xy(100, 160, "BLUMDINS"); 
+        else if(choice == 3) oslPrintf_xy(100, 160, "ARSANDE"); 
+        else if(choice == 4) oslPrintf_xy(100, 160, "MYBOROSS"); 
+        else if(choice == 5) oslPrintf_xy(100, 160, "ARGRASSE"); 
+        else if(choice == 6) oslPrintf_xy(100, 160, "NORBONKGE"); 
+        else if(choice == 7) oslPrintf_xy(100, 160, "BLOWESS"); 
+        else if(choice == 8) oslPrintf_xy(100, 160, "CEMES"); 
+        else if(choice == 9) oslPrintf_xy(100, 160, "WATERSERORE"); 
+        else if(choice == 10) oslPrintf_xy(100, 160, "VANDEL"); 
+        else if(choice == 11) oslPrintf_xy(100, 160, "LIEOSAUR"); 
+        else if(choice == 12) oslPrintf_xy(100, 160, "STURK"); 
+        else if(choice == 13) oslPrintf_xy(100, 160, "BLIP"); 
+        else if(choice == 14) oslPrintf_xy(100, 160, "CECEI"); 
+        else if(choice == 15) oslPrintf_xy(100, 160, "FANZ"); 
+        else if(choice == 16) oslPrintf_xy(100, 160, "DARCK"); 
+        else if(choice == 17) oslPrintf_xy(100, 160, "FEESH"); 
+        else if(choice == 18) oslPrintf_xy(100, 160, "ABEL"); 
+        else if(choice == 19) oslPrintf_xy(100, 160, "CHAOS"); 
+        
+        oslEndDrawing();
+        oslSyncFrame();
+        
+        oslReadKeys();
+        
+        //assign that sonymon
+        if(osl_keys->pressed.cross || osl_keys->pressed.start){
+            sonymon_num = 1; //equip first sonymon
+            sonymon1.alive = 1;
+            totalSonymon++;	
+            create.ASSIGN_SONYMON(1, sonymon1.id, 5);
+            break;
+        }
+        else if(osl_keys->pressed.left && choice > 2){choice--; oslPlaySound(beep, 2);}
+        else if(osl_keys->pressed.right && choice < 19){choice++; oslPlaySound(beep, 2);}
+        
+	}
+	
+	quitGame = 0;
+	
+	//testing inventory...temperarily give items to player
+    bag.inventory[0] = 1;
+    bag.inventory[1] = 2;
     
     return;
 }
@@ -727,7 +871,7 @@ void ENTRY_EFFECT(OSL_MAP * map, int area)
            oslStartDrawing();
            if(InsideCenter) oslDrawImageSimple(uplink_center);
            else oslDrawMapSimple(map);
-           oslDrawImageSimple(zero);
+           oslDrawImageSimple(player.image);
            
            oslDrawFillRect(squareOne, 0, moveSquare, 272, BLACK);
            oslDrawFillRect(squareTwo, 0, moveSquare2, 272, BLACK);
@@ -757,104 +901,99 @@ int SonymonFreeRoam(const char * playerName, const int load)
     //}
     
     oslSetTransparentColor(RGB(255,0,255));
+    
     //load game files
 	LoadFiles(1);
 	
+	//configure Vaughn
+	COMPUTER Vaughn;
+	Vaughn.trainer = true;
+	Vaughn.AI = Still;
+	Vaughn.image = oslLoadImageFilePNG((char*)"img/sprites/guy1.png", OSL_IN_RAM, OSL_PF_5551);
+	Vaughn.posx = -550;
+	Vaughn.posy = 1230;
+	Vaughn.name =          (char*)"V@ughn";
+	Vaughn.greetMessage =  (char*)"Welcome to Sonymon v0.3! Get Ready to battle!";
+	Vaughn.loseMessage =   (char*)"Well, I lost, as expected...";
+	Vaughn.winMessage =    (char*)"Wow, and I made SURE the player could beat me!!";
+	Vaughn.normalMessage = (char*)"Well... go explore!";
+	Vaughn.trainerSonymon1.id = 12;
+	Vaughn.trainerSonymon1.level = 3;
 	
-	//reset all map points
-    World_Route->scrollX = 0;
-    World_Route->scrollY = 0;
-    FR1->scrollX = 0;
-    FR1->scrollY = 0;
-    
-	//Place player at the center of the screen
-	zero->x = 240; 
-    zero->y = 121; 
-    FR1->scrollX = -2005;
-    FR1->scrollY = 1181;  
-    oslSetImageTileSize(zero,0,DOWN,23,32);
+	//configure fouadtjuhmaster
+	COMPUTER fouadtjuhmaster;
+	fouadtjuhmaster.trainer = true;
+	fouadtjuhmaster.AI = FastRotation;
+	fouadtjuhmaster.image = oslLoadImageFilePNG((char*)"img/sprites/guy2.png", OSL_IN_RAM, OSL_PF_5551);
+	fouadtjuhmaster.posx = -610;
+	fouadtjuhmaster.posy = 1250;
+	fouadtjuhmaster.name =          (char*)"Fouadtjuhmaster";
+	fouadtjuhmaster.greetMessage =  (char*)"Are you sure you want to lose?";
+	fouadtjuhmaster.loseMessage =   (char*)"Impossible, I never lose!";
+	fouadtjuhmaster.winMessage =    (char*)"I always will win!";
+	fouadtjuhmaster.normalMessage = (char*)"Get ready!";
+	fouadtjuhmaster.trainerSonymon1.id = 13;
+	fouadtjuhmaster.trainerSonymon1.level = 3;
+	
+	//configure billyJoe
+	COMPUTER billyJoe;
+	billyJoe.AI = NormalRotation;
+	billyJoe.image = oslLoadImageFilePNG((char*)"img/sprites/guy3.png", OSL_IN_RAM, OSL_PF_5551);
+	billyJoe.posx = -520;
+	billyJoe.posy = 1797;
+	billyJoe.name =           (char*)"Billy Joe";
+	billyJoe.greetMessage =  (char*)"I am not going to lose to someone like you!";
+	billyJoe.loseMessage =   (char*)"Oh come on, and I thought I had it to!";
+	billyJoe.winMessage =    (char*)"HA YEAH WE DID IT!";
+	billyJoe.normalMessage = (char*)"What do you want?";
+	
+	//configure annoyingSteve
+	COMPUTER annoyingSteve;
+	annoyingSteve.AI = FastRotation;
+	annoyingSteve.image = oslLoadImageFilePNG((char*)"img/sprites/guy1.png", OSL_IN_RAM, OSL_PF_5551);
+	annoyingSteve.posx = -520;
+	annoyingSteve.posy = 1000;
+	annoyingSteve.name =          (char*)"Annoying Steve";
+	annoyingSteve.greetMessage =  (char*)"(Snort)...my sonymans arz better than yurs!";
+	annoyingSteve.loseMessage =   (char*)"whaaaaat?!?";
+	annoyingSteve.winMessage =    (char*)"FAIL!!!!!!!!!!!";
+	annoyingSteve.normalMessage = (char*)"Eyes naht the stoopid one ihtz yu!"; 
     
     if(gameMusic != NULL){oslStopSound(gameMusic); oslDeleteSound(gameMusic); gameMusic = NULL;}
     gameMusic = oslLoadSoundFileBGM((char*)"music/route/dawn.bgm", OSL_FMT_NONE);
     oslPlaySound(gameMusic, 1); oslSetSoundLoop(gameMusic, 1);
     
-     //wipe all sonymon memory or stats CLEAN!!!
-     ResetStats();
+    //wipe all sonymon memory or stats CLEAN!!!
+    ResetStats();
     
-     //choose a starting sonymon
-     int choice = 2;
-     const char * name = "???";
-     
-     OSL_IMAGE * selection;
-     selection = oslLoadImageFilePNG((char*)"img/data/choose.png", OSL_IN_RAM, OSL_PF_5551);
-     if(!selection) MISSING_IMG_FILES(1);
-     
-     while(1)
-     { 
-        oslStartDrawing();
-        oslClearScreen(BLACK);
-        oslDrawImage(selection);
-        
-        //I skip 1 because that is the id of "unknown" and it makes more sense :)
-        
-             if(choice == 2)  {oslDrawImage(blumkins_front);    name = "blumdins";     sonymon1.id = choice;}
-        else if(choice == 3)  {oslDrawImage(arsande_front);     name = "arsande";      sonymon1.id = choice;}
-        else if(choice == 4)  {oslDrawImage(myboross_front);    name = "myboross";     sonymon1.id = choice;}
-        else if(choice == 5)  {oslDrawImage(argrasse_front);    name = "argrasse";     sonymon1.id = choice;}
-        else if(choice == 6)  {oslDrawImage(norbonkge_front);   name = "norbonkge";    sonymon1.id = choice;}
-        else if(choice == 7)  {oslDrawImage(blowhole_front);    name = "blowess";      sonymon1.id = choice;}
-        else if(choice == 8)  {oslDrawImage(cemes_front);       name = "cemes";        sonymon1.id = choice;}
-        else if(choice == 9)  {oslDrawImage(waterserore_front); name = "waterserore";  sonymon1.id = choice;}
-        else if(choice == 10) {oslDrawImage(vandel_front);      name = "vandel";       sonymon1.id = choice;}
-        else if(choice == 11) {oslDrawImage(lieosaur_front);    name = "lieosaur";     sonymon1.id = choice;}
-        else if(choice == 12) {oslDrawImage(sturk_front);       name = "sturk";        sonymon1.id = choice;}
-        else if(choice == 13) {oslDrawImage(blip_front);        name = "blip";         sonymon1.id = choice;}
-        else if(choice == 14) {oslDrawImage(cecei_front);       name = "cecei";        sonymon1.id = choice;}
-        else if(choice == 15) {oslDrawImage(fanz_front);        name = "fanz";         sonymon1.id = choice;}
-        else if(choice == 16) {oslDrawImage(darck_front);       name = "darck";         sonymon1.id = choice;}
-        else if(choice == 17) {oslDrawImage(feesh_front);       name = "feesh";         sonymon1.id = choice;}
-        
-        oslSetTextColor(WHITE);
-        oslSetFont(bold);
-        oslDrawString(5, 15, "Choose a starting Sonymon");
-        oslSetFont(verdana);
-        oslPrintf_xy(50, 160, "%s Lv5", name); 
-        
-        oslEndDrawing();
-        oslSyncFrame();
-        
-        oslReadKeys();
-        
-        //assign that sonymon
-        if(osl_keys->pressed.cross || osl_keys->pressed.start){
-            sonymon_num = 1; //equip first sonymon
-            sonymon1.alive = 1;
-            totalSonymon++;	
-            create.ASSIGN_SONYMON(1, sonymon1.id, 5);
-            break;
-        }
-        else if(osl_keys->pressed.left && choice > 2){choice--; oslPlaySound(beep, 2);}
-        else if(osl_keys->pressed.right && choice < 17){choice++; oslPlaySound(beep, 2);}
-        
-	 }
-    
-    quitGame = 0;
-    
-    //testing inventory...temperarily give items to player
-    inventory[0] = 1;
-    inventory[1] = 2;
-    inventory[2] = 3;
-    inventory[3] = 4;
-    inventory[4] = 99;
-    inventory[5] = 98;
-    
-    while(quitGame == 0) { 
+    /* MAIN GAME LOOP */
+    while(quitGame == 0) 
+    { 
         oslStartDrawing();
         
+        //update game
         HANDLE(playerName, FR1);
         HANDLE_SEARCH(playerName, FR1);
         
+        //update player
+        oslDrawImage(player.image);
+        player.Update(playerName, FR1);
+        
+        //update computers
+        Vaughn.ComputerAnimate();
+        Vaughn.UpdateAIMap(FR1, playerName);
+        
+        fouadtjuhmaster.ComputerAnimate();
+        fouadtjuhmaster.UpdateAIMap(FR1, playerName);
+        
+        billyJoe.ComputerAnimate();
+        billyJoe.UpdateAIMap(FR1, playerName);
+        
+        annoyingSteve.ComputerAnimate();
+        annoyingSteve.UpdateAIMap(FR1, playerName);
+        
         oslEndDrawing();
+        
         oslSyncFrame();
     }
 
@@ -877,53 +1016,21 @@ void HANDLE(const char * playerName, OSL_MAP * level)
    oslClearScreen(BLACK);
    oslDrawMap(level);
    
-   oslDrawImage(zero);
-   player.DrawInfo(Toggle1, 2);
-   player.ReadKeys(playerName, level);
-   
    if(InsideCenter)
    {
         oslDrawImageSimple(uplink_center);
-        
-        COMPUTER Cguy1;
-        Cguy1.image = Cguy1.loadImage(1, Cguy1.loadedImage);
-        Cguy1.UpdateAI(Cguy1.image, "Trainer Paul: I keep getting beat by arsandes!", 0, 400, 60, Cguy1.carry, Cguy1.position);
-        Cguy1.ComputerAnimate(Cguy1.image, 0, Cguy1.manip, Cguy1.march, Cguy1.position);
-        
-        COMPUTER Cguy2;
-        Cguy2.image = Cguy2.loadImage(2, Cguy2.loadedImage);
-        Cguy2.UpdateAI(Cguy2.image, "Trainer Rick: I can't wait! Can't Wait! Can't Wait!", 0, 100, 110, Cguy2.carry, Cguy2.position);
-        Cguy2.ComputerAnimate(Cguy2.image, 1, Cguy2.manip, Cguy2.march, Cguy2.position);
-        
-        COMPUTER Cguy3;
-        Cguy3.image = Cguy3.loadImage(3, Cguy3.loadedImage);
-        Cguy3.UpdateAI(Cguy3.image, "Old Trainer Jackson: I forgot to save my progress ohhh!", 2, 305, 127, Cguy3.carry, Cguy3.position);
-        Cguy3.ComputerAnimate(Cguy3.image, 2, Cguy3.manip, Cguy3.march, Cguy3.position);
         
         if(justEntered){
            oslStopSound(gameMusic);
            oslPlaySound(center_music, 1);
            oslSetSoundLoop(center_music, 1);
-           zero->x = 225;
-           zero->y = 227;
+           player.image->x = 225;
+           player.image->y = 227;
            justEntered = 0;
            ENTRY_EFFECT(level, area);
         }
    }
    
-   //COMPUTER introGuy;
-   //introGuy.image = introGuy.loadImage(1, introGuy.loadedImage);
-   //introGuy.UpdateAIMap(introGuy.image, level, "V@ughn: Welcome to Sonymon build betav9, made by me!!", 0, 600, 280, introGuy.carry, introGuy.position);
-   //introGuy.ComputerAnimate(introGuy.image, 1, introGuy.manip, introGuy.march, introGuy.position);
-   
-   //COMPUTER trainer1;
-   //trainer1.image = trainer1.loadImage(4, trainer1.loadedImage);
-   //trainer1.UpdateAIMap(trainer1.image, level, "Trainer Joe: I'm not ready to battle just yet...maybe later ;)", 1, 400, 340, trainer1.carry, trainer1.position);
-   //trainer1.ComputerAnimate(trainer1.image, 2, trainer1.manip, trainer1.march, trainer1.position);
-   
-   items.Populate(level, area); 
-   items.Draw(area);
-
   return;
  
 }
@@ -935,378 +1042,6 @@ void HANDLE(const char * playerName, OSL_MAP * level)
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //sonymon battle functions:////////////////////////////////////////////////////////////////////
-
-//trainer battle fuction
-void TRAINER_BATTLE(const char * playerName, const char * trainerName, OSL_IMAGE * trainer, 
-                    const int enemyID1, const int enemyLevel1, const int enemyID2, const int enemyLevel2,
-                    const int enemyID3, const int enemyLevel3)
-{
-     int totalTrainerSonymon = 1;
-     if(enemyID1 != 0 && enemyID2 != 0 && enemyID3 != 0) totalTrainerSonymon= 3;
-     else if(enemyID1 != 0 && enemyID2 != 0) totalTrainerSonymon = 2;
-     else if(enemyID1 != 0) totalTrainerSonymon = 1;
-     else {oslWarning("FAILED TO COUNT TOTAL TRAINER SONYMON!!! EXITING FUNCTION TO AVOID A CRASH!!!"); return;}
-     
-     //load images based on const int enemyID...
-     if(enemy1 != NULL) {oslDeleteImage(enemy1); enemy1 = NULL;}
-     if(enemy2 != NULL) {oslDeleteImage(enemy2); enemy2 = NULL;}
-     if(enemy3 != NULL) {oslDeleteImage(enemy3); enemy3 = NULL;}
-     
-     if(totalTrainerSonymon == 3){
-           stats.setImageUnspecified(enemyID1, enemy1);
-           stats.setImageUnspecified(enemyID2, enemy2);
-           stats.setImageUnspecified(enemyID3, enemy3);
-     }
-     else if(totalTrainerSonymon == 2){
-           stats.setImageUnspecified(enemyID1, enemy1);
-           stats.setImageUnspecified(enemyID2, enemy2);
-     }
-     else if(totalTrainerSonymon == 1){
-           stats.setImageUnspecified(enemyID1, enemy1);
-     }
-     
-     //battle intro
-     oslPauseSound(gameMusic, -1); oslPauseSound(center_music, -1);
-     oslPlaySound(wild_intro, 3);  oslSetSoundLoop(wild_intro, 1);
-   
-     unsigned i = 0;
-     unsigned j = 0;
-     
-     for(i = 0; i < 70; i++)
-     {          
-           oslStartDrawing();
-           j++;
-           if(j > 2)oslClearScreen(BLACK);
-           if(j > 4)oslClearScreen(RED);
-           if(j > 6)oslClearScreen(BLUE);
-           if(j > 8) j = 0;
-           
-           oslDrawImageSimple(zero);
-           oslEndDrawing();
-           oslSyncFrame();
-     }
-     
-     //reset all the battle variables so next time we have normal gameplay
-     turn = 0; loadedHealthBefore = 0; briefPause = 0;
-     MAX_HP = 0; MAX_ENEMY_HP = 0;
-     loadedEnemyHealthBefore = 0;
-     OUTLINE_MAX = 0; OUTLINE_ENEMY_MAX = 0;
-     GOING_UP = 1; GOING_DOWN = 0;//begin shifting
-     turn = 1; selecting = 1; ran = 0; //player's turn
-     
-     positionScreenItems(enemy1);
-     
-     unsigned long squareOne = 0;
-     unsigned long squareTwo = 272;
-     unsigned long moveSquare = 136;
-     unsigned long moveSquare2 = 136;
-     int showMaxHealth;
-     
-     //init ENEMY class
-     ENEMY controlEnemy;
-     
-     int showMaxHealth1, enemyHealth1, enemyAttackPower1, enemyDefense1, enemyType1, XP1;
-     int showMaxHealth2, enemyHealth2, enemyAttackPower2, enemyDefense2, enemyType2, XP2;
-     int showMaxHealth3, enemyHealth3, enemyAttackPower3, enemyDefense3, enemyType3, XP3;
-     const char * enemyName1 = "???";
-     const char * enemyName2 = "???";
-     const char * enemyName3 = "???";
-     
-     int trainer_num = 1;
-     
-     //set enemy stats all based on enemyLevel and enemyType!!! :D
-     
-     //trainer slot #1
-     stats.setEnemyType(enemyID1, enemyLevel1, enemy1);
-     stats.XPGain(XP1, enemyID1, enemyLevel1);
-     stats.setHealth(enemyHealth1, enemyID1, enemyLevel1);
-     stats.setAttackPower(enemyAttackPower1, enemyID1, enemyLevel1);
-     stats.setDefense(enemyDefense1, enemyID1, enemyLevel1);
-     stats.setType(enemyType1, enemyID1);
-     stats.setEnemyMoves(enemyID1, enemyLevel1);
-     showMaxHealth1 = enemyHealth1;
-     
-     //trainer slot #2
-     stats.setEnemyType(enemyID2, enemyLevel2, enemy2);
-     stats.XPGain(XP2, enemyID2, enemyLevel2);
-     stats.setHealth(enemyHealth2, enemyID2, enemyLevel2);
-     stats.setAttackPower(enemyAttackPower2, enemyID2, enemyLevel2);
-     stats.setDefense(enemyDefense2, enemyID2, enemyLevel2);
-     stats.setType(enemyType2, enemyID2);
-     stats.setEnemyMoves(enemyID2, enemyLevel2);
-     showMaxHealth2 = enemyHealth2;
-     
-     //trainer slot #3
-     stats.setEnemyType(enemyID3, enemyLevel3, enemy3);
-     stats.XPGain(XP3, enemyID3, enemyLevel3);
-     stats.setHealth(enemyHealth3, enemyID3, enemyLevel3);
-     stats.setAttackPower(enemyAttackPower3, enemyID3, enemyLevel3);
-     stats.setDefense(enemyDefense3, enemyID3, enemyLevel3);
-     stats.setType(enemyType3, enemyID3);
-     stats.setEnemyMoves(enemyID3, enemyLevel3);
-     showMaxHealth3 = enemyHealth3;
-     
-     //load health bar variables
-     OSL_IMAGE *healthBar, *enemyHealthBar;
-     healthBar = oslLoadImageFile((char*)"img/data/Hbar.png", OSL_IN_RAM, OSL_PF_5551);
-     enemyHealthBar = oslLoadImageFile((char*)"img/data/Hbar.png", OSL_IN_RAM, OSL_PF_5551);
-     if(!healthBar || !enemyHealthBar)
-           MISSING_IMG_FILES(1);
-     
-     //intro animation
-     for(i = 0; i < 142; i++)
-     {
-           squareOne--;
-           moveSquare--;
-           squareTwo++;
-           moveSquare2++;
-           
-           oslStartDrawing();
-           oslClearScreen(RGBA(0,0,0,0));
-           oslDrawImageSimple(background_grass);
-           oslDrawImageSimple(sonymon1.image);
-           oslDrawImageSimple(messageBox);
-           
-           oslDrawFillRect(-1, squareOne, 481, moveSquare, BLACK);
-           oslDrawFillRect(-1, squareTwo, 481, moveSquare2, BLACK);
-           oslEndDrawing();
-           oslSyncFrame();
-     }
-     
-     //start looping the battle sound
-     oslStopSound(wild_intro); oslPlaySound(wild_battle, 3); oslSetSoundLoop(wild_battle, 1);
-     
-     //set enemy stats all based on enemyLevel and enemyType!!! :D
-     
-     if(sonymon_num == 1)      showMaxHealth = sonymon1.health;
-     else if(sonymon_num == 2) showMaxHealth = sonymon2.health;
-     else if(sonymon_num == 3) showMaxHealth = sonymon3.health;
-     
-     waitForClick("trainer sonymon", background_grass, enemy1, sonymon1.image, pointer);
-     
-     while(1)
-     {       
-             oslStartDrawing();
-             oslDrawImage(background_grass);
-             
-             //handle enemy ai
-             
-             //handle player and player sonymon
-             //UPDATE(enemyHealth, enemyDefense, enemyType, enemy, background_grass);
-             
-             //draw player sonymon based on int sonymon_num
-             if(sonymon_num == 1)      oslDrawImage(sonymon1.image);
-             else if(sonymon_num == 2) oslDrawImage(sonymon2.image);
-             else if(sonymon_num == 3) oslDrawImage(sonymon3.image);
-             
-             //draw trainer sonymon based on int trainer_num
-             if(trainer_num == 1)      oslDrawImage(enemy1);
-             else if(trainer_num == 2) oslDrawImage(enemy2);
-             else if(trainer_num == 3) oslDrawImage(enemy3);
-             
-             //draw util boxes
-             oslDrawImage(messageBox);
-             oslDrawImage(dialog_box);
-             oslDrawImage(xp_bar);
-             oslDrawImage(enemy_dialog_box);
-             oslDrawImage(healthBar);
-             oslDrawImage(enemyHealthBar);
-             
-             //handle enemy and player health bars
-             DrawCharacterTextBox(healthBar);
-             if(trainer_num == 1)DrawEnemyTextBox(enemyHealth1, enemyHealthBar);
-             else if(trainer_num == 2)DrawEnemyTextBox(enemyHealth2, enemyHealthBar);
-             else if(trainer_num == 3)DrawEnemyTextBox(enemyHealth3, enemyHealthBar);
-             
-             if(selecting && turn)
-             {
-                oslDrawImage(fightBox);
-                
-                oslSetFont(bold);
-                oslSetTextColor(BLACK);
-                oslSetBkColor(RGBA(0,0,0,0));
-                
-                oslPrintf_xy(286, 216, "FIGHT");
-                oslPrintf_xy(393, 216, "BAG");
-                oslPrintf_xy(286, 245, "SNYMN");
-                oslPrintf_xy(393, 245, "RUN");
-                
-                
-                oslSetFont(normal);
-                oslSetTextColor(BLACK);
-                oslSetBkColor(RGBA(0,0,0,0));
-                if(sonymon_num == 1)      oslPrintf_xy(18, 216, "What will %s do?", sonymon1.name);
-                else if(sonymon_num == 2) oslPrintf_xy(18, 216, "What will %s do?", sonymon2.name);
-                else if(sonymon_num == 3) oslPrintf_xy(18, 216, "What will %s do?", sonymon3.name);
-
-                oslDrawImageSimple(battle_pointer);
-                
-             }
-             
-             if(selectMoves && turn)
-             {
-                oslSetFont(italic);
-                oslSetTextColor(BLACK);
-                oslSetBkColor(RGBA(0,0,0,0));
-             
-                if(sonymon_num == 1){
-                    oslPrintf_xy(18, 216, "%s" , sonymon1.moveName1);
-                    oslPrintf_xy(153, 216, "%s",  sonymon1.moveName2);
-                    oslPrintf_xy(18, 242, "%s", sonymon1.moveName3);
-                    oslPrintf_xy(153, 242, "%s", sonymon1.moveName4);
-                }
-                else if(sonymon_num == 2){
-                    oslPrintf_xy(18, 216, "%s" , sonymon2.moveName1);
-                    oslPrintf_xy(153, 216, "%s",  sonymon2.moveName2);
-                    oslPrintf_xy(18, 242, "%s", sonymon2.moveName3);
-                    oslPrintf_xy(153, 242, "%s", sonymon2.moveName4);
-                }
-                else if(sonymon_num == 3){
-                    oslPrintf_xy(18, 216, "%s" , sonymon3.moveName1);
-                    oslPrintf_xy(153, 216, "%s",  sonymon3.moveName2);
-                    oslPrintf_xy(18, 242, "%s", sonymon3.moveName3);
-                    oslPrintf_xy(153, 242, "%s", sonymon3.moveName4);
-                }
-                oslDrawImageSimple(battle_selector);
-             }
-             
-             oslSetFont(verdana);
-             oslSetTextColor(BLACK);
-             oslSetBkColor(RGBA(0,0,0,0));
-             
-             //draw player sonymon health, level, max-health, and name based on int sonymon_num
-             if(sonymon_num == 1){
-                 oslPrintf_xy(419, 160,"%i/%i", sonymon1.health, sonymon1.maxHealth);
-                 oslPrintf_xy(256, 141, "%s  Lv:%i", sonymon1.name, sonymon1.level);
-             }
-             else if(sonymon_num == 2){
-                 oslPrintf_xy(419, 160,"%i/%i", sonymon2.health, sonymon2.maxHealth);
-                 oslPrintf_xy(256, 141, "%s  Lv:%i", sonymon2.name, sonymon2.level);
-             }
-             else if(sonymon_num == 3) {
-                 oslPrintf_xy(419, 160,"%i/%i", sonymon3.health, sonymon3.maxHealth);
-                 oslPrintf_xy(256, 141, "%s  Lv:%i", sonymon3.name, sonymon3.level);
-             }
-             
-             //draw trainer sonymon level, health, max-health, and name based on int trainer_num
-             if(trainer_num == 1){
-                 oslPrintf_xy(178, 48,"%i", enemyHealth1);
-                 oslPrintf_xy(20, 25, "%s  Lv:%i", enemyName1, enemyLevel1);
-             }
-             else if(trainer_num == 2){
-                 oslPrintf_xy(178, 48,"%i", enemyHealth2);
-                 oslPrintf_xy(20, 25, "%s  Lv:%i", enemyName2, enemyLevel2);
-             }
-             else if(trainer_num == 3) {
-                 oslPrintf_xy(178, 48,"%i", enemyHealth3);
-                 oslPrintf_xy(20, 25, "%s  Lv:%i", enemyName3, enemyLevel3);
-             }
-             
-             //display effectiveness of all the various moves
-             if(EFFECT == NOT_EFFECTIVE)
-             {
-                       oslSetFont(normal);
-                       ClearMessageBox();
-                       oslStartDrawing();
-                       oslPrintf_xy(18, 216, "It's not very effective...");
-                       oslEndDrawing();
-                       oslSyncFrame();
-                       EFFECT = NOTHING;
-                       hWait; hWait;
-             }
-             else if(ENEMY_EFFECT == NOT_EFFECTIVE)
-             {
-                       oslSetFont(normal);
-                       ClearMessageBox();
-                       oslStartDrawing();
-                       oslPrintf_xy(18, 216, "It's not very effective...");
-                       oslEndDrawing();
-                       oslSyncFrame();
-                       ENEMY_EFFECT = NOTHING;
-                       hWait; hWait;
-             }
-             else if(EFFECT == SUPER_EFFECTIVE)
-             {
-                       oslSetFont(normal);
-                       ClearMessageBox();
-                       oslStartDrawing();
-                       oslPrintf_xy(18, 216, "It's SUPER effective!");
-                       oslEndDrawing();
-                       oslSyncFrame();
-                       EFFECT = NOTHING;
-                       hWait; hWait;
-             }
-             else if(ENEMY_EFFECT == SUPER_EFFECTIVE)
-             {
-                       oslSetFont(normal);
-                       ClearMessageBox();
-                       oslStartDrawing();
-                       oslPrintf_xy(18, 216, "It's SUPER effective!");
-                       oslEndDrawing();
-                       oslSyncFrame();
-                       ENEMY_EFFECT = NOTHING;
-                       hWait; hWait;
-             }
-             
-             oslEndDrawing();
-             oslSyncFrame();
-                 
-             if(ran) 
-             {
-     
-                  for(pointer->y = 250; pointer->y < 262; pointer->y++)
-                  {
-                     if(pointer->y > 258) pointer->y = 250;
-             
-                     oslReadKeys();
-                     if(osl_keys->pressed.cross) { oslPlaySound(beep, 2); break; }
-             
-                     oslStartDrawing();
-                     oslDrawImage(background_grass);
-                     
-                     //draw player sonymon
-                     if(sonymon_num == 1)      oslDrawImage(sonymon1.image);
-                     else if(sonymon_num == 2) oslDrawImage(sonymon2.image);
-                     else if(sonymon_num == 3) oslDrawImage(sonymon3.image);
-                     
-                     //draw enemy
-                     //oslDrawImageSimple(enemy);
-                     oslSetFont(normal);
-                     oslDrawImage(messageBox);
-                     oslDrawImage(pointer);
-                     oslSetFont(verdana);
-                     oslSetBkColor(RGBA(0,0,0,0));
-                     oslSetTextColor(BLACK);
-                     oslPrintf_xy(18, 216, "%s got away safely", playerName);
-                     oslEndDrawing();
-                     oslSyncFrame();
-                   }
-                   
-                   break;
-             }
-     
-             if(enemyAlive1 == 0 && enemyAlive2 == 0 && enemyAlive3 == 0) break;
-     }
-     
-     //adjust sound/musc
-     hWait;
-     oslStopSound(wild_battle);
-     oslPauseSound(gameMusic, 0);
-     oslPauseSound(center_music, 0);
-     
-     //delete health bars and set pointers to NULL
-     oslDeleteImage(healthBar);
-     oslDeleteImage(enemyHealthBar);
-     healthBar = NULL;
-     enemyHealthBar = NULL;
-     
-     /******* NOW THE PLAYER HAS "SEEN" THE SONYMON, LET"S ADD IT TO THE RECORDS *********/
-     if(enemyID1 != 0) SonymonSeen[enemyID1] = enemyID1;
-     if(enemyID2 != 0) SonymonSeen[enemyID2] = enemyID2;
-     if(enemyID3 != 0) SonymonSeen[enemyID3] = enemyID3;
-     
-     return;
-}
 
 //wild-sonymon battle function
 void BATTLE(const char * playerName, OSL_IMAGE * enemy, const int enemyID, const int enemyLevel)
@@ -1328,7 +1063,7 @@ void BATTLE(const char * playerName, OSL_IMAGE * enemy, const int enemyID, const
            if(j > 10)oslClearScreen(WHITE);
            if(j > 15)j = 0;
            
-           oslDrawImageSimple(zero);
+           oslDrawImageSimple(player.image);
            oslEndDrawing();
            oslSyncFrame();
      }
@@ -1396,7 +1131,7 @@ void BATTLE(const char * playerName, OSL_IMAGE * enemy, const int enemyID, const
      STATS stats;
      
      //set enemy stats all based on enemyLevel and enemyType!!! :D
-     stats.setEnemyType(enemyID, level, enemy);
+     enemyName = stats.setEnemyType(enemyID, enemy);
      stats.XPGain(XP, enemyID, enemyLevel);
      stats.setHealth(enemyHealth, enemyID, enemyLevel);
      stats.setAttackPower(enemyAttackPower, enemyID, enemyLevel);
@@ -1456,10 +1191,10 @@ void BATTLE(const char * playerName, OSL_IMAGE * enemy, const int enemyID, const
                 oslSetTextColor(BLACK);
                 oslSetBkColor(RGBA(0,0,0,0));
                 
-                oslDrawString(286, 226, "FIGHT");
-                oslDrawString(393, 226, "BAG");
-                oslDrawString(286, 255, "SNYMN");
-                oslDrawString(393, 255, "RUN");
+                oslPrintf_xy(286, 226, "FIGHT");
+                oslPrintf_xy(393, 226, "BAG");
+                oslPrintf_xy(286, 255, "SNYMN");
+                oslPrintf_xy(393, 255, "RUN");
                 
                 
                 oslSetFont(normal);
@@ -1726,8 +1461,10 @@ void positionScreenItems(OSL_IMAGE *enemy)
 {
      /* postion all the images in the battle scene */
      
-     enemy->y = 30; 
-     enemy->x = 315;
+     if(enemy != NULL){
+       enemy->y = 30; 
+       enemy->x = 315;
+     }
      
      if(sonymon1.image != NULL){
      sonymon1.image->y = 95; 
@@ -1754,22 +1491,34 @@ void positionScreenItems(OSL_IMAGE *enemy)
        sonymon5.image->x = 28; 
      }
      
-     messageBox->y = 212;
-     enemy_dialog_box->x = 10;
+     if(messageBox != NULL){
+       messageBox->y = 212;
+     }
      
-     fightBox->y = 212;
-     fightBox->x = 270;
+     if(enemy_dialog_box != NULL){
+       enemy_dialog_box->x = 10;
+       enemy_dialog_box->y =20;
+     }
      
-     enemy_dialog_box->y =20;
+     if(fightBox != NULL){
+       fightBox->y = 212;
+       fightBox->x = 270;
+     }
      
-     dialog_box->x = 250;
-     dialog_box->y = 132;
+     if(dialog_box != NULL){
+       dialog_box->x = 250;
+       dialog_box->y = 132;
+     }
      
-     xp_bar->x = 254;
-     xp_bar->y = 182;
+     if(xp_bar != NULL){
+       xp_bar->x = 254;
+       xp_bar->y = 182;
+     }
      
-     pointer->x = 445;
-     pointer->y = 250;
+     if(pointer != NULL){
+       pointer->x = 445;
+       pointer->y = 250;
+     }
      
      return;
 }
@@ -1794,6 +1543,8 @@ void playDeathSound(int type)
 	else if(type == 15) oslPlaySound(fanz, 4);
 	else if(type == 16) oslPlaySound(darck, 4);
 	else if(type == 17) oslPlaySound(feesh, 4);
+	else if(type == 18) oslPlaySound(abel, 4);
+	else if(type == 19) oslPlaySound(chaos, 4);
 	else oslFatalError("DID NOT APPLY A DEATH SOUND TO SONYMON!!!\nfound in function playDeathSound(int type);!!!");
      
      return;
@@ -1824,7 +1575,7 @@ void waitForClick(const char * message, OSL_IMAGE *background, OSL_IMAGE *enemy,
              oslSetFont(verdana);
              oslSetBkColor(RGBA(0,0,0,0));
              oslSetTextColor(BLACK);
-             oslPrintf_xy(18, 216, "Wild %s appeared...", message);
+             oslPrintf_xy(18, 226, "Wild %s appeared...", message);
              oslEndDrawing();
              oslSyncFrame();
      }
