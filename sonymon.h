@@ -57,30 +57,29 @@ class SONYMON {
            SONYMON();
            ~SONYMON();
            
+           //properties
            IMAGE * image;
-           
            const char * name;
            const char * moveName1;
            const char * moveName2;
            const char * moveName3;
            const char * moveName4;
-           
            int health;
            int maxHealth;
            int attack;
            int defense;
            int type;
-           int level;
            int xp;
            int max_xp;
-           
            short move1;
            short move2;
            short move3;
            short move4;
            short alive;
            short id;
+           short level;
            
+           //behaviors
            void ASSIGN_SONYMON(int slot, int id, int level);
            int ApplyTypes(const int moveUsed, int &damagePower, const int enemyRealType, int &EFFECT);
            int ApplyAttackValue(int getValue, int enemyAttackPower);
@@ -296,7 +295,7 @@ int collision(OSL_IMAGE *img1,float img1posX, float img1posY, OSL_IMAGE *img2, f
 
 int SAVEGAME(int sonymon1ID, int sonymon1LEVEL, int sonymon2ID, int sonymon2LEVEL, int sonymon3ID, int sonymon3LEVEL);
 
-int LOADGAME(int &sonymon1ID, int &sonymon1LEVEL, int &sonymon2ID, int &sonymon2LEVEL, int &sonymon3ID, int &sonymon3LEVEL);
+int LOADGAME(short &sonymon1ID, short &sonymon1LEVEL, short &sonymon2ID, short &sonymon2LEVEL, short &sonymon3ID, short &sonymon3LEVEL);
 
 int initOSLib();
 

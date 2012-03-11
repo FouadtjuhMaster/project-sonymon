@@ -43,35 +43,41 @@ char nameList[][20] =	// End list with ""
 
 char data[100] = "someData: 50";
 
-int LOADGAME(int &sonymon1ID, int &sonymon1LEVEL, int &sonymon2ID, int &sonymon2LEVEL, int &sonymon3ID, int &sonymon3LEVEL)
+int LOADGAME(short &sonymon1ID, short &sonymon1LEVEL, short &sonymon2ID, short &sonymon2LEVEL, short &sonymon3ID, short &sonymon3LEVEL)
 {
     struct oslSaveLoad saveLoadData;
     int type = OSL_DIALOG_NONE;
     char message[100] = "";
     char loadedData[100] = "";
     
-    while(1)
+    type = oslGetSaveLoadType();
+        
+    oslStartDrawing();
+    oslClearScreen(RGBA(0,0,0,0));
+    oslDrawSaveLoad();
+    oslEndDrawing();
+    oslSyncFrame();
+        
+    if (type == OSL_DIALOG_NONE)
     {
-        type = oslGetSaveLoadType();
-        
-        oslStartDrawing();
-        oslClearScreen(RGBA(0,0,0,0));
-        oslDrawSaveLoad();
-        oslEndDrawing();
-        oslSyncFrame();
-        
-        if (type == OSL_DIALOG_NONE)
-        {
-           memset(&saveLoadData, 0, sizeof(saveLoadData));
-           strcpy(saveLoadData.gameID, gameID);
-           strcpy(saveLoadData.saveName, saveName);
-           saveLoadData.nameList = nameList;
-           saveLoadData.data = &loadedData;
-           saveLoadData.dataSize = 100;
-           oslInitLoadDialog(&saveLoadData);
-           memset(message, 0, sizeof(message));
-        }
+        memset(&saveLoadData, 0, sizeof(saveLoadData));
+        strcpy(saveLoadData.gameID, gameID);
+        strcpy(saveLoadData.saveName, saveName);
+        saveLoadData.nameList = nameList;
+        saveLoadData.data = &loadedData;
+        saveLoadData.dataSize = 100;
+        oslInitLoadDialog(&saveLoadData);
+        memset(message, 0, sizeof(message));
     }
+    
+    sonymon1ID = 12;
+    sonymon1LEVEL = 8;
+    
+    sonymon2ID = 1;
+    sonymon2LEVEL = 1;
+    
+    sonymon3ID = 1;
+    sonymon3LEVEL = 1;
     
     return 0;
 }

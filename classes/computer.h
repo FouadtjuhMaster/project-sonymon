@@ -19,6 +19,7 @@ class COMPUTER : public SONYMON {
              const char * loseMessage;
              const char * normalMessage;
              IMAGE * image;
+             IMAGE * imageUp;
              int numOfSonymon;
              int posx;
              int posy;
@@ -589,6 +590,9 @@ void COMPUTER::BattleTrainer(const char * playerName)
      /******* NOW THE PLAYER HAS "SEEN" THE SONYMON, LET"S ADD IT TO THE RECORDS *********/
      SonymonSeen[trainerSonymon1.id] = trainerSonymon1.id;
      
+     //reset computer
+     trainer = false;
+     
      //free ram
      oslDeleteImage(trainerSonymon1.image);
      
@@ -597,11 +601,10 @@ void COMPUTER::BattleTrainer(const char * playerName)
 
 void COMPUTER::waitForTrainer(OSL_IMAGE *background, OSL_IMAGE *player, OSL_IMAGE *pointer)
 {            
-     IMAGE * trainer = oslLoadImageFilePNG((char*)"img/sprites/guy1Up.png", OSL_IN_RAM, OSL_PF_5551);
-     trainer->stretchX *= 1.6;
-     trainer->stretchY *= 1.6;
-     trainer->x = 310;
-     trainer->y = 8;
+     imageUp->stretchX *= 1.6;
+     imageUp->stretchY *= 1.6;
+     imageUp->x = 315;
+     imageUp->y = 5;
      pointer->x = 445;
      pointer->y = 250;
      
@@ -617,7 +620,7 @@ void COMPUTER::waitForTrainer(OSL_IMAGE *background, OSL_IMAGE *player, OSL_IMAG
              oslClearScreen(RGBA(0,0,0,0));
              oslDrawImageSimple(background);
              oslDrawImageSimple(player);
-             oslDrawImageSimple(trainer);
+             oslDrawImageSimple(imageUp);
              oslDrawImage(messageBox);
              oslDrawImage(pointer);
              oslSetFont(verdana);

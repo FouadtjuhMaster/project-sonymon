@@ -893,12 +893,12 @@ void ENTRY_EFFECT(OSL_MAP * map, int area)
 int SonymonFreeRoam(const char * playerName, const int load)
 {   
     if(playerName == NULL){oslDebug("ERROR! Player name is equal to NULL...setting to 'Ken' by default"); playerName = "KEN";}
-    //load the game if the user selected "continue game"
-    //if(load){
-             //int success = 0;
-             //success = LOADGAME(sonymon1_id, sonymon1_level, sonymon2_id, sonymon2_level, sonymon3_id, sonymon3_level);
-             //if(success != 1) return 0;
-    //}
+  
+    if(load){
+             int success = 0;
+             success = LOADGAME(sonymon1.id, sonymon1.level, sonymon2.id, sonymon2.level, sonymon3.id, sonymon3.level);
+             if(success != 1) return 0;
+    }
     
     oslSetTransparentColor(RGB(255,0,255));
     
@@ -910,6 +910,7 @@ int SonymonFreeRoam(const char * playerName, const int load)
 	Vaughn.trainer = true;
 	Vaughn.AI = Still;
 	Vaughn.image = oslLoadImageFilePNG((char*)"img/sprites/guy1.png", OSL_IN_RAM, OSL_PF_5551);
+    Vaughn.imageUp = oslLoadImageFilePNG((char*)"img/sprites/guy1Up.png", OSL_IN_RAM, OSL_PF_5551);
 	Vaughn.posx = -550;
 	Vaughn.posy = 1230;
 	Vaughn.name =          (char*)"V@ughn";
@@ -925,6 +926,7 @@ int SonymonFreeRoam(const char * playerName, const int load)
 	fouadtjuhmaster.trainer = true;
 	fouadtjuhmaster.AI = FastRotation;
 	fouadtjuhmaster.image = oslLoadImageFilePNG((char*)"img/sprites/guy2.png", OSL_IN_RAM, OSL_PF_5551);
+	fouadtjuhmaster.imageUp = oslLoadImageFilePNG((char*)"img/sprites/guy1Up.png", OSL_IN_RAM, OSL_PF_5551);
 	fouadtjuhmaster.posx = -610;
 	fouadtjuhmaster.posy = 1250;
 	fouadtjuhmaster.name =          (char*)"Fouadtjuhmaster";
@@ -938,7 +940,9 @@ int SonymonFreeRoam(const char * playerName, const int load)
 	//configure billyJoe
 	COMPUTER billyJoe;
 	billyJoe.AI = NormalRotation;
+	billyJoe.trainer = true;
 	billyJoe.image = oslLoadImageFilePNG((char*)"img/sprites/guy3.png", OSL_IN_RAM, OSL_PF_5551);
+	billyJoe.imageUp = oslLoadImageFilePNG((char*)"img/sprites/guy2Up.png", OSL_IN_RAM, OSL_PF_5551);
 	billyJoe.posx = -520;
 	billyJoe.posy = 1797;
 	billyJoe.name =           (char*)"Billy Joe";
@@ -946,11 +950,15 @@ int SonymonFreeRoam(const char * playerName, const int load)
 	billyJoe.loseMessage =   (char*)"Oh come on, and I thought I had it to!";
 	billyJoe.winMessage =    (char*)"HA YEAH WE DID IT!";
 	billyJoe.normalMessage = (char*)"What do you want?";
+	billyJoe.trainerSonymon1.id = 6;
+	billyJoe.trainerSonymon1.level = 3;
 	
 	//configure annoyingSteve
 	COMPUTER annoyingSteve;
 	annoyingSteve.AI = FastRotation;
-	annoyingSteve.image = oslLoadImageFilePNG((char*)"img/sprites/guy1.png", OSL_IN_RAM, OSL_PF_5551);
+	annoyingSteve.trainer = true;
+	annoyingSteve.image = oslLoadImageFilePNG((char*)"img/sprites/guy8.png", OSL_IN_RAM, OSL_PF_5551);
+	annoyingSteve.imageUp = oslLoadImageFilePNG((char*)"img/sprites/guy2Up.png", OSL_IN_RAM, OSL_PF_5551);
 	annoyingSteve.posx = -520;
 	annoyingSteve.posy = 1000;
 	annoyingSteve.name =          (char*)"Annoying Steve";
@@ -958,6 +966,22 @@ int SonymonFreeRoam(const char * playerName, const int load)
 	annoyingSteve.loseMessage =   (char*)"whaaaaat?!?";
 	annoyingSteve.winMessage =    (char*)"FAIL!!!!!!!!!!!";
 	annoyingSteve.normalMessage = (char*)"Eyes naht the stoopid one ihtz yu!"; 
+	annoyingSteve.trainerSonymon1.id = 2;
+	annoyingSteve.trainerSonymon1.level = 2;
+	
+	//configure branden
+	COMPUTER branden;
+	branden.AI = Still;
+	branden.trainer = true;
+	branden.image = oslLoadImageFilePNG((char*)"img/sprites/guy7.png", OSL_IN_RAM, OSL_PF_5551);
+	branden.imageUp = oslLoadImageFilePNG((char*)"img/sprites/guy2Up.png", OSL_IN_RAM, OSL_PF_5551);
+	branden.posx = -520;
+	branden.posy = 1400;
+	branden.name =          (char*)"Branden";
+	branden.greetMessage =  (char*)"Ready to battle? Oh wait, you are getting forced anyway!";
+	branden.loseMessage =   (char*)"I guess you just forced me to lose then...";
+	branden.winMessage =    (char*)"And I just FORCED you to lose!";
+	branden.normalMessage = (char*)"I have to stop saying 'force'..."; 
     
     if(gameMusic != NULL){oslStopSound(gameMusic); oslDeleteSound(gameMusic); gameMusic = NULL;}
     gameMusic = oslLoadSoundFileBGM((char*)"music/route/dawn.bgm", OSL_FMT_NONE);
@@ -991,6 +1015,9 @@ int SonymonFreeRoam(const char * playerName, const int load)
         
         annoyingSteve.ComputerAnimate();
         annoyingSteve.UpdateAIMap(FR1, playerName);
+        
+        branden.ComputerAnimate();
+        branden.UpdateAIMap(FR1, playerName);
         
         oslEndDrawing();
         
