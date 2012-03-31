@@ -1,17 +1,19 @@
-#define NormalRotation 1
-#define FastRotation 2
-#define Still 0
-
-class COMPUTER : public SONYMON {
+/** 
+ * class COMPUTER : public SONYMON
+ * -------------------------------
+ * ->a sublcass of class SONYMON that updates and handles sonymon trainers
+ *
+ * @void ComputerAnimate() - draws trainer sprite
+ * @void UpdateAI(...) - updates trainer in a single room
+ * @void UpdateAIMap(...) - updates a trainer in a map
+ * @void BattleTrainer(...) - battle animation against player
+ * @void MessageBoxMap(...) - makes a message box appear on a map
+ * @void waitForTrainer(...) - pause screen for battle scene          
+ *
+*/
+class COMPUTER : public SONYMON 
+{
       public: 
-             COMPUTER();
-             ~COMPUTER();
-             
-             //behaviors
-             void ComputerAnimate();
-             void UpdateAI(const char * playerName);
-             void UpdateAIMap(OSL_MAP * map, const char * playerName);
-             
              //properites
              const char * name;
              const char * greetMessage;
@@ -34,6 +36,13 @@ class COMPUTER : public SONYMON {
              SONYMON trainerSonymon4;
              SONYMON trainerSonymon5;
              
+             //behaviors
+             void ComputerAnimate();
+             void UpdateAI(const char * playerName);
+             void UpdateAIMap(OSL_MAP * map, const char * playerName);
+             COMPUTER();
+             ~COMPUTER();
+             
       private:
             int carry;
             int position;
@@ -47,6 +56,16 @@ class COMPUTER : public SONYMON {
               
 };
 
+#define NormalRotation 1
+#define FastRotation 2
+#define Still 0
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+/// COMPUTER method definitions ////////////////////////////////////////
 
 void COMPUTER::UpdateAIMap(OSL_MAP * map, const char * playerName)
 {

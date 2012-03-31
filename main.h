@@ -20,10 +20,6 @@
 #define TEXT_LENGTH			(16)
 #define MAX_LIGHTS 6
 
-PSP_MODULE_INFO("Sonymon", 0, 1, 1);
-PSP_MAIN_THREAD_ATTR(THREAD_ATTR_USER | THREAD_ATTR_VFPU);
-PSP_HEAP_SIZE_KB(-1024);
-
 /*declare our pointers toward our sound effects (wav files and bgm files)*/
 OSL_SOUND *menu_music, *select, *start_music;
 
@@ -34,7 +30,7 @@ pspUtilityMsgDialogParams dialog;
 
 const char * playerName; 
 int quit, selected = 0;
-unsigned menuChoice = 1; //by default
+unsigned menuChoice = 1;
 unsigned gameSelect = 0;
 
 int SonymonFreeRoam(const char * playerName, const int load);

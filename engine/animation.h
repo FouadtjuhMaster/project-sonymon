@@ -1,34 +1,29 @@
+/**
+ * class ANIMATE
+ * -------------
+ * ->all sonymon move animation are defined in this class
+ *
+ * @void animateMovePlayer(...) - animates a player sonymon attack
+ * @void animateMoveEnemy(...) - animates an enemy sonymon attack     
+ * @void frontDie(...) - animates a fainting effect
+ * @void flashHurtEnemy(...) - flashes enemy image
+ * @void flashHurtPlayer(...) - flashes player image
+*/
 class ANIMATE
 {
       public:
-             ANIMATE();
-             ~ANIMATE();
-             
              //animation methods
              void animateMovePlayer(int move, const char * name, OSL_IMAGE * sonymon, OSL_IMAGE * enemy, OSL_IMAGE * background);
              void animateMoveEnemy(int move, const char * name, OSL_IMAGE * sonymon, OSL_IMAGE * enemy, OSL_IMAGE * background);
-             /* moves aminated:
-                      tackle
-                      slam
-                      uplink
-                      pound
-                      jumpKick
-                      contaminate
-                      clobber
-                      steroids
-                      
-                      NEEDS ANIMATION:
-                            -leech
-                            -blaze
-                            -watergun
-                            -gust
-             */
-             
              void frontDie(OSL_IMAGE *image, int XP, const char * writeDeath, OSL_IMAGE *playerSonymon, OSL_IMAGE *background);
              void flashHurtEnemy(OSL_IMAGE * sonymon, OSL_IMAGE * enemy, OSL_IMAGE * background);
              void flashHurtPlayer(OSL_IMAGE * sonymon, OSL_IMAGE * enemy, OSL_IMAGE * background);
-      
+             
+              ANIMATE();
+             ~ANIMATE();
+             
       private:
+            //properties
             int originalx;
             int originaly; 
             int eoriginalx;
@@ -38,22 +33,12 @@ class ANIMATE
              
 }animate;
 
-ANIMATE::ANIMATE()
-{
-    originalx = 0;
-    originaly = 0;
-    eoriginalx = 0;
-    eoriginaly = 0;
-    originalAngle = 0.0;
-    eoriginalAngle = 0.0;
-    
-    return;
-}
-
-ANIMATE::~ANIMATE()
-{
-     return;
-}
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+/// ANIMATE method definitions /////////////////////////////////////////
 
 void ANIMATE::animateMovePlayer(int move, const char * name, OSL_IMAGE * sonymon, OSL_IMAGE * enemy, OSL_IMAGE * background)
 {
@@ -79,7 +64,7 @@ void ANIMATE::animateMovePlayer(int move, const char * name, OSL_IMAGE * sonymon
              oslSetFont(verdana);
              oslSetTextColor(BLACK);
              oslSetBkColor(RGBA(0,0,0,0));
-             oslPrintf_xy(18, 216, "%s used tackle", name);
+             oslPrintf_xy(18, 226, "%s used tackle", name);
              
              oslEndDrawing();
              oslSyncFrame();
@@ -99,7 +84,7 @@ void ANIMATE::animateMovePlayer(int move, const char * name, OSL_IMAGE * sonymon
              oslSetFont(verdana);
              oslSetTextColor(BLACK);
              oslSetBkColor(RGBA(0,0,0,0));
-             oslPrintf_xy(18, 216, "%s used tackle", name);
+             oslPrintf_xy(18, 226, "%s used tackle", name);
              
              oslEndDrawing();
              oslSyncFrame();
@@ -121,7 +106,7 @@ void ANIMATE::animateMovePlayer(int move, const char * name, OSL_IMAGE * sonymon
              oslSetFont(verdana);
              oslSetTextColor(BLACK);
              oslSetBkColor(RGBA(0,0,0,0));
-             oslPrintf_xy(18, 216, "%s used steroids", name);
+             oslPrintf_xy(18, 226, "%s used steroids", name);
              
              oslEndDrawing();
              oslSyncFrame();
@@ -141,7 +126,7 @@ void ANIMATE::animateMovePlayer(int move, const char * name, OSL_IMAGE * sonymon
              oslSetFont(verdana);
              oslSetTextColor(BLACK);
              oslSetBkColor(RGBA(0,0,0,0));
-             oslPrintf_xy(18, 216, "%s used steroids", name);
+             oslPrintf_xy(18, 226, "%s used steroids", name);
              
              oslEndDrawing();
              oslSyncFrame();
@@ -163,7 +148,7 @@ void ANIMATE::animateMovePlayer(int move, const char * name, OSL_IMAGE * sonymon
              oslSetFont(verdana);
              oslSetTextColor(BLACK);
              oslSetBkColor(RGBA(0,0,0,0));
-             oslPrintf_xy(18, 216, "%s used slam", name);
+             oslPrintf_xy(18, 226, "%s used slam", name);
              
              oslEndDrawing();
              oslSyncFrame();
@@ -184,7 +169,7 @@ void ANIMATE::animateMovePlayer(int move, const char * name, OSL_IMAGE * sonymon
              oslSetFont(verdana);
              oslSetTextColor(BLACK);
              oslSetBkColor(RGBA(0,0,0,0));
-             oslPrintf_xy(18, 216, "%s used slam", name);
+             oslPrintf_xy(18, 226, "%s used slam", name);
              
              oslEndDrawing();
              oslSyncFrame();
@@ -216,7 +201,7 @@ void ANIMATE::animateMovePlayer(int move, const char * name, OSL_IMAGE * sonymon
              oslSetFont(verdana);
              oslSetTextColor(BLACK);
              oslSetBkColor(RGBA(0,0,0,0));
-             oslPrintf_xy(18, 216, "%s used pound", name);
+             oslPrintf_xy(18, 226, "%s used pound", name);
              
              oslEndDrawing();
              oslSyncFrame();
@@ -254,7 +239,7 @@ void ANIMATE::animateMovePlayer(int move, const char * name, OSL_IMAGE * sonymon
              oslSetFont(verdana);
              oslSetTextColor(BLACK);
              oslSetBkColor(RGBA(0,0,0,0));
-             oslPrintf_xy(18, 216, "%s used uplink", name);
+             oslPrintf_xy(18, 226, "%s used uplink", name);
              
              oslEndDrawing();
              oslSyncFrame();
@@ -278,7 +263,7 @@ void ANIMATE::animateMovePlayer(int move, const char * name, OSL_IMAGE * sonymon
              oslSetFont(verdana);
              oslSetTextColor(BLACK);
              oslSetBkColor(RGBA(0,0,0,0));
-             oslPrintf_xy(18, 216, "%s used jumpKick", name);
+             oslPrintf_xy(18, 226, "%s used jumpKick", name);
              
              oslEndDrawing();
              oslSyncFrame();
@@ -300,7 +285,7 @@ void ANIMATE::animateMovePlayer(int move, const char * name, OSL_IMAGE * sonymon
              oslSetFont(verdana);
              oslSetTextColor(BLACK);
              oslSetBkColor(RGBA(0,0,0,0));
-             oslPrintf_xy(18, 216, "%s used jumpKick", name);
+             oslPrintf_xy(18, 226, "%s used jumpKick", name);
              
              oslEndDrawing();
              oslSyncFrame();
@@ -344,7 +329,7 @@ void ANIMATE::animateMovePlayer(int move, const char * name, OSL_IMAGE * sonymon
                 oslSetFont(verdana);
                 oslSetTextColor(BLACK);
                 oslSetBkColor(RGBA(0,0,0,0));
-                oslPrintf_xy(18, 216, "%s used contaminate", name);
+                oslPrintf_xy(18, 226, "%s used contaminate", name);
           }
      }
      
@@ -368,7 +353,7 @@ void ANIMATE::animateMovePlayer(int move, const char * name, OSL_IMAGE * sonymon
                 oslSetFont(verdana);
                 oslSetTextColor(BLACK);
                 oslSetBkColor(RGBA(0,0,0,0));
-                oslPrintf_xy(18, 216, "%s used clobber", name);
+                oslPrintf_xy(18, 226, "%s used clobber", name);
           }
      }
      
@@ -409,7 +394,7 @@ void ANIMATE::animateMoveEnemy(int move, const char * name, OSL_IMAGE * sonymon,
              oslSetFont(verdana);
              oslSetTextColor(BLACK);
              oslSetBkColor(RGBA(0,0,0,0));
-             oslPrintf_xy(18, 216, "%s used tackle", name);
+             oslPrintf_xy(18, 226, "%s used tackle", name);
              
              oslEndDrawing();
              oslSyncFrame();
@@ -429,7 +414,7 @@ void ANIMATE::animateMoveEnemy(int move, const char * name, OSL_IMAGE * sonymon,
              oslSetFont(verdana);
              oslSetTextColor(BLACK);
              oslSetBkColor(RGBA(0,0,0,0));
-             oslPrintf_xy(18, 216, "%s used tackle", name);
+             oslPrintf_xy(18, 226, "%s used tackle", name);
              
              oslEndDrawing();
              oslSyncFrame();
@@ -451,7 +436,7 @@ void ANIMATE::animateMoveEnemy(int move, const char * name, OSL_IMAGE * sonymon,
              oslSetFont(verdana);
              oslSetTextColor(BLACK);
              oslSetBkColor(RGBA(0,0,0,0));
-             oslPrintf_xy(18, 216, "%s used steroids", name);
+             oslPrintf_xy(18, 226, "%s used steroids", name);
              
              oslEndDrawing();
              oslSyncFrame();
@@ -471,7 +456,7 @@ void ANIMATE::animateMoveEnemy(int move, const char * name, OSL_IMAGE * sonymon,
              oslSetFont(verdana);
              oslSetTextColor(BLACK);
              oslSetBkColor(RGBA(0,0,0,0));
-             oslPrintf_xy(18, 216, "%s used steroids", name);
+             oslPrintf_xy(18, 226, "%s used steroids", name);
              
              oslEndDrawing();
              oslSyncFrame();
@@ -503,7 +488,7 @@ void ANIMATE::animateMoveEnemy(int move, const char * name, OSL_IMAGE * sonymon,
              oslSetFont(verdana);
              oslSetTextColor(BLACK);
              oslSetBkColor(RGBA(0,0,0,0));
-             oslPrintf_xy(18, 216, "%s used pound", name);
+             oslPrintf_xy(18, 226, "%s used pound", name);
              
              oslEndDrawing();
              oslSyncFrame();
@@ -525,7 +510,7 @@ void ANIMATE::animateMoveEnemy(int move, const char * name, OSL_IMAGE * sonymon,
              oslSetFont(verdana);
              oslSetTextColor(BLACK);
              oslSetBkColor(RGBA(0,0,0,0));
-             oslPrintf_xy(18, 216, "%s used slam", name);
+             oslPrintf_xy(18, 226, "%s used slam", name);
              
              oslEndDrawing();
              oslSyncFrame();
@@ -546,7 +531,7 @@ void ANIMATE::animateMoveEnemy(int move, const char * name, OSL_IMAGE * sonymon,
              oslSetFont(verdana);
              oslSetTextColor(BLACK);
              oslSetBkColor(RGBA(0,0,0,0));
-             oslPrintf_xy(18, 216, "%s used slam", name);
+             oslPrintf_xy(18, 226, "%s used slam", name);
              
              oslEndDrawing();
              oslSyncFrame();
@@ -584,7 +569,7 @@ void ANIMATE::animateMoveEnemy(int move, const char * name, OSL_IMAGE * sonymon,
              oslSetFont(verdana);
              oslSetTextColor(BLACK);
              oslSetBkColor(RGBA(0,0,0,0));
-             oslPrintf_xy(18, 216, "%s used uplink", name);
+             oslPrintf_xy(18, 226, "%s used uplink", name);
              
              oslEndDrawing();
              oslSyncFrame();
@@ -608,7 +593,7 @@ void ANIMATE::animateMoveEnemy(int move, const char * name, OSL_IMAGE * sonymon,
              oslSetFont(verdana);
              oslSetTextColor(BLACK);
              oslSetBkColor(RGBA(0,0,0,0));
-             oslPrintf_xy(18, 216, "%s used jumpKick", name);
+             oslPrintf_xy(18, 226, "%s used jumpKick", name);
              
              oslEndDrawing();
              oslSyncFrame();
@@ -630,7 +615,7 @@ void ANIMATE::animateMoveEnemy(int move, const char * name, OSL_IMAGE * sonymon,
              oslSetFont(verdana);
              oslSetTextColor(BLACK);
              oslSetBkColor(RGBA(0,0,0,0));
-             oslPrintf_xy(18, 216, "%s used jumpKick", name);
+             oslPrintf_xy(18, 226, "%s used jumpKick", name);
              
              oslEndDrawing();
              oslSyncFrame();
@@ -674,7 +659,7 @@ void ANIMATE::animateMoveEnemy(int move, const char * name, OSL_IMAGE * sonymon,
                 oslSetFont(verdana);
                 oslSetTextColor(BLACK);
                 oslSetBkColor(RGBA(0,0,0,0));
-                oslPrintf_xy(18, 216, "%s used contaminate", name);
+                oslPrintf_xy(18, 226, "%s used contaminate", name);
           }
      }
      
@@ -697,7 +682,7 @@ void ANIMATE::animateMoveEnemy(int move, const char * name, OSL_IMAGE * sonymon,
                 oslSetFont(verdana);
                 oslSetTextColor(BLACK);
                 oslSetBkColor(RGBA(0,0,0,0));
-                oslPrintf_xy(18, 216, "%s used clobber", name);
+                oslPrintf_xy(18, 226, "%s used clobber", name);
           }
      }
      
@@ -723,9 +708,9 @@ void ANIMATE::frontDie(OSL_IMAGE *image, int XP, const char * writeDeath, OSL_IM
      sonymon_id = 1;
      
      //set stats
-     if(sonymon_num == 1)     {sonymon_id = sonymon1_id; sonymon_level = sonymon1_level; sonymon_xp = sonymon1_xp; sonymon_max_xp = sonymon1_max_xp; sonymonName = sonymon1_name;}
-     else if(sonymon_num == 2){sonymon_id = sonymon2_id; sonymon_level = sonymon2_level; sonymon_xp = sonymon2_xp; sonymon_max_xp = sonymon2_max_xp; sonymonName = sonymon2_name;}
-     else if(sonymon_num == 3){sonymon_id = sonymon3_id; sonymon_level = sonymon3_level; sonymon_xp = sonymon3_xp; sonymon_max_xp = sonymon3_max_xp; sonymonName = sonymon3_name;}
+     if(sonymon_num == 1)     {sonymon_id = sonymon1.id; sonymon_level = sonymon1.level; sonymon_xp = sonymon1.xp; sonymon_max_xp = sonymon1.max_xp; sonymonName = sonymon1.name;}
+     else if(sonymon_num == 2){sonymon_id = sonymon2.id; sonymon_level = sonymon2.level; sonymon_xp = sonymon2.xp; sonymon_max_xp = sonymon2.max_xp; sonymonName = sonymon2.name;}
+     else if(sonymon_num == 3){sonymon_id = sonymon3.id; sonymon_level = sonymon3.level; sonymon_xp = sonymon3.xp; sonymon_max_xp = sonymon3.max_xp; sonymonName = sonymon3.name;}
      
      originalx = image->x;
      originaly = image->y;
@@ -768,7 +753,7 @@ void ANIMATE::frontDie(OSL_IMAGE *image, int XP, const char * writeDeath, OSL_IM
              oslSetFont(verdana);
              oslSetBkColor(RGBA(0,0,0,0));
              oslSetTextColor(BLACK);
-             oslPrintf_xy(18, 216, "%s fainted...", enemyName);
+             oslPrintf_xy(18, 226, "%s fainted...", enemyName);
              oslEndDrawing();
              oslSyncFrame();
      }
@@ -788,27 +773,27 @@ void ANIMATE::frontDie(OSL_IMAGE *image, int XP, const char * writeDeath, OSL_IM
              oslSetFont(verdana);
              oslSetBkColor(RGBA(0,0,0,0));
              oslSetTextColor(BLACK);
-             oslPrintf_xy(18, 216, "%s gained %i exp points", sonymonName, XP);
+             oslPrintf_xy(18, 226, "%s gained %i exp points", sonymonName, XP);
              oslEndDrawing();
              oslSyncFrame();
      }
      
      //add the xp
-     if(sonymon_num == 1) sonymon1_xp += XP;
-     else if(sonymon_num == 2) sonymon2_xp += XP;
-     else if(sonymon_num == 3) sonymon3_xp += XP;
+     if(sonymon_num == 1) sonymon1.xp += XP;
+     else if(sonymon_num == 2) sonymon2.xp += XP;
+     else if(sonymon_num == 3) sonymon3.xp += XP;
        
      //if the sonymon leveled up show it
-     if(sonymon1_xp > sonymon1_max_xp || sonymon2_xp > sonymon2_max_xp || sonymon3_xp > sonymon3_max_xp)
+     if(sonymon1.xp > sonymon1.max_xp || sonymon2.xp > sonymon2.max_xp || sonymon3.xp > sonymon3.max_xp)
      {
          STATS stats;
          stats.LEVEL_UP(sonymon_num,  sonymon_id);
          oslPlaySound(found, 2);
          
          int sonymonLevel = 2;
-         if(sonymon_num == 1)      sonymonLevel = sonymon1_level;
-         else if(sonymon_num == 2) sonymonLevel = sonymon2_level;
-         else if(sonymon_num == 3) sonymonLevel = sonymon3_level;
+         if(sonymon_num == 1)      sonymonLevel = sonymon1.level;
+         else if(sonymon_num == 2) sonymonLevel = sonymon2.level;
+         else if(sonymon_num == 3) sonymonLevel = sonymon3.level;
          
          for(pointer->y = 240; pointer->y < 252; pointer->y++)
          {
@@ -825,7 +810,7 @@ void ANIMATE::frontDie(OSL_IMAGE *image, int XP, const char * writeDeath, OSL_IM
              oslSetFont(verdana);
              oslSetBkColor(RGBA(0,0,0,0));
              oslSetTextColor(BLACK);
-             oslPrintf_xy(18, 216, "%s reached level %i", sonymonName, sonymonLevel);
+             oslPrintf_xy(18, 226, "%s reached level %i", sonymonName, sonymonLevel);
              oslEndDrawing();
              oslSyncFrame();
           }
@@ -902,3 +887,19 @@ void ANIMATE::flashHurtPlayer(OSL_IMAGE * sonymon, OSL_IMAGE * enemy, OSL_IMAGE 
      return;
 }
 
+ANIMATE::ANIMATE()
+{
+    originalx = 0;
+    originaly = 0;
+    eoriginalx = 0;
+    eoriginaly = 0;
+    originalAngle = 0.0;
+    eoriginalAngle = 0.0;
+    
+    return;
+}
+
+ANIMATE::~ANIMATE()
+{
+     return;
+}

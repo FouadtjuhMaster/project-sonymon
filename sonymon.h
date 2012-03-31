@@ -340,24 +340,24 @@ void HANDLE(const char * playerName, OSL_MAP * level);
 int SonymonFreeRoam(const char * playerName);
 
 
-#include "classes/stats.h"
+#include "engine/stats.h"
 
-#include "classes/message.h"
+#include "engine/message.h"
 
-#include "classes/item.h"
+#include "engine/item.h"
 
-#include "classes/map.h"
+#include "engine/map.h"
 
-#include "classes/animation.h"
+#include "engine/animation.h"
 
-#include "classes/menu.h"
+#include "engine/menu.h"
 
-#include "classes/updateTurn.h"
+#include "engine/updateTurn.h"
 
-#include "classes/player.h"
+#include "engine/player.h"
 
-#include "classes/enemy.h"
+#include "engine/enemy.h"
 
-#include "classes/computer.h"
+#include "engine/computer.h"
 
 #include "save.h"

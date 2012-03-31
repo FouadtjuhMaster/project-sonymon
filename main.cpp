@@ -1,5 +1,9 @@
 #include "main.h"
 
+PSP_MODULE_INFO("Sonymon", 0, 1, 1);
+PSP_MAIN_THREAD_ATTR(THREAD_ATTR_USER | THREAD_ATTR_VFPU);
+PSP_HEAP_SIZE_KB(-1024);
+
 int main(int argc, char* argv[])
 {  
 	oslInit(0);
@@ -101,7 +105,7 @@ void showCredits( void )
           oslDrawImage(credits_bk);
           
           oslSetTextColor(0xFF0000FF);
-          oslPrintf_xy(5, 15, "Credits: Sonymon v0.3 the pokemon homebrew");
+          oslPrintf_xy(5, 15, "Credits: Sonymon v0.35 the pokemon homebrew");
           oslSetTextColor(0xFF000000);
           
           oslPrintf_xy(5, 25, "Programming: V@ughn");
@@ -109,7 +113,7 @@ void showCredits( void )
           oslPrintf_xy(5, 45, "Sound Effects: V@ughn");
           oslPrintf_xy(5, 55, "Music: www.entropoy.com");
           oslPrintf_xy(5, 65, "Maps: V@ughn");
-          oslPrintf_xy(5, 75, "Art: fouadtjuhmaster and V@ughn");
+          oslPrintf_xy(5, 75, "Art: fouadtjuhmaster, pspgabe550 and V@ughn");
           
           oslSetTextColor(0xFF0000FF);
           oslPrintf_xy(5, 95, "Beta Testers:");
